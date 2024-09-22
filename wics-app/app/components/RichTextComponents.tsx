@@ -1,3 +1,4 @@
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { PortableText } from 'next-sanity';
@@ -31,14 +32,9 @@ export const RichTextComponents = {
     bullet: ({ children }: any) => (
       <li className="ml-5 list-item">{children}</li>
     ),
-    number: ({ children }: any) => {
-      // Handle the nested list case manually here if needed
-      return (
-        <li className="ml-5 list-item">
-          {children}
-        </li>
-      );
-    },
+    number: ({ children }: any) => (
+      <li className="ml-5 list-item">{children}</li>
+    ),
   },
   block: {
     h1: ({ value }: any) => (
@@ -70,6 +66,24 @@ export const RichTextComponents = {
         {children}
       </blockquote>
     ),
+    // Handle normal blocks with newlines (`\n`)
+    normal: ({ value }: any) => {
+      return (
+        <p className="mb-4">
+          {value.children.map((child: any, index: number) => {
+            const lines = child.text.split('\n');
+            return lines.map((line: string, i: number) => (
+              i === lines.length - 1 
+                ? line 
+                : <>
+                    {line}
+                    <br />
+                  </>
+            ));
+          })}
+        </p>
+      );
+    },
   },
   marks: {
     link: ({ children, value }: any) => {
