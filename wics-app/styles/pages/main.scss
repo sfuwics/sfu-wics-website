@@ -1,0 +1,51 @@
+@use "./variables.scss" as *;
+
+@use "./typography.scss";
+@use "./pages/main.scss";
+
+:root {
+  --colour-wics-blue-900: #0A052B;
+  --colour-wics-blue-800: #110A40;
+  --colour-wics-blue-700: #180D5B;
+  --colour-wics-blue-600: #1E1076;
+  --colour-wics-blue-500: #24138E;
+  --colour-wics-blue-400: #2D18AF;
+  --colour-wics-blue-300: #351ADB;
+  --colour-wics-blue-200: #2B09FF;
+  --colour-wics-blue-100: #6880FF;
+
+  --colour-wics-yellow-900: #753F00;
+  --colour-wics-yellow-800: #B2650A;
+  --colour-wics-yellow-700: #D07C1A;
+  --colour-wics-yellow-600: #E9922C;
+  --colour-wics-yellow-500: #FFAA46;
+  --colour-wics-yellow-400: #FFBC6D;
+  --colour-wics-yellow-300: #FFCF96;
+  --colour-wics-yellow-200: #FFE2BF;
+  --colour-wics-yellow-100: #FFF1E0;
+
+  --colour-neutral-1200: #141515;
+  --colour-neutral-1100: #191a1a;
+  --colour-neutral-1000: #323434;
+  --colour-neutral-900: #4b4e4d;
+  --colour-neutral-800: #646867;
+  --colour-neutral-700: #7d8281;
+  --colour-neutral-600: #979b9a;
+  --colour-neutral-500: #b0b5b4;
+  --colour-neutral-400: #cacecd;
+  --colour-neutral-300: #e5e6e6;
+  --colour-neutral-200: #eff0f0;
+  --colour-neutral-100: #f7f8f7;
+  --colour-neutral-000: #fff;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: $font-stack;
+  -webkit-font-smoothing: antialiased;
+  color: var(--colour-neutral-1200);
+}
