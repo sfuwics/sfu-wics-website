@@ -6,7 +6,7 @@ import React from "react";
 
 async function getPostsByTag(tag: string) {
   const query = `
-    *[_type == "post" && references(*[_type == "tag" && slug.current == "${tag}"]._id)]{
+    *[_type == "post" && references(*[_type == "tag" && slug.current == "${tag}"]._id)] | order(publishedAt desc) {
       title,
       slug,
       author,
