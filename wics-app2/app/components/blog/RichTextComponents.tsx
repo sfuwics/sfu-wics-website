@@ -79,6 +79,22 @@ export const RichTextComponents = {
         {value.children[0].text}
       </h3>
     ),
+    h4: ({ value }: any) => (
+      <h4
+        id={slugify(value.children[0].text)}
+        className="pt-3 text-xl font-bold"
+      >
+        {value.children[0].text}
+      </h4>
+    ),
+    h5: ({ value }: any) => (
+      <h5
+        id={slugify(value.children[0].text)}
+        className="pt-3 text-lg font-bold"
+      >
+        {value.children[0].text}
+      </h5>
+    ),
     blockquote: ({ children }: any) => (
       <blockquote className="my-5 border-l-4 border-l-[#24138E] py-5 pl-5">
         {children}

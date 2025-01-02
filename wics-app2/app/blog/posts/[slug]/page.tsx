@@ -16,7 +16,7 @@ interface Params {
   };
 }
 
-async function getPost(slug: string, commentsOrder: string = "desc") {
+async function getPost(slug: string) {
   const query = `
   *[_type == "post" && slug.current == "${slug}"][0] {
     title,
@@ -25,7 +25,7 @@ async function getPost(slug: string, commentsOrder: string = "desc") {
     publishedAt,
     excerpt,
     _id,
-    "headings": body[style in ["h1", "h2", "h3", "h4", "h5", "h6"]],
+    "headings": body[style in ["h1", "h2", "h3", "h4", "h5"]],
     body[] {
       ...,
       _type == "image" => {
