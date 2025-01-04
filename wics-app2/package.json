@@ -16,6 +16,7 @@
   "dependencies": {
     "@portabletext/react": "^3.2.0",
     "@sanity/image-url": "^1.1.0",
+    "@sanity/orderable-document-list": "^1.2.2",
     "@sanity/vision": "^3.68.3",
     "@tailwindcss/typography": "^0.5.15",
     "next": "15.1.2",
