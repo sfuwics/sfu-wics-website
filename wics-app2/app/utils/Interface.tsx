@@ -14,3 +14,13 @@ export interface Tag {
   _id: string;
   postCount?: number;
 }
+
+export interface Profile {
+  name: string;
+  role: string;
+  pronouns: string;
+  blurb: string;
+  linkedin: string;
+  mainImage: any;
+  _id: string;
+}

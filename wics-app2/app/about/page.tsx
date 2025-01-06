@@ -3,19 +3,22 @@ import Header from "@/app/components/blog/Header";
 import PostComponent from "@/app/components/blog/PostComponent";
 import WiCSGroupPhoto from "@/app/public/images/about/wics-group-photo.png";
 import Image from "next/image";
+import ProfileCard from "../components/ProfileCard";
 
-async function getPosts() {
+async function getProfiles() {
   const query = `
-    *[_type == "post"] | order(publishedAt desc) {
-        title,
-        slug,
-        author,
-        publishedAt,
-        excerpt,
-        tags[]-> {
-          _id,
-          slug,
-          name
+    *[_type == "profile"] | order(orderRank)  {
+        name,
+        role,
+        pronouns,
+        blurb,
+        linkedin,
+        mainImage {
+            asset->{
+              _id,
+              url
+            },
+            alt
         }
     }
   `;
@@ -26,7 +29,8 @@ async function getPosts() {
 export const revalidate = 60;
 
 export default async function About() {
-  
+  const profiles: Profile[] = await getProfiles();
+
   return (
     <div className="mx-auto max-w-7xl">
       <Header title="Get to Know SFU WiCS" />
@@ -54,7 +58,9 @@ export default async function About() {
           lasting connections,{" "}
           <span className="text-4xl font-bold text-wics-blue-500">support</span>{" "}
           academic and professional journeys, and{" "}
-          <span className="text-4xl font-bold text-wics-blue-500">challenge</span>{" "}
+          <span className="text-4xl font-bold text-wics-blue-500">
+            challenge
+          </span>{" "}
           biases to create a more equitable and inclusive tech world.
         </p>
       </div>
@@ -62,6 +68,12 @@ export default async function About() {
       <div className="mt-20">
         <Header title="Core Executive Profiles" />
 
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-fr">
+        {profiles?.length > 0 &&
+            profiles?.map((profile) => (
+              <ProfileCard key={profile?._id} profile={profile} />
+            ))}
+        </div>
       </div>
     </div>
   );
