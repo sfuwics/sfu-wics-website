@@ -17,4 +17,6 @@ export const structure: StructureResolver = (S, context) =>
         S,
         context,
       }),
+
+      S.documentTypeListItem('personList').title('Person List'),
 	  ]);

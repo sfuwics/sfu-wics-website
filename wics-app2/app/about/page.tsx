@@ -5,8 +5,8 @@ import Image from "next/image";
 import ProfileCard from "../components/ProfileCard";
 import ProfileCardSmall from "../components/ProfileCardSmall";
 import ProfileGrid from "../components/ProfileGrid";
-import Accordian from "../components/Accordian";
-import PastExecAccordian from "../components/PastExecAccordian";
+
+import PastExecAccordion from "../components/PastExecAccordion";
 import Button from "../components/Button";
 
 
@@ -33,7 +33,7 @@ async function getProfiles() {
 
 async function getPastExecList() {
   const query = `
-    *[_type == "personList"] {
+    *[_type == "personList"] | order(title desc) {
       title,
       "imageUrl": image.asset->url,
       people[] {
@@ -100,7 +100,7 @@ export default async function About() {
 
       <div className="mt-10 pb-14">
         <Header title="Past Executives" />
-        <PastExecAccordian data={execLists} />
+        <PastExecAccordion data={execLists} />
 
       </div>
     </div>
