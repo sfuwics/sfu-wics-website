@@ -14,6 +14,9 @@ const config: Config = {
         xs: "475px",
       },
       colors: {
+        main: {
+          100: "#FCFCFC"
+        },
         wics: {
           blue: {
             900: "#0A052B",
