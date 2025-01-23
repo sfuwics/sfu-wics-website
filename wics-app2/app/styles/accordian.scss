@@ -1,0 +1,53 @@
+@use "@/app/styles/main";
+
+.accordion {
+  border-radius: 0.75rem;
+  background-color: var(--colour-neutral-100);
+  padding: 1rem;
+
+  button {
+    display: block;
+    width: 100%;
+    text-align: initial;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+
+    li + li {
+      margin-top: 0.5rem;
+      
+    }
+
+    li {
+
+      padding: 0;
+      margin: 0;
+    }
+
+    button {
+      padding: 1rem 0 1rem 0;
+    }
+  }
+
+  .card:not(:last-child) {
+    border-bottom: 1px solid var(--colour-neutral-400);
+    
+  }
+
+  .card-body[data-opened] {
+    padding: 0 0 1rem;
+  }
+
+  .card-body {
+    box-sizing: content-box;
+    padding: 0 0.5rem;
+    border-radius: 10px;
+    overflow-y: hidden;
+    max-height: 0;
+    transition: max-height 250ms ease-in-out, padding 250ms ease-in-out;
+  }
+}

@@ -1,0 +1,31 @@
+@use "./dropdown";
+
+:root {
+  --color-wics-blue-500: #24138E;
+
+  --svgcolor: var(--color-wics-blue-500);
+
+  --colour-neutral-1200: #141515;
+  --colour-neutral-1100: #191a1a;
+  --colour-neutral-1000: #323434;
+  --colour-neutral-900: #4b4e4d;
+  --colour-neutral-800: #646867;
+  --colour-neutral-700: #7d8281;
+  --colour-neutral-600: #979b9a;
+  --colour-neutral-500: #b0b5b4;
+  --colour-neutral-400: #cacecd;
+  --colour-neutral-300: #e5e6e6;
+  --colour-neutral-200: #eff0f0;
+  --colour-neutral-100: #f7f8f7;
+  --colour-neutral-000: #fff;
+}
+
+// *,
+// *::before,
+// *::after {
+//   box-sizing: border-box;
+//   padding: 0;
+//   margin: 0;
+//   -webkit-font-smoothing: antialiased;
+//   color: var(--colour-neutral-000);
+// }
