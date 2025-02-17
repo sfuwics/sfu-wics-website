@@ -28,7 +28,7 @@ export default async function Blog() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <Header title="Blog Posts" />
+      <Header title="Written by WiCS" />
       <div>
         {posts?.length > 0 &&
           posts?.map((post) => <PostComponent key={post?._id} post={post} />)}
