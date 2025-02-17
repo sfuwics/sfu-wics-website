@@ -63,6 +63,7 @@ export default async function About() {
             src={WiCSGroupPhoto}
             alt="Group photo at WiCS 20th Aniversary"
             className="rounded-2xl"
+            priority={true}
           />
         </div>
 
