@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Post } from "../../utils/Interface";
 import { PortableText } from "next-sanity";
 import { RichTextComponents } from "@/app/components/blog/RichTextComponents";
-
+import ImageCarousel from "./ImageCarousel";
 
 interface Props {
   posts: Post;
@@ -23,6 +23,8 @@ const PostComponent = ({ post }: Props) => {
           <div className={richTextStyles}>
             <PortableText value={post?.body}  components={RichTextComponents} />
           </div>
+
+          <ImageCarousel images={post?.images} />
       </div>
 
     </div>
