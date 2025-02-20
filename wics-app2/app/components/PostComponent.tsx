@@ -22,8 +22,6 @@ const PostComponent = ({ post }: Props) => {
 
           <div className={richTextStyles}>
             <PortableText value={post?.body}  components={RichTextComponents} />
-            
-            <PortableText value={post?.body} />
           </div>
       </div>
 
@@ -41,10 +39,11 @@ m-auto
 prose-headings:my-3
 prose-heading:text-2xl
 prose-p:mb-4
-prose-p:leading-5
+prose-p:leading-6
 prose-li:list-disc
-prose-li:leading-5
-prose-li:ml-12
+prose-li:leading-3
+prose-ul:py-0
 prose-ul:pb-4
-prose-ol:pb-
+prose-ol:py-0
+prose-ol:pb-4
 `;
