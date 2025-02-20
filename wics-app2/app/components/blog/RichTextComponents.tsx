@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { PortableText } from "next-sanity";
+import { PortableText } from "@portabletext/react";
 import { urlForImage } from "@/sanity/lib/image";
 import { slugify } from "@/app/utils/helpers";
 
@@ -12,12 +12,10 @@ export const RichTextComponents = {
         console.error("Missing image URL:", value);
         return <p className="text-gray-500 italic">Image not available</p>;
       }
-    
+
       const { width, height } = value?.dimensions || {};
       const aspectRatio = width && height ? width / height : 0;
-      console.log(aspectRatio);
-    
-      // Determine whether the image should take full width (aspect ratios like 3:4 should not take full width)
+
       const shouldTakeFullWidth = aspectRatio >= 1;
 
       return (
@@ -100,25 +98,8 @@ export const RichTextComponents = {
         {children}
       </blockquote>
     ),
-    // Handle normal blocks with newlines (`\n`)
-    normal: ({ value }: any) => {
-      return (
-        <p className="mb-4">
-          {value.children.map((child: any, index: number) => {
-            const lines = child.text.split("\n");
-            return lines.map((line: string, i: number) =>
-              i === lines.length - 1 ? (
-                line
-              ) : (
-                <>
-                  {line}
-                  <br />
-                </>
-              ),
-            );
-          })}
-        </p>
-      );
+    normal: ({ children }: any) => {
+      return <p className="mb-4">{children}</p>;
     },
   },
   marks: {
@@ -131,7 +112,7 @@ export const RichTextComponents = {
         <Link
           href={value.href}
           rel={rel}
-          className="text-wics-blue-100 underline hover:text-wics-yellow-500"
+          className="text-wics-blue-400 underline hover:text-wics-yellow-500"
         >
           {children}
         </Link>
