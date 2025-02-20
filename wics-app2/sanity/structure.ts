@@ -8,7 +8,8 @@ export const structure: StructureResolver = (S, context) =>
   S.list()
     .title('SFU WiCS Studio')
     .items([
-	    S.documentTypeListItem('post').title('Posts'),
+      S.documentTypeListItem('post').title('Posts'),
+	    S.documentTypeListItem('blogPost').title('Blog Posts'),
       S.documentTypeListItem('tag').title('Tags'),
 
       orderableDocumentListDeskItem({

@@ -1,4 +1,4 @@
-import Header from "@/app/components/blog/Header";
+import Header from "@/app/components/blog/BlogHeader";
 import React from "react";
 import { client } from "@/sanity/lib/client";
 import { Post } from "@/app/utils/Interface";
@@ -18,28 +18,39 @@ interface Params {
 
 async function getPost(slug: string) {
   const query = `
-  *[_type == "post" && slug.current == "${slug}"][0] {
-    title,
-    slug,
-    author,
-    publishedAt,
-    excerpt,
-    _id,
-    "headings": body[style in ["h1", "h2", "h3", "h4", "h5"]],
-    body[] {
-      ...,
-      _type == "image" => {
-        "url": asset->url,
-      "dimensions": asset->metadata.dimensions,
-      "alt": alt
-      }
-    },
-    tags[]-> {
-      _id,
+  *[_type == "blogPost" && slug.current == "${slug}"][0] {
+      title,
       slug,
-      name
+      author,
+      publishedAt,
+      excerpt,
+      _id,
+      "headings": body[style in ["h1", "h2", "h3", "h4", "h5"]],
+      body[] {
+          ...,
+          children[] {
+              _key,
+              _type,
+              text,
+              marks
+          },
+          markDefs[] {
+              _key,
+              _type,
+              "href": @.href
+          },
+          _type == "image" => {
+              "url": asset->url,
+              "dimensions": asset->metadata.dimensions,
+              "alt": alt
+          }
+      },
+      tags[]-> {
+          _id,
+          slug,
+          name
+      }
     }
-  }
   `;
 
   const post = await client.fetch(query);
@@ -56,7 +67,7 @@ const page = async ({ params }: Params) => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="mx-auto max-w-2xl">
       <Header title={post?.title} />
       <div className="text-left">
         <p className="text-wics-blue-500">{post?.author}</p>
@@ -74,7 +85,11 @@ const page = async ({ params }: Params) => {
         </div>
 
         <div className={richTextStyles}>
-          <PortableText value={post?.body} components={RichTextComponents} />
+          <PortableText value={post?.body} components={RichTextComponents} 
+              onMissingComponent={(type, value) => {
+                console.warn(`Missing component for type: ${type}`, value);
+            }}
+          />
         </div>
       </div>
     </div>

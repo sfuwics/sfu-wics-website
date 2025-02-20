@@ -10,20 +10,7 @@ export const post = {
       name: "title",
       title: "Title",
       type: "string",
-      validation: (Rule: Rule) => Rule.required().error("Required")
-    },
-    {
-      name: 'slug',
-      title: "Slug",
-      type: "slug",
-      options: { source: "title" },
-      validation: (Rule: Rule) => Rule.required().error("Required")
-    },
-    {
-      name: "author",
-      title: "Author",
-      type: "string",
-      validation: (Rule: Rule) => Rule.max(200).error("Max 80 characters")
+      validation: (Rule: Rule) => Rule.required().error("Required"),
     },
     {
       name: "publishedAt",
@@ -32,38 +19,40 @@ export const post = {
       initialValue: () => new Date().toISOString(),
     },
     {
-      name: "excerpt",
-      title: "Excerpt",
-      type: "text",
-      validation: (Rule: Rule) => Rule.max(200).error("Max 200 characters")
-    },
-    {
       name: "body",
       title: "Body",
       type: "array",
       of: [
-        {type: "block"},
+        { type: "block" }
+      ],
+    },
+    {
+      name: "isEvent",
+      type: "boolean",
+      title: "Is Event Announcement?",
+      description: "Check this box if this post is for an event announcement",
+    },
+    {
+      name: "images",
+      type: "array",
+      title: "Carousel Images",
+      description: "Add images for the carousel",
+      of: [
         {
-          type: 'image',
+          type: "image",
           options: {
-            hotspot: true, // Allow hotspot cropping
+            hotspot: true,
           },
           fields: [
             {
-              name: 'alt',
-              type: 'string',
-              title: 'Alternative text',
-              description: 'Important for accessibility and SEO.',
+              name: "alt",
+              type: "string",
+              title: "Alternative text",
+              description: "Important for accessibility and SEO.",
             },
           ],
         },
       ],
     },
-    {
-      name: "tags",
-      title: "Tags",
-      type: "array",
-      of: [ { type: "reference", to: [{ type: "tag" }] }],
-    }
   ],
-}
+};

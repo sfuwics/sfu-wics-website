@@ -1,5 +1,5 @@
-import Header from "@/app/components/blog/Header";
-import PostComponent from "@/app/components/blog/PostComponent";
+import Header from "@/app/components/blog/BlogHeader";
+import PostComponent from "@/app/components/blog/BlogPostComponent";
 import { Post } from "@/app/utils/Interface";
 import { client } from "@/sanity/lib/client";
 import React from "react";
@@ -45,4 +45,4 @@ const page = async ({ params }: Params) => {
   );
 };
 
-export default page
+export default page;

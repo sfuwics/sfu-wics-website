@@ -1,5 +1,5 @@
 import { client } from "@/sanity/lib/client";
-import Header from "@/app/components/blog/Header";
+import Header from "@/app/components/Header";
 import WiCSGroupPhoto from "@/app/public/images/about/wics-group-photo.png";
 import Image from "next/image";
 import ProfileCard from "../components/ProfileCard";
@@ -8,7 +8,6 @@ import ProfileGrid from "../components/ProfileGrid";
 
 import PastExecAccordion from "../components/PastExecAccordion";
 import Button from "../components/Button";
-
 
 async function getProfiles() {
   const query = `
@@ -94,15 +93,11 @@ export default async function About() {
         </div>
       </div>
 
-
-      
-      
       {/* <Dropdown id="1" title="hi" content="higggggg"/> */}
 
       <div className="mt-10 pb-14">
         <Header title="Past Executives" />
         <PastExecAccordion data={execLists} />
-
       </div>
     </div>
   );

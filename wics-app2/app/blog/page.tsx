@@ -1,15 +1,16 @@
 import { client } from "@/sanity/lib/client";
-import Header from '@/app/components/blog/Header';
-import PostComponent from "@/app/components/blog/PostComponent";
+import Header from "@/app/components/Header";
+import PostComponent from "@/app/components/blog/BlogPostComponent";
 
 async function getPosts() {
   const query = `
-    *[_type == "post"] | order(publishedAt desc) {
+    *[_type == "blogPost"] | order(publishedAt desc) {
         title,
         slug,
         author,
         publishedAt,
         excerpt,
+        "featureImage": coalesce(featureImage.asset->url, body[_type == "image"][0].asset->url),
         tags[]-> {
           _id,
           slug,
