@@ -50,7 +50,7 @@ const ImageCarousel = ({ images, options }: CarouselProps) => {
                 alt={img.alt || "Carousel Image"}
                 width={800}
                 height={500}
-                className="w-full rounded-lg"
+                className="w-full rounded-xl"
               />
             </div>
           ))}
@@ -69,7 +69,7 @@ const ImageCarousel = ({ images, options }: CarouselProps) => {
         <div className="flex items-center justify-end">
           {/* Dots Navigation */}
           {safeImages.length > 1 && (
-            <div className="flex">
+            <div className="flex flex-wrap">
               {scrollSnaps.map((_, index) => (
                 <DotButton
                   key={index}
@@ -84,9 +84,6 @@ const ImageCarousel = ({ images, options }: CarouselProps) => {
         </div>
       </div>
       )}
-
-
-      
     </section>
   );
 };

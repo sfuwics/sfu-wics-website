@@ -24,7 +24,10 @@ const PostComponent = ({ post }: Props) => {
             <PortableText value={post?.body}  components={RichTextComponents} />
           </div>
 
-          <ImageCarousel images={post?.images} />
+          <div className="sm:w-3/4">
+            <ImageCarousel images={post?.images} />
+          </div>
+
       </div>
 
     </div>
