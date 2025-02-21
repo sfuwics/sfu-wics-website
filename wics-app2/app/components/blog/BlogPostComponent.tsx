@@ -11,7 +11,7 @@ const PostComponent = ({ post }: Props) => {
   return (
     <div className="border-t border-black py-5 sm:py-8 flex gap-1 sm:gap-5 lg:gap-10 items-start">
       <div className="w-2/3 ">
-        <Link href={`blog/posts/${post?.slug?.current}`}>
+        <Link href={`/blog/posts/${post?.slug?.current}`}>
           <h2 className="text-2xl font-medium">{post?.title}</h2>
           <p className="mb-4 line-clamp-2 sm:line-clamp-3 text-sm mt-2">{post?.excerpt}</p>
           <p className=" text-wics-blue-500 text-sm">{post?.author}</p>

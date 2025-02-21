@@ -12,12 +12,14 @@ interface PaginatedPostsProps {
   posts: any[];
   currentPage: number;
   postsPerPage: number;
+  url: string;
 }
 
 const PaginatedPosts = ({
   posts = [],
   currentPage,
   postsPerPage,
+  url,
 }: PaginatedPostsProps) => {
   if (!posts || posts.length === 0) {
     return <p>No posts available.</p>;
@@ -45,7 +47,9 @@ const PaginatedPosts = ({
                 {post?._type === "blogPost" && (
                   <BlogPostComponent post={post} />
                 )}
-                {post?._type === "post" && <PostComponent post={post} />}
+                {post?._type === "post" && (
+                  <PostComponent post={post} />
+                )}
               </div>
             ))}
         </motion.div>
@@ -63,7 +67,7 @@ const PaginatedPosts = ({
 
         {/* Page Number Buttons */}
         {Array.from({ length: totalPages }, (_, index) => (
-          <Link key={index + 1} href={`/newsroom/pg-${index + 1}`}>
+          <Link key={index + 1} href={`/${url}/pg-${index + 1}`}>
             <button
               className={`rounded-xl border-2 border-neutral-200 px-3 py-1 ${
                 currentPage === index + 1
@@ -78,7 +82,7 @@ const PaginatedPosts = ({
 
         {/* Next Button */}
         {currentPage < totalPages && (
-          <Link href={`/newsroom/pg-${currentPage + 1}`}>
+          <Link href={`/${url}/pg-${currentPage + 1}`}>
             <button className="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-neutral-200 transition-colors hover:bg-neutral-200 disabled:opacity-50">
               <FaChevronRight className="h-4 w-4 text-wics-blue-500" />
             </button>
