@@ -21,6 +21,7 @@
     "@tailwindcss/typography": "^0.5.15",
     "embla-carousel-class-names": "^8.5.2",
     "embla-carousel-react": "^8.5.2",
+    "media": "^0.2.1",
     "next": "15.1.2",
     "next-sanity": "^9.8.29-canary.0",
     "react": "^18.3.1",

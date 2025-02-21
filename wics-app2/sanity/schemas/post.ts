@@ -37,6 +37,7 @@ export const post = {
       type: "array",
       title: "Carousel Images",
       description: "Add images for the carousel",
+      options: { sortable: true },
       of: [
         {
           type: "image",
