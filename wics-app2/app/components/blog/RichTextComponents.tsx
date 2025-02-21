@@ -107,12 +107,13 @@ export const RichTextComponents = {
       const rel = !value.href.startsWith("/")
         ? "noreferrer noopener"
         : undefined;
-
+  
       return (
         <Link
           href={value.href}
           rel={rel}
-          className="text-wics-blue-400 underline hover:text-wics-yellow-500"
+          className="text-wics-blue-400 underline hover:text-wics-yellow-500 break-words overflow-hidden"
+          style={{ wordBreak: "break-word" }}
         >
           {children}
         </Link>
