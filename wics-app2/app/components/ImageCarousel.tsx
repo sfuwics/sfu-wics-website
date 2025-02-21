@@ -37,6 +37,8 @@ const ImageCarousel = ({ images, options }: CarouselProps) => {
     onNextButtonClick,
   } = usePrevNextButtons(emblaApi);
 
+  const isEmblaReady = !!emblaApi;
+
   return (
     <section className="relative mx-auto w-full max-w-4xl overflow-hidden">
       {/* Carousel Viewport */}
@@ -58,7 +60,7 @@ const ImageCarousel = ({ images, options }: CarouselProps) => {
       </div>
 
       {/* Carousel Controls */}
-      {safeImages.length > 1 && (
+      {safeImages.length > 1 && isEmblaReady &&  (
         <div className="mt-5 grid grid-cols-[auto_1fr] justify-between gap-4">
         {/* Navigation Buttons */}
         <div className="grid grid-cols-2 items-center gap-2">

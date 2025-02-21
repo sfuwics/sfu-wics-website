@@ -45,6 +45,8 @@ export const usePrevNextButtons = (emblaApi: any) => {
     };
 
     emblaApi.on("select", onSelect);
+    onSelect(); // Call once to set initial state
+
     return () => emblaApi.off("select", onSelect);
   }, [emblaApi]);
 
