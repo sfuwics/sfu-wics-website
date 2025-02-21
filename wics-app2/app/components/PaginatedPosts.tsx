@@ -1,54 +1,36 @@
 // components/blog/PaginatedPosts.tsx
 "use client";
 
-import React, { useState } from "react";
-import PostComponent from "@/app/components/PostComponent";
+import React from "react";
+import PostComponent from "./PostComponent";
 import BlogPostComponent from "@/app/components/blog/BlogPostComponent";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-const PaginatedPosts = ({ posts = [] }: { posts: any[] }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 5;
+interface PaginatedPostsProps {
+  posts: any[];
+  currentPage: number;
+  postsPerPage: number;
+}
 
+const PaginatedPosts = ({
+  posts = [],
+  currentPage,
+  postsPerPage,
+}: PaginatedPostsProps) => {
   if (!posts || posts.length === 0) {
     return <p>No posts available.</p>;
   }
 
+  // Calculate pagination
   const totalPages = Math.ceil(posts.length / postsPerPage);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
-  // Page change handlers
-  const handlePageClick = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-    scrollToTop();
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-      scrollToTop();
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      scrollToTop();
-    }
-  };
-
   return (
     <div>
-      {/* Animations for page transitions */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentPage} // Ensure animation triggers on page change
@@ -60,54 +42,49 @@ const PaginatedPosts = ({ posts = [] }: { posts: any[] }) => {
           {currentPosts?.length > 0 &&
             currentPosts.map((post) => (
               <div key={post?._id}>
-                {post?._type === 'blogPost' && (
+                {post?._type === "blogPost" && (
                   <BlogPostComponent post={post} />
                 )}
-                {post?._type === 'post' && (
-                  <PostComponent post={post} />
-                )}
+                {post?._type === "post" && <PostComponent post={post} />}
               </div>
-          ))}
+            ))}
         </motion.div>
       </AnimatePresence>
 
+      <div className="m-4 sm:m-8 flex items-center justify-center gap-2">
+        {/* Previous Button */}
+        {currentPage > 1 && (
+          <Link href={`/newsroom/pg-${currentPage - 1}`}>
+            <button className="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-neutral-200 transition-colors hover:bg-neutral-200 disabled:opacity-50">
+            <FaChevronLeft className="h-4 w-4 text-wics-blue-500" />
+            </button>
+          </Link>
+        )}
 
-
-
-      <div className="flex justify-center items-center gap-2 mt-4">
-          {/* Previous Button */}
-          <button
-            className="px-3 py-1 bg-gray-200 rounded-md"
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-
-          {/* Page Number Buttons */}
-          {Array.from({ length: totalPages }, (_, index) => (
+        {/* Page Number Buttons */}
+        {Array.from({ length: totalPages }, (_, index) => (
+          <Link key={index + 1} href={`/newsroom/pg-${index + 1}`}>
             <button
-              key={index + 1}
-              className={`px-3 py-1 rounded-md ${
+              className={`rounded-xl border-2 border-neutral-200 px-3 py-1 ${
                 currentPage === index + 1
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200"
+                  ? "bg-wics-blue-500 text-white"
+                  : "bg-white text-wics-blue-500"
               }`}
-              onClick={() => handlePageClick(index + 1)}
             >
               {index + 1}
             </button>
-          ))}
+          </Link>
+        ))}
 
-          {/* Next Button */}
-          <button
-            className="px-3 py-1 bg-gray-200 rounded-md"
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        </div>
+        {/* Next Button */}
+        {currentPage < totalPages && (
+          <Link href={`/newsroom/pg-${currentPage + 1}`}>
+            <button className="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-neutral-200 transition-colors hover:bg-neutral-200 disabled:opacity-50">
+              <FaChevronRight className="h-4 w-4 text-wics-blue-500" />
+            </button>
+          </Link>
+        )}
+      </div>
     </div>
   );
 };

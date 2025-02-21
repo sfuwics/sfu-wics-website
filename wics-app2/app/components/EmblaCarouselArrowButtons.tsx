@@ -1,5 +1,5 @@
 import React from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa"; // Import icons
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 interface ArrowButtonProps {
   onClick: () => void;
