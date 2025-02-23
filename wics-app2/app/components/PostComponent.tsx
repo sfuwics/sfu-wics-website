@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Post } from "../../utils/Interface";
 import { PortableText } from "next-sanity";
 import { RichTextComponents } from "@/app/components/blog/RichTextComponents";
-import ImageCarousel from "./ImageCarousel";
+import ImageCarousel from "@/app/components/carousels/ImageCarousel";
 
 interface Props {
   posts: Post;

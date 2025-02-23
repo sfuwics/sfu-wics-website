@@ -22,15 +22,23 @@ export const post = {
       name: "body",
       title: "Body",
       type: "array",
-      of: [
-        { type: "block" }
-      ],
+      of: [{ type: "block" }],
     },
     {
       name: "isEvent",
       type: "boolean",
       title: "Is Event Announcement?",
       description: "Check this box if this post is for an event announcement",
+    },
+    {
+      name: "eventDate",
+      title: "Event Date",
+      type: "date",
+      hidden: ({ parent }) => !parent?.isEvent, // Hide if isEvent is false
+      validation: (Rule: Rule) =>
+        Rule.custom((value, context) =>
+          context.parent.isEvent && !value ? "Event date is required" : true
+        ),
     },
     {
       name: "images",
