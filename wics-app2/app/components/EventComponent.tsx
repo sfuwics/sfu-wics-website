@@ -19,15 +19,20 @@ const PostComponent = ({ post }: Props) => {
       </div>
 
       {post?.featureImage && (
-        <div className="flex sm:w-1/3">
-          <Image
-            src={post.featureImage}
-            alt={post?.title || "Post Image"}
-            width={800}
-            height={400}
-            className="h-auto max-h-full w-full rounded-xl object-cover"
-            priority
-          />
+        <div className="flex sm:w-1/3 justify-center">
+          <div className="rounded-xl overflow-hidden">
+            <Image
+              src={post.featureImage}
+              alt={post?.title || "Post Image"}
+              width={800}
+              height={400}
+              className="h-auto w-full object-contain lg:max-h-[350px]"
+              style={{
+                aspectRatio: post?.featureImageDimensions?.aspectRatio || 16 / 9, // Fallback to 16:9
+              }}
+              priority
+            />
+          </div>
         </div>
       )}
     </div>

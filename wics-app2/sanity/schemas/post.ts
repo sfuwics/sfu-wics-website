@@ -31,6 +31,12 @@ export const post = {
       description: "Check this box if this post is for an event announcement",
     },
     {
+      name: "isEventRecap",
+      type: "boolean",
+      title: "Is this post about a finished event?",
+      description: "Check this box if this post is for a finished event",
+    },
+    {
       name: "eventDate",
       title: "Event Date",
       type: "date",

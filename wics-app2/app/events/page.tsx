@@ -32,11 +32,18 @@ async function getUpcomingEvents() {
         _key,
         asset->{
           _id,
-          url
-        },
-        alt
+          url,
+          metadata {
+            dimensions {
+              width,
+              height,
+              aspectRatio
+            }
+          }
+        }
       },
       "featureImage": images[0].asset->url,
+      "featureImageDimensions": images[0].asset->metadata.dimensions
     }
   `;
   return await client.fetch(query);
