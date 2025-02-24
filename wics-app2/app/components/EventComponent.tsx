@@ -10,32 +10,34 @@ interface Props {
 
 const PostComponent = ({ post }: Props) => {
   return (
-    <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-5 lg:gap-10">
-      <div className="sm:w-2/3">
-        <h2 className="text-lg sm:text-xl font-medium">{post?.title}</h2>
-        <div className={richTextStyles}>
-          <PortableText value={post?.body} components={RichTextComponents} />
-        </div>
-      </div>
-
-      {post?.featureImage && (
-        <div className="flex sm:w-1/3 justify-center">
-          <div className="rounded-xl overflow-hidden">
-            <Image
-              src={post.featureImage}
-              alt={post?.title || "Post Image"}
-              width={800}
-              height={400}
-              className="h-auto w-full object-contain lg:max-h-[350px]"
-              style={{
-                aspectRatio: post?.featureImageDimensions?.aspectRatio || 16 / 9, // Fallback to 16:9
-              }}
-              priority
-            />
-          </div>
-        </div>
-      )}
+<div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-5 lg:gap-10">
+  {/* Title and Body */}
+  <div className="sm:w-2/3 order-2 sm:order-1">
+    <h2 className="text-base py-2 sm:text-xl font-medium">{post?.title}</h2>
+    <div className={richTextStyles}>
+      <PortableText value={post?.body} components={RichTextComponents} />
     </div>
+  </div>
+
+  {/* Image */}
+  {post?.featureImage && (
+    <div className="flex sm:w-1/3 justify-center order-1 sm:order-2">
+      <div className="rounded-xl overflow-hidden">
+        <Image
+          src={post.featureImage}
+          alt={post?.title || "Post Image"}
+          width={800}
+          height={400}
+          className="h-auto w-full object-contain lg:max-h-[350px]"
+          style={{
+            aspectRatio: post?.featureImageDimensions?.aspectRatio || 16 / 9, // Fallback to 16:9
+          }}
+          priority
+        />
+      </div>
+    </div>
+  )}
+</div>
   );
 };
 
