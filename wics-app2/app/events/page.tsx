@@ -5,6 +5,7 @@ import EventComponent from "@/app/components/EventComponent";
 import ComponentCarousel from "../components/carousels/ComponentCarousel";
 import Image from "next/image";
 import FeatureComponent from "../components/FeatureComponent";
+import Link from 'next/link';
 
 async function getUpcomingEvents() {
   const query = `
@@ -79,10 +80,14 @@ export default async function Events() {
 
       <div className="sm-grid-rows-3 my-6 flex w-full flex-col gap-4 sm:grid sm:grid-cols-2 md:grid-cols-4 md:grid-rows-2 lg:grid-cols-5 xl:grid-rows-4">
         <div className="h-48 w-full overflow-hidden rounded-xl sm:col-span-2 sm:h-64 md:col-span-2 md:row-span-2 md:h-auto lg:col-span-3 lg:h-[600px] xl:row-span-4 xl:h-[800px]">
-          <FeatureComponent
-            imageSrc={firstEventRecap.featureImage}
-            text="Check out our past events"
-          />
+          <Link href="/events/past-events">
+
+              <FeatureComponent
+                imageSrc={firstEventRecap.featureImage}
+                text="Check out our past events"
+              />
+
+          </Link>
         </div>
 
         <div className="h-48 w-full overflow-hidden rounded-xl sm:col-span-2 md:col-span-2 md:col-start-3 md:row-start-1 lg:col-start-4 lg:h-full xl:row-span-2">
