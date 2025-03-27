@@ -11,6 +11,7 @@ export const structure: StructureResolver = (S, context) =>
       S.documentTypeListItem('post').title('Posts'),
 	    S.documentTypeListItem('blogPost').title('Blog Posts'),
       S.documentTypeListItem('tag').title('Tags'),
+      S.documentTypeListItem('pageBuilder').title('Page Builder'),
 
       orderableDocumentListDeskItem({
         title: 'Profiles',
