@@ -25,7 +25,7 @@ const PostComponent = ({ post }: Props) => {
           </div>
 
           <div className="sm:w-2/3">
-            <ImageCarousel images={post?.images} />
+            <ImageCarousel images={post?.images} autoScroll={false}/>
           </div>
 
       </div>
