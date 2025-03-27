@@ -7,6 +7,8 @@ import Image from "next/image";
 import FeatureComponent from "../components/FeatureComponent";
 import Link from "next/link";
 import TryCatchPic from "@/app/public/images/events/trycatch.png";
+import GHCPic from "@/app/public/images/events/ghc.png";
+import CANCWiCPic from "@/app/public/images/events/canc-wic.jpg";
 
 async function getUpcomingEvents() {
   const query = `
@@ -63,13 +65,31 @@ async function getRecentEventRecapPic() {
   return await client.fetch(query);
 }
 
+const pageBuilder = `
+  *[_type == "pageBuilder"] {
+    title,
+    slug,
+    logo,
+    link,
+    blurb,
+    images[]{
+      asset->{url},
+      alt
+    },
+    tags[]->{
+      title
+    }
+  }
+`;
+
+
+
 export const revalidate = 60;
 
 export default async function Events() {
   const posts: Post[] = await getUpcomingEvents();
   const eventRecapPic = await getRecentEventRecapPic();
   const firstEventRecap = eventRecapPic[0];
-  console.log(eventRecapPic[0]);
 
   return (
     <div className="mx-auto">
@@ -100,17 +120,21 @@ export default async function Events() {
         </div>
 
         <div className="h-48 w-full overflow-hidden rounded-xl sm:row-start-3 md:col-start-3 md:row-start-2 lg:col-start-4 lg:h-full xl:row-span-2 xl:row-start-3">
-          <FeatureComponent
-            imageSrc={firstEventRecap.featureImage}
-            text="Grace Hopper Celebration"
-          />
+          <Link href="/page/ghc" >
+            <FeatureComponent
+              imageSrc={GHCPic}
+              text="Grace Hopper Celebration"
+            />
+          </Link>
         </div>
 
         <div className="h-48 w-full overflow-hidden rounded-xl sm:row-start-3 md:col-start-4 md:row-start-2 lg:col-start-5 lg:h-full xl:row-span-2 xl:row-start-3">
-          <FeatureComponent
-            imageSrc={firstEventRecap.featureImage}
-            text="CAN-CWiC"
-          />
+          <Link href="/page/can-cwic" >
+            <FeatureComponent
+              imageSrc={CANCWiCPic}
+              text="CAN-CWiC"
+            />
+          </Link>
         </div>
       </div>
     </div>
