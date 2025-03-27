@@ -22,7 +22,7 @@ async function getPage(slug: string) {
     *[_type == "pageBuilder" && slug.current == "${slug}"][0] {
       title,
       slug,
-      logo {
+      "logo": coalesce(sponsor->logo, logo) {
         asset->{
           url
         }
@@ -61,7 +61,6 @@ async function getPage(slug: string) {
   const post = await client.fetch(query);
   return post;
 }
-
 async function getPostsByTag(tag: string) {
   const query = `
     *[
@@ -114,24 +113,14 @@ const revalidate = 60;
 
 const page = async ({ params }: Params) => {
   const page: Page = await getPage(params?.slug);
-
-  if (page?.tag) {
-    
-  }
-
   const posts = await getPostsByTag(page?.tag?.slug?.current);
-  console.log("Tag slug:", page?.tag?.slug);
-
-
-  console.log(posts);
-
 
   if (!page) {
     notFound();
   }
 
   return (
-    <div className="xl:mx-56">
+    <div className="lg:mx-12 xl:mx-48">
       <Header title={page?.title} />
       <div className="flex justify-center pb-10">
           {page.logo && page?.link && (
@@ -146,7 +135,7 @@ const page = async ({ params }: Params) => {
           )}
         </div>
 
-      <div className="lg:grid lg:grid-cols-2 lg:gap-4">
+      <div className="lg:grid lg:grid-cols-2 lg:gap-6">
         <div className={richTextStyles}>
           <PortableText value={page?.blurb} components={RichTextComponents} 
           />

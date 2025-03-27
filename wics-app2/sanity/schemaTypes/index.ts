@@ -5,8 +5,9 @@ import { tag } from "../schemas/tag";
 import { profile } from "../schemas/profile";
 import { personList } from "../schemas/personList";
 import { pageBuilder } from "../schemas/pageBuilder";
+import { sponsor } from "../schemas/sponsor";
 
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-    types: [blogPost, post, tag, profile, personList, pageBuilder],
+    types: [blogPost, post, tag, profile, personList, pageBuilder, sponsor],
 };
