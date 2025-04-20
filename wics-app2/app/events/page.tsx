@@ -118,7 +118,7 @@ export default async function Events() {
         </div>
 
         <div className="h-48 w-full overflow-hidden rounded-xl sm:row-start-3 md:col-start-3 md:row-start-2 lg:col-start-4 lg:h-full xl:row-span-2 xl:row-start-3">
-          <Link href="/page/ghc" >
+          <Link href="/page/ghc" target="_blank" rel="noopener noreferrer">
             <FeatureComponent
               imageSrc={GHCPic}
               text="Grace Hopper Celebration"
@@ -127,11 +127,8 @@ export default async function Events() {
         </div>
 
         <div className="h-48 w-full overflow-hidden rounded-xl sm:row-start-3 md:col-start-4 md:row-start-2 lg:col-start-5 lg:h-full xl:row-span-2 xl:row-start-3">
-          <Link href="/page/can-cwic" >
-            <FeatureComponent
-              imageSrc={CANCWiCPic}
-              text="CAN-CWiC"
-            />
+          <Link href="/page/can-cwic" target="_blank" rel="noopener noreferrer">
+            <FeatureComponent imageSrc={CANCWiCPic} text="CAN-CWiC" />
           </Link>
         </div>
       </div>
