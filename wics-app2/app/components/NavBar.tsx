@@ -44,12 +44,12 @@ export default function NavBar() {
         ref={navRef}
         className={` ${
           isOpen ? "h-[20rem] rounded-3xl" : "h-[3rem] rounded-[24px]"
-        } bg-main-100 z-[1000] mx-auto mt-4 flex max-w-[40rem] flex-col overflow-hidden border border-wics-blue-500 pt-1.5 px-8 transition-all duration-300 sm:pt-0 sm:flex-row sm:justify-between`}
+        } z-[1000] mx-auto mt-4 flex max-w-[40rem] flex-col overflow-hidden border border-wics-blue-500 bg-main-100 px-5 pt-2 transition-all duration-300 sm:flex-row sm:justify-between sm:pt-0`}
       >
         <ul className={`flex w-full items-center sm:w-auto`}>
           <li className="ml-0.5 flex items-center">
             <Link href="/">
-              <Logo className="h-8 w-12 sm:h-16" />
+              <Logo className="h-[32px] w-[48px] sm:h-[40px]" />
             </Link>
           </li>
           {/* hamburger and x buttons for nav toggle */}
@@ -93,28 +93,41 @@ export default function NavBar() {
           <ul className="mt-8 flex flex-col items-center gap-6 text-base text-wics-blue-500 sm:mt-0 sm:flex-row sm:gap-4">
             <li>
               <Link
-                className="decoration-wics-yellow-500 decoration-2 hover:underline" href="/about"
+                className="decoration-wics-yellow-500 decoration-2 hover:underline"
+                href="/about"
               >
                 About
               </Link>
             </li>
             <li>
-              <Link className="decoration-wics-yellow-500 decoration-2 hover:underline" href="/newsroom">
+              <Link
+                className="decoration-wics-yellow-500 decoration-2 hover:underline"
+                href="/newsroom"
+              >
                 Newsroom
               </Link>
             </li>
             <li>
-              <Link className="decoration-wics-yellow-500 decoration-2 hover:underline" href="/events">
+              <Link
+                className="decoration-wics-yellow-500 decoration-2 hover:underline"
+                href="/events"
+              >
                 Events
               </Link>
             </li>
             <li>
-              <Link className="decoration-wics-yellow-500 decoration-2 hover:underline" href="/blog">
+              <Link
+                className="decoration-wics-yellow-500 decoration-2 hover:underline"
+                href="/blog"
+              >
                 WiCS Writes
               </Link>
             </li>
             <li>
-              <Link className="decoration-wics-yellow-500 decoration-2 hover:underline" href="/sponsors">
+              <Link
+                className="decoration-wics-yellow-500 decoration-2 hover:underline"
+                href="/sponsors"
+              >
                 Sponsors
               </Link>
             </li>
