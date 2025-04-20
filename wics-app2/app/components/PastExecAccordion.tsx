@@ -1,18 +1,10 @@
 "use client";
 import "@/app/styles/accordion.scss";
-@use "@/app/styles/main";
-
 import { useRef, useEffect } from "react";
 
 interface Person {
   name: string;
   role: string;
-}
-
-interface TransformedData {
-  name: string;
-  imageUrl: string | undefined;
-  content: JSX.Element[];
 }
 
 interface AccordionProps {
@@ -23,31 +15,29 @@ export const PastExecAccordion: React.FC<AccordionProps> = ({ data }) => {
   const previouslyOpenedPanelIndex = useRef<number>(-1);
   const panelsRef = useRef<Map<number, HTMLUListElement>>();
 
-  function getIdPanelMap(): Map<number, HTMLUListElement> {
-    if (panelsRef.current) {
-      return panelsRef.current;
+  function getIdPanelMap() {
+    if (!panelsRef.current) {
+      panelsRef.current = new Map();
     }
-    panelsRef.current = new Map();
     return panelsRef.current;
   }
 
-  function toggleAccordion(indexClicked: number): void {
+  function toggleAccordion(indexClicked: number) {
     const idPanelMap = getIdPanelMap();
     const previouslyOpenedNode = idPanelMap.get(
-      previouslyOpenedPanelIndex.current
+      previouslyOpenedPanelIndex.current,
     );
     const selectedNode = idPanelMap.get(indexClicked);
 
     if (!selectedNode) return;
 
-    if (selectedNode?.dataset.hasOwnProperty("opened")) {
+    if (selectedNode.dataset.opened) {
       closePanel(selectedNode);
     } else {
       openPanel(selectedNode);
       if (
-        previouslyOpenedPanelIndex.current !== indexClicked &&
-        previouslyOpenedPanelIndex.current !== undefined &&
-        previouslyOpenedNode
+        previouslyOpenedNode &&
+        previouslyOpenedPanelIndex.current !== indexClicked
       ) {
         closePanel(previouslyOpenedNode);
       }
@@ -55,29 +45,49 @@ export const PastExecAccordion: React.FC<AccordionProps> = ({ data }) => {
     previouslyOpenedPanelIndex.current = indexClicked;
   }
 
-  function openPanel(node: HTMLUListElement): void {
+  function openPanel(node: HTMLUListElement) {
     node.style.maxHeight = `${node.scrollHeight}px`;
-    node.setAttribute("data-opened", "");
+    node.dataset.opened = "true";
   }
 
-  function closePanel(node: HTMLUListElement): void {
+  function closePanel(node: HTMLUListElement) {
     node.style.maxHeight = "0";
-    node.removeAttribute("data-opened");
+    delete node.dataset.opened;
   }
 
-  // Transform data
-  const transformedData: TransformedData[] = data.map((item) => ({
-    name: item.title,
-    imageUrl: item.imageUrl,
-    content: item.people.map((person) => (
-      <div key={person.name}>
-        <strong>{person.name}</strong>
-        {person.role && `, ${person.role}`}
-      </div>
-    )),
-  }));
+  // Handle image load and resize events
+  useEffect(() => {
+    const recalculateHeights = () => {
+      const idPanelMap = getIdPanelMap();
+      const currentlyOpenNode = idPanelMap.get(
+        previouslyOpenedPanelIndex.current,
+      );
+      if (currentlyOpenNode?.dataset.opened) {
+        openPanel(currentlyOpenNode);
+      }
+    };
 
-  // Open the first accordion panel on render
+    const images = document.querySelectorAll(".card-image");
+    const resizeObserver = new ResizeObserver(recalculateHeights);
+
+    images.forEach((img) => {
+      img.addEventListener("load", recalculateHeights);
+      if (img.complete) recalculateHeights();
+      resizeObserver.observe(img);
+    });
+
+    window.addEventListener("resize", recalculateHeights);
+
+    return () => {
+      images.forEach((img) =>
+        img.removeEventListener("load", recalculateHeights),
+      );
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", recalculateHeights);
+    };
+  }, [data]);
+
+  // Open first panel on mount
   useEffect(() => {
     const idPanelMap = getIdPanelMap();
     const firstNode = idPanelMap.get(0);
@@ -85,36 +95,40 @@ export const PastExecAccordion: React.FC<AccordionProps> = ({ data }) => {
       openPanel(firstNode);
       previouslyOpenedPanelIndex.current = 0;
     }
-  }, []); // Empty dependency array ensures this runs only once after mount
+  }, []);
 
   return (
     <ul className="accordion">
-      {transformedData.map(({ name, content, imageUrl }, i) => (
+      {data.map(({ title, people, imageUrl }, i) => (
         <li key={i} className="card">
-          <button onClick={() => toggleAccordion(i)}>{name}</button>
+          <button onClick={() => toggleAccordion(i)}>{title}</button>
           <ul
             className="card-body"
             ref={(node) => {
               const idPanelMap = getIdPanelMap();
               if (node) {
                 idPanelMap.set(i, node);
-                return;
+              } else {
+                idPanelMap.delete(i);
               }
-              idPanelMap.delete(i);
             }}
           >
             <div className="content-container">
               <div className="card-content">
-                {content.map((item, j) => (
-                  <li key={j}>{item}</li>
+                {people.map((person, j) => (
+                  <li key={j}>
+                    <strong>{person.name}</strong>
+                    {person.role && `, ${person.role}`}
+                  </li>
                 ))}
               </div>
               {imageUrl && (
                 <div className="image-container">
                   <img
                     src={imageUrl}
-                    alt={`${name} thumbnail`}
+                    alt={`${title} thumbnail`}
                     className="card-image"
+                    loading="lazy"
                   />
                 </div>
               )}
