@@ -60,7 +60,7 @@ const Carousel = ({ children, options, autoScroll = true, scrollInterval = 3000 
   return (
     <section className="relative mx-auto w-full overflow-hidden">
       {/* Carousel Viewport with Auto Height */}
-      <div className="p-2 md:p-4 2xl:p-8 border border-black rounded-2xl">
+      <div className="p-4 2xl:p-8 border border-black rounded-2xl">
         <div className="overflow-hidden transition-all duration-300" ref={emblaRef} style={{ height: carouselHeight }}>
           {/* Carousel Container */}
           <div className="-ml-4 flex items-start touch-pan-y touch-pinch-zoom">
