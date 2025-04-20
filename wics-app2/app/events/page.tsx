@@ -65,23 +65,6 @@ async function getRecentEventRecapPic() {
   return await client.fetch(query);
 }
 
-const pageBuilder = `
-  *[_type == "pageBuilder"] {
-    title,
-    slug,
-    logo,
-    link,
-    blurb,
-    images[]{
-      asset->{url},
-      alt
-    },
-    tags[]->{
-      title
-    }
-  }
-`;
-
 export const revalidate = 60;
 
 export default async function Events() {
