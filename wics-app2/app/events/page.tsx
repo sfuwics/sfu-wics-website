@@ -102,7 +102,7 @@ export default async function Events() {
           <Link href="/events/past-events">
             <FeatureComponent
               imageSrc={firstEventRecap.featureImage}
-              text="Check out our past events"
+              text="Check Out Our Past Events"
             />
           </Link>
         </div>
