@@ -99,7 +99,6 @@ const page = async ({ params }: Params) => {
 export default page;
 
 // styling for blog post
-// max-w-2xl
 const richTextStyles = `
 mt-14
 text-left
