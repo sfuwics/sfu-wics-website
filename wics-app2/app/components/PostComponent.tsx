@@ -39,14 +39,13 @@ export default PostComponent;
 const richTextStyles = `
 text-left
 text-sm
-
 m-auto
 prose-headings:my-3
 prose-heading:text-2xl
 prose-p:mb-4
 prose-p:leading-6
 prose-li:list-disc
-prose-li:leading-3
+prose-li:leading-snug
 prose-ul:py-0
 prose-ul:pb-4
 prose-ol:py-0
