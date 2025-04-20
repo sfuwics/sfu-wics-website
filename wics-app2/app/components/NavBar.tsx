@@ -54,36 +54,37 @@ export default function NavBar() {
           </li>
           {/* hamburger and x buttons for nav toggle */}
           <li className="ml-auto flex items-center">
-            <button className="relative ml-auto sm:hidden" onClick={toggleMenu}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="#24138E"
-                className={`size-6 ${isOpen ? "hidden" : "flex"} `}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              </svg>
+            <button
+              className="relative h-4 w-6 sm:hidden"
+              onClick={toggleMenu}
+              aria-label="Toggle menu"
+            >
+              <div className="relative h-full w-full">
+                {/* Top bar */}
+                <span
+                  className={`absolute left-0 block h-0.5 w-full bg-wics-blue-500 transition-all duration-300 ${
+                    isOpen
+                      ? "top-1/2 w-full -translate-y-1/2 rotate-45"
+                      : "top-0 w-full"
+                  }`}
+                ></span>
 
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="#24138E"
-                className={`size-6 ${isOpen ? "flex" : "hidden"} `}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18 18 6M6 6l12 12"
-                />
-              </svg>
+                {/* Middle bar */}
+                <span
+                  className={`absolute left-0 top-1/2 block h-0.5 w-full -translate-y-1/2 bg-wics-blue-500 transition-all duration-300 ${
+                    isOpen ? "opacity-0" : "opacity-100"
+                  }`}
+                ></span>
+
+                {/* Bottom bar */}
+                <span
+                  className={`absolute left-0 block h-0.5 w-full bg-wics-blue-500 transition-all duration-300 ${
+                    isOpen
+                      ? "top-1/2 w-full -translate-y-1/2 -rotate-45"
+                      : "bottom-0 w-full"
+                  }`}
+                ></span>
+              </div>
             </button>
           </li>
         </ul>
