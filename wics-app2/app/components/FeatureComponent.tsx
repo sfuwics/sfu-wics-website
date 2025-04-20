@@ -21,14 +21,17 @@ const FeatureComponent: React.FC<FeatureComponentProps> = ({
 
   return (
     <div
-      className={`relative h-full w-full transition-opacity duration-700 ${isVisible ? "opacity-100" : "opacity-0"} transform text-white transition-transform duration-300 hover:text-wics-blue-500`}
+      className={`group relative h-full w-full transition-opacity duration-700 ${
+        isVisible ? "opacity-100" : "opacity-0"
+      }`}
     >
-      <div className="absolute inset-0 z-20 bg-gradient-to-b from-black/60 to-transparent transition-opacity duration-300 hover:from-white/60" />
+      <div className="absolute inset-0 z-20 h-2/3 bg-gradient-to-b from-black/75 via-transparent to-transparent" />
       <Image src={imageSrc} alt={text} fill className="object-cover" />
       <div className="max-w-2/3 absolute left-2 top-2 z-20 mx-2 my-2 text-xl lg:text-2xl xl:mx-4">
-        {text}
+        <span className="text-white group-hover:underline group-hover:decoration-wics-yellow-500 group-hover:decoration-4">
+          {text}
+        </span>
       </div>
-      {/* </div> */}
     </div>
   );
 };
