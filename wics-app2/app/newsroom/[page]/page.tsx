@@ -55,7 +55,7 @@ const NewsroomPage = async ({ params }: { params: { page: string } }) => {
   const posts = await getPosts();
   const postsPerPage = 5;
 
-  const currentPage = parseInt(params.page.replace("pg-", ""), 10);
+  const currentPage = params.page ? parseInt(params.page.replace("pg-", ""), 10) : 1;
 
   // Handle invalid page numbers
   if (isNaN(currentPage) || currentPage < 1) {
