@@ -6,7 +6,7 @@ import Header from "@/app/components/Header";
 
 async function getPosts() {
   const query = `
-    *[_type == "blogPost" || _type == "post" && isEventRecap == true ] | order(publishedAt desc) {
+    *[_type == "post" && isEventRecap == true ] | order(publishedAt desc) {
       _id,
       _type,
       title,
@@ -53,9 +53,10 @@ const revalidate = 60;
 
 const PastEventsPage = async ({ params }: { params: { page: string } }) => {
   const posts = await getPosts();
+  console.log(posts);
   const postsPerPage = 5;
 
-  const currentPage = parseInt(params.page.replace("pg-", ""), 10);
+  const currentPage = params.page ? parseInt(params.page.replace("pg-", ""), 10) : 1;
 
   // Handle invalid page numbers
   if (isNaN(currentPage) || currentPage < 1) {
@@ -65,7 +66,7 @@ const PastEventsPage = async ({ params }: { params: { page: string } }) => {
   return (
     <div className="mx-auto max-w-3xl px-3">
       <Header title="Past Events" />
-      <PaginatedPosts posts={posts} currentPage={currentPage} url={"past-events"} postsPerPage={postsPerPage} />
+      <PaginatedPosts posts={posts} currentPage={currentPage} url={"events/past-events"} postsPerPage={postsPerPage} />
     </div>
   );
 };
