@@ -20,7 +20,12 @@ interface CarouselProps {
   scrollInterval?: number;
 }
 
-const ImageCarousel = ({ images, options, autoScroll = true, scrollInterval = 3000 }: CarouselProps) => {
+const ImageCarousel = ({
+  images,
+  options,
+  autoScroll = true,
+  scrollInterval = 3000,
+}: CarouselProps) => {
   const safeImages = (images ?? []).filter((img) => img?.asset?.url);
   if (safeImages.length === 0) return null;
 
@@ -30,17 +35,18 @@ const ImageCarousel = ({ images, options, autoScroll = true, scrollInterval = 30
     ...options,
   });
 
-  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi);
+  const { selectedIndex, scrollSnaps, onDotButtonClick } =
+    useDotButton(emblaApi);
   const [carouselHeight, setCarouselHeight] = useState("auto");
 
   const updateHeight = useCallback(() => {
     if (!emblaApi) return;
-    
+
     const slides = emblaApi.slideNodes();
     const activeSlide = slides[selectedIndex];
     if (!activeSlide) return;
 
-    const img = activeSlide.querySelector('img');
+    const img = activeSlide.querySelector("img");
     if (img && img.complete) {
       setCarouselHeight(`${img.offsetHeight}px`);
     } else {
@@ -57,7 +63,7 @@ const ImageCarousel = ({ images, options, autoScroll = true, scrollInterval = 30
     updateHeight();
 
     // Update height on slide change
-    emblaApi.on('select', updateHeight);
+    emblaApi.on("select", updateHeight);
 
     // Additional check after images load
     const checkAfterLoad = () => {
@@ -68,12 +74,12 @@ const ImageCarousel = ({ images, options, autoScroll = true, scrollInterval = 30
     // Set up mutation observer to catch image loads
     const observer = new MutationObserver(checkAfterLoad);
     const slides = emblaApi.slideNodes();
-    slides.forEach(slide => {
+    slides.forEach((slide) => {
       observer.observe(slide, { childList: true, subtree: true });
     });
 
     return () => {
-      emblaApi.off('select', updateHeight);
+      emblaApi.off("select", updateHeight);
       observer.disconnect();
     };
   }, [emblaApi, updateHeight]);
@@ -96,12 +102,12 @@ const ImageCarousel = ({ images, options, autoScroll = true, scrollInterval = 30
   return (
     <section className="relative mx-auto w-full overflow-hidden">
       <div className="">
-        <div 
-          className="overflow-hidden transition-all duration-300" 
-          ref={emblaRef} 
+        <div
+          className="overflow-hidden transition-all duration-300"
+          ref={emblaRef}
           style={{ height: carouselHeight }}
         >
-          <div className="-ml-4 flex items-start touch-pan-y touch-pinch-zoom">
+          <div className="-ml-4 flex touch-pan-y touch-pinch-zoom items-start">
             {safeImages.map((img) => (
               <div key={img._key} className="w-full flex-shrink-0 pl-4">
                 <Image
@@ -109,7 +115,7 @@ const ImageCarousel = ({ images, options, autoScroll = true, scrollInterval = 30
                   alt={img.alt || "Carousel Image"}
                   width={1200}
                   height={800}
-                  className="w-full h-auto rounded-xl"
+                  className="h-auto w-full rounded-xl"
                   priority={true}
                   onLoadingComplete={updateHeight}
                 />
@@ -131,8 +137,10 @@ const ImageCarousel = ({ images, options, autoScroll = true, scrollInterval = 30
                 <DotButton
                   key={index}
                   onClick={() => onDotButtonClick(index)}
-                  className={`mx-1 h-4 w-4 rounded-full border-2 border-gray transition-all ${
-                    index === selectedIndex ? "border-2 border-wics-blue-500" : ""
+                  className={`border-gray mx-1 h-4 w-4 rounded-full border-2 transition-all ${
+                    index === selectedIndex
+                      ? "border-2 border-wics-blue-500"
+                      : ""
                   }`}
                 />
               ))}
