@@ -18,8 +18,6 @@ async function getAllTags() {
   return tags;
 }
 
-export const revalidate = 60;
-
 const page = async () => {
   const tags: Tag = await getAllTags();
   return (

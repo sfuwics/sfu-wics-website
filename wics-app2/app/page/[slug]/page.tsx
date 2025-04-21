@@ -109,8 +109,6 @@ async function getPostsByTag(tag: string) {
   return await client.fetch(query);
 }
 
-const revalidate = 60;
-
 const page = async ({ params }: Params) => {
   const page: Page = await getPage(params?.slug);
   const posts = await getPostsByTag(page?.tag?.slug?.current);

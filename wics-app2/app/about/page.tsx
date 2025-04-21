@@ -45,8 +45,6 @@ async function getPastExecList() {
   return data;
 }
 
-export const revalidate = 60;
-
 export default async function About() {
   const profiles: Profile[] = await getProfiles();
   const execLists: PersonList[] = await getPastExecList();

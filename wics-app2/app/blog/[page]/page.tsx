@@ -26,8 +26,6 @@ async function getPosts() {
   return data;
 }
 
-export const revalidate = 60;
-
 const BlogPage = async ({ params }: { params: { page: string } }) => {
   const posts = await getPosts();
   const postsPerPage = 5;

@@ -49,8 +49,6 @@ async function getPosts() {
   return await client.fetch(query);
 }
 
-const revalidate = 60;
-
 const NewsroomPage = async ({ params }: { params: { page: string } }) => {
   const posts = await getPosts();
   const postsPerPage = 5;

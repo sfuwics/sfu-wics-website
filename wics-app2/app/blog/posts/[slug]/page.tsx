@@ -57,8 +57,6 @@ async function getPost(slug: string) {
   return post;
 }
 
-const revalidate = 60;
-
 const page = async ({ params }: Params) => {
   const post: Post = await getPost(params?.slug);
 

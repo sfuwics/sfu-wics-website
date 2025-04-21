@@ -34,8 +34,6 @@ async function getGoldSponsors() {
   return sponsors;
 }
 
-export const revalidate = 60;
-
 export default async function Sponsors() {
   const platinumSponsors = await getGoldSponsors();
   const goldSponsors = await getGoldSponsors();
