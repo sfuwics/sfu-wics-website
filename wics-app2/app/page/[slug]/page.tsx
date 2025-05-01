@@ -12,6 +12,8 @@ import PostComponent from "@/app/components/PostComponent";
 import BlogPostComponent from "@/app/components/blog/BlogPostComponent";
 
 import { getSlugsByType, generateSlugParams } from "@/app/lib/staticParams";
+import PaginatedPosts from "@/app/components/PaginatedPosts";
+
 
 export const dynamic = 'force-static'; 
 
@@ -121,6 +123,7 @@ export async function generateStaticParams() {
 const page = async ({ params }: Params) => {
   const page: Page = await getPage(params?.slug);
   const posts = await getPostsByTag(page?.tag?.slug?.current);
+  const postsPerPage = 5;
 
   if (!page) {
     notFound();
@@ -153,18 +156,13 @@ const page = async ({ params }: Params) => {
         </div>
       </div>
       
-      <div className="mt-10 sm:mt-24">
-        {posts?.length > 0 &&
-                posts.map((post) => (
-                  <div key={post?._id}>
-                    {post?._type === "blogPost" && (
-                      <BlogPostComponent post={post} />
-                    )}
-                    {post?._type === "post" && (
-                      <PostComponent post={post} />
-                    )}
-                  </div>
-          ))}
+      <div className="mt-10 sm:mt-24 mx-auto max-w-3xl px-3">
+        <PaginatedPosts
+          posts={posts}
+          url={`page/${params.slug}`}
+          postsPerPage={postsPerPage}
+          mode="client"
+        />
       </div>
 
     </div>
