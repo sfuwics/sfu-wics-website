@@ -3,14 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import { urlForImage } from "@/sanity/lib/image";
-import { slugify } from "@/app/utils/helpers";
+import { slugify } from "@/app/lib/helpers";
 
 export const RichTextComponents = {
   types: {
     image: ({ value }: any) => {
       if (!value?.url) {
         console.error("Missing image URL:", value);
-        return <p className="text-gray-500 italic">Image not available</p>;
+        return <p className="italic text-gray-500">Image not available</p>;
       }
 
       const { width, height } = value?.dimensions || {};
@@ -107,12 +107,12 @@ export const RichTextComponents = {
       const rel = !value.href.startsWith("/")
         ? "noreferrer noopener"
         : undefined;
-  
+
       return (
         <Link
           href={value.href}
           rel={rel}
-          className="text-wics-blue-400 underline hover:text-wics-yellow-500 break-words overflow-hidden"
+          className="overflow-hidden break-words text-wics-blue-400 underline hover:text-wics-yellow-500"
           style={{ wordBreak: "break-word" }}
         >
           {children}

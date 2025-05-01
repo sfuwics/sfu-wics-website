@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { Profile } from "../utils/Interface";
+import { Profile } from "../lib/Interface";
 import Image from "next/image";
 import LinkedinIcon from "@/app/public/icons/linkedin.svg";
 import LinkedinIconBlue from "@/app/public/icons/linkedin-blue.svg";
@@ -34,7 +34,7 @@ const ProfileCard = ({ profile }: Props) => {
         />
 
         {/* Overlay (Bio and Name) */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 text-white opacity-0 transition-all duration-300 sm:group-hover:opacity-100 sm:flex hidden">
+        <div className="absolute inset-0 flex hidden flex-col items-center justify-center gap-5 text-white opacity-0 transition-all duration-300 sm:flex sm:group-hover:opacity-100">
           {/* Visible on non-mobile */}
           <p className="text-md mt-2 px-4">{profile?.blurb}</p>
 
@@ -43,7 +43,7 @@ const ProfileCard = ({ profile }: Props) => {
               href={profile.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="block hover:opacity-80 transition-opacity duration-300"
+              className="block transition-opacity duration-300 hover:opacity-80"
             >
               <Image src={LinkedinIcon} height={24} width={24} />
             </a>
@@ -54,7 +54,7 @@ const ProfileCard = ({ profile }: Props) => {
       {/* Name, Role, and LinkedIn Icon */}
       <div className="relative flex flex-col items-start">
         <div className="flex items-center gap-2">
-          <p className="text-xl sm:text-2xl md:text-3xl font-medium text-wics-blue-500">
+          <p className="text-xl font-medium text-wics-blue-500 sm:text-2xl md:text-3xl">
             {profile?.name}
           </p>
 
@@ -66,7 +66,12 @@ const ProfileCard = ({ profile }: Props) => {
               rel="noopener noreferrer"
               className="block sm:hidden" // Only show on mobile
             >
-              <Image src={LinkedinIconBlue} alt="LinkedIn" height={20} width={20} />
+              <Image
+                src={LinkedinIconBlue}
+                alt="LinkedIn"
+                height={20}
+                width={20}
+              />
             </a>
           )}
         </div>
@@ -74,7 +79,7 @@ const ProfileCard = ({ profile }: Props) => {
       </div>
 
       {/* Mobile-specific blurb */}
-      <p className="text-sm sm:hidden mt-2">{profile?.blurb}</p> 
+      <p className="mt-2 text-sm sm:hidden">{profile?.blurb}</p>
     </div>
   );
 };

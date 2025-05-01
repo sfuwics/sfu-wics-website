@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
-import { Post } from "../../utils/Interface";
+import { Post } from "../../lib/Interface";
 
 interface Props {
   posts: Post;
