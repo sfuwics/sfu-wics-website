@@ -3,6 +3,11 @@ import PaginatedPosts from "@/app/components/PaginatedPosts";
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/lib/client";
 import Header from "@/app/components/Header";
+import { generatePaginatedParams } from "@/app/lib/generatePaginatedParams";
+
+export const dynamic = 'force-static';
+
+const postsPerPage = 5;
 
 async function getPosts() {
   const query = `
@@ -49,22 +54,23 @@ async function getPosts() {
   return await client.fetch(query);
 }
 
+export async function generateStaticParams() {
+  const posts = await getPosts();
+  return generatePaginatedParams(posts.length, postsPerPage, "pg");
+}
+
 const PastEventsPage = async ({ params }: { params: { page: string } }) => {
   const posts = await getPosts();
-  console.log(posts);
-  const postsPerPage = 5;
+  const currentPage = parseInt(params.page.replace("pg-", ""), 10);
 
-  const currentPage = params.page ? parseInt(params.page.replace("pg-", ""), 10) : 1;
-
-  // Handle invalid page numbers
   if (isNaN(currentPage) || currentPage < 1) {
-    notFound(); // Render 404 page for invalid pages
+    notFound();
   }
 
   return (
     <div className="mx-auto max-w-3xl px-3">
       <Header title="Past Events" />
-      <PaginatedPosts posts={posts} currentPage={currentPage} url={"events/past-events"} postsPerPage={postsPerPage} />
+      <PaginatedPosts posts={posts} currentPage={currentPage} url={"events/past-events"} postsPerPage={postsPerPage} mode="dynamic"/>
     </div>
   );
 };

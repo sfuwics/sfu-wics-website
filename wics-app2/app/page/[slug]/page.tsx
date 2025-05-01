@@ -11,6 +11,10 @@ import ImageCarousel from "@/app/components/carousels/ImageCarousel";
 import PostComponent from "@/app/components/PostComponent";
 import BlogPostComponent from "@/app/components/blog/BlogPostComponent";
 
+import { getSlugsByType, generateSlugParams } from "@/app/lib/staticParams";
+
+export const dynamic = 'force-static'; 
+
 interface Params {
   params: {
     slug: string;
@@ -107,6 +111,11 @@ async function getPostsByTag(tag: string) {
     }
   `;
   return await client.fetch(query);
+}
+
+export async function generateStaticParams() {
+  const slugs = await getSlugsByType("pageBuilder");
+  return generateSlugParams(slugs);
 }
 
 const page = async ({ params }: Params) => {

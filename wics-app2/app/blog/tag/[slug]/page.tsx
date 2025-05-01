@@ -1,10 +1,13 @@
 import Header from "@/app/components/blog/BlogHeader";
 import PostComponent from "@/app/components/blog/BlogPostComponent";
-import { Post } from "@/app/utils/Interface";
+import { Post } from "@/app/lib/Interface";
 import { client } from "@/sanity/lib/client";
 import React from "react";
 import PaginatedPosts from "@/app/components/PaginatedPosts";
 import { notFound } from "next/navigation";
+import { getSlugsByType, generateSlugParams } from "@/app/lib/staticParams";
+
+export const dynamic = 'force-static'; 
 
 async function getPostsByTag(tag: string) {
   const query = `
@@ -29,6 +32,12 @@ async function getPostsByTag(tag: string) {
   return posts;
 }
 
+export async function generateStaticParams() {
+  const slugs = await getSlugsByType("tag");
+  return slugs.map((slug) => ({ slug }));
+}
+
+
 interface Params {
   params: {
     slug: string;
@@ -41,7 +50,9 @@ const BlogPageByTag = async ({ params }: Params) => {
   const postsPerPage = 5;
 
   // Handle pagination only if page parameter exists
-  const currentPage = params.page ? parseInt(params.page.replace("pg-", ""), 10) : 1;
+  const currentPage = params.page
+    ? parseInt(params.page.replace("pg-", ""), 10)
+    : 1;
 
   if (isNaN(currentPage) || currentPage < 1) {
     notFound();
@@ -50,11 +61,11 @@ const BlogPageByTag = async ({ params }: Params) => {
   return (
     <div className="mx-auto max-w-5xl px-6">
       <Header title={`#${params.slug}`} tags />
-      <PaginatedPosts 
-        posts={posts} 
-        currentPage={currentPage} 
-        url={`blog/tag/${params.slug}`} 
-        postsPerPage={postsPerPage} 
+      <PaginatedPosts
+        posts={posts}
+        url={`blog/tag/${params.slug}`}
+        postsPerPage={postsPerPage}
+        mode="client"
       />
     </div>
   );

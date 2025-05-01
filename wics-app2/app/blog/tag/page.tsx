@@ -1,5 +1,5 @@
 import Header from "@/app/components/blog/BlogHeader";
-import { Tag } from "@/app/utils/Interface";
+import { Tag } from "@/app/lib/Interface";
 import Link from "next/link";
 import React from "react";
 import { client } from "@/sanity/lib/client";

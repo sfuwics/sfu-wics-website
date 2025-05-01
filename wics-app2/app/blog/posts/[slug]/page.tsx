@@ -1,14 +1,17 @@
 import Header from "@/app/components/blog/BlogHeader";
 import React from "react";
 import { client } from "@/sanity/lib/client";
-import { Post } from "@/app/utils/Interface";
+import { Post } from "@/app/lib/Interface";
 import Link from "next/link";
 import { PortableText } from "next-sanity";
 import { urlForImage } from "@/sanity/lib/image";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { slugify } from "@/app/utils/helpers";
+import { slugify } from "@/app/lib/helpers";
 import { RichTextComponents } from "@/app/components/blog/RichTextComponents";
+import { getSlugsByType, generateSlugParams } from "@/app/lib/staticParams";
+
+export const dynamic = 'force-static'; 
 
 interface Params {
   params: {
@@ -57,6 +60,11 @@ async function getPost(slug: string) {
   return post;
 }
 
+export async function generateStaticParams() {
+  const slugs = await getSlugsByType("blogPost");
+  return generateSlugParams(slugs);
+}
+
 const page = async ({ params }: Params) => {
   const post: Post = await getPost(params?.slug);
 
@@ -83,9 +91,11 @@ const page = async ({ params }: Params) => {
         </div>
 
         <div className={richTextStyles}>
-          <PortableText value={post?.body} components={RichTextComponents} 
-              onMissingComponent={(type, value) => {
-                console.warn(`Missing component for type: ${type}`, value);
+          <PortableText
+            value={post?.body}
+            components={RichTextComponents}
+            onMissingComponent={(type, value) => {
+              console.warn(`Missing component for type: ${type}`, value);
             }}
           />
         </div>
