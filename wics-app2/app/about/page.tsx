@@ -50,7 +50,6 @@ export default async function About() {
   const execLists: PersonList[] = await getPastExecList();
 
   return (
-    // <div className="mx-auto max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
     <div className="mx-auto">
       <Header title="Get to Know SFU WiCS" />
 
@@ -82,7 +81,7 @@ export default async function About() {
       </div>
 
       <div className="mt-20">
-        <Header title="Core Executive Profiles" />
+        <Header title="Executive Profiles" />
         <div className="grid auto-rows-fr grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {profiles?.length > 0 &&
             profiles?.map((profile) => (
@@ -90,8 +89,6 @@ export default async function About() {
             ))}
         </div>
       </div>
-
-      {/* <Dropdown id="1" title="hi" content="higggggg"/> */}
 
       <div className="mt-10 pb-14">
         <Header title="Past Executives" />
