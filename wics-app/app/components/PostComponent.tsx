@@ -1,44 +1,53 @@
-import Link from 'next/link'
-import React from 'react'
-import { Post } from '../utils/Interface'
+import Link from "next/link";
+import React from "react";
+import Image from "next/image";
+import { Post } from "../../utils/Interface";
+import { PortableText } from "next-sanity";
+import { RichTextComponents } from "@/app/components/blog/RichTextComponents";
+import ImageCarousel from "@/app/components/carousels/ImageCarousel";
 
 interface Props {
   posts: Post;
 }
 
-const PostComponent = ( {post}: Props ) => {
+const PostComponent = ({ post }: Props) => {
+  
   return (
-    <div className={cardStyle}>
-      <Link href={`/posts/${post?.slug?.current}`}>
-        <h2 className='text-2xl'>{post?.title}</h2>
-        <p className='my-2 text-purple-800'>{post?.author}</p>
-        <p className='my-2 text-purple-800'>{new Date(post?.publishedAt).toDateString()}</p>
-        <p className='mb-4 line-clamp-2'>{post?.excerpt}</p>
-      </Link>
-
-      {/* TAGS */}
-
+    <div className="border-t border-black py-5 sm:py-8 flex gap-1 sm:gap-5 lg:gap-10 items-start">
       <div>
-        {post?.tags?.map((tag => (
-          <span key={tag?._id} className='mr-2 p-1 rounded-sm text-sm lowercase border'>#{tag?.name}</span>
-        )))}
+          <h2 className="text-2xl font-medium">{post?.title}</h2>
+          <p className="pb-4 text-wics-blue-500 text-sm">
+            {new Date(post?.publishedAt).toDateString()}
+          </p>
+
+          <div className={richTextStyles}>
+            <PortableText value={post?.body}  components={RichTextComponents} />
+          </div>
+
+          <div className="sm:w-2/3">
+            <ImageCarousel images={post?.images} autoScroll={false}/>
+          </div>
+
       </div>
 
     </div>
-  )
-}
+  );
+};
 
-export default PostComponent
+export default PostComponent;
 
-const cardStyle = `
-mb-8
-p-4
-border
-border-gray-900
-rounded-md
-shadow-sm
-shadow-purple-950
-hover:shadow-md
-hover:bg-purple-500
-hover:text-white
-`
+const richTextStyles = `
+text-left
+text-sm
+m-auto
+prose-headings:my-3
+prose-heading:text-2xl
+prose-p:mb-4
+prose-p:leading-6
+prose-li:list-disc
+prose-li:leading-snug
+prose-ul:py-0
+prose-ul:pb-4
+prose-ol:py-0
+prose-ol:pb-4
+`;

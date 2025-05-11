@@ -1,25 +1,16 @@
-import Link from 'next/link';
-import React from 'react'
+import Link from "next/link";
+import React from "react";
 
 interface Props {
   title: string;
-  tags?: boolean;
 }
 
-const Header = ({ title = "", tags = false }: Props) => {
+const Header = ({ title = "" }: Props) => {
   return (
-    <header className='py-14 px-4 mb-12 text-center border-b '>
-      <h2 className='uppercase text-2xl mx-auto max-w-2xl font-bold'>
-        {title}
-      </h2>
-
-      {tags && (
-        <div className="text-xs mt-2 hover:text-purple-500">
-          <Link href="/tag">#tags</Link>
-        </div>
-      )}
+    <header className="py-10 sm:pb-20 lg:pb-26">
+      <h2 className="mx-auto text-5xl sm:text-6xl font-bold text-wics-blue-500">{title}</h2>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

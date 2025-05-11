@@ -10,20 +10,7 @@ export const post = {
       name: "title",
       title: "Title",
       type: "string",
-      validation: (Rule: Rule) => Rule.required().error("Required")
-    },
-    {
-      name: 'slug',
-      title: "Slug",
-      type: "slug",
-      options: { source: "title" },
-      validation: (Rule: Rule) => Rule.required().error("Required")
-    },
-    {
-      name: "author",
-      title: "Author",
-      type: "string",
-      validation: (Rule: Rule) => Rule.max(200).error("Max 80 characters")
+      validation: (Rule: Rule) => Rule.required().error("Required"),
     },
     {
       name: "publishedAt",
@@ -32,20 +19,53 @@ export const post = {
       initialValue: () => new Date().toISOString(),
     },
     {
-      name: "excerpt",
-      title: "Excerpt",
-      type: "text",
-      validation: (Rule: Rule) => Rule.max(200).error("Max 200 characters")
-    },
-    {
       name: "body",
       title: "Body",
       type: "array",
+      of: [{ type: "block" }],
+    },
+    {
+      name: "isEvent",
+      type: "boolean",
+      title: "Is Event Announcement?",
+      description: "Check this box if this post is for an event announcement",
+    },
+    {
+      name: "isEventRecap",
+      type: "boolean",
+      title: "Is this post about a finished event?",
+      description: "Check this box if this post is for a finished event",
+    },
+    {
+      name: "eventDate",
+      title: "Event Date",
+      type: "date",
+      hidden: ({ parent }) => !parent?.isEvent, // Hide if isEvent is false
+      validation: (Rule: Rule) =>
+        Rule.custom((value, context) =>
+          context.parent.isEvent && !value ? "Event date is required" : true
+        ),
+    },
+    {
+      name: "images",
+      type: "array",
+      title: "Carousel Images",
+      description: "Add images for the carousel",
+      options: { sortable: true },
       of: [
-        {type: "block"},
         {
           type: "image",
-          fields: [ { type: "text", name: "alt", title: "alt"} ],
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: "alt",
+              type: "string",
+              title: "Alternative text",
+              description: "Important for accessibility and SEO.",
+            },
+          ],
         },
       ],
     },
@@ -53,7 +73,7 @@ export const post = {
       name: "tags",
       title: "Tags",
       type: "array",
-      of: [ { type: "reference", to: [{ type: "tag" }] }],
-    }
+      of: [{ type: "reference", to: [{ type: "tag" }] }],
+    },
   ],
-}
+};
