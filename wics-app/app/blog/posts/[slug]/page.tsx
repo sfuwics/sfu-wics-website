@@ -4,10 +4,7 @@ import { client } from "@/sanity/lib/client";
 import { Post } from "@/app/lib/Interface";
 import Link from "next/link";
 import { PortableText } from "next-sanity";
-import { urlForImage } from "@/sanity/lib/image";
-import Image from "next/image";
 import { notFound } from "next/navigation";
-import { slugify } from "@/app/lib/helpers";
 import { RichTextComponents } from "@/app/components/blog/RichTextComponents";
 import { getSlugsByType, generateSlugParams } from "@/app/lib/staticParams";
 

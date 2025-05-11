@@ -3,11 +3,7 @@ import Header from "@/app/components/Header";
 import WiCSGroupPhoto from "@/app/public/images/about/wics-group-photo.png";
 import Image from "next/image";
 import ProfileCard from "../components/ProfileCard";
-import ProfileCardSmall from "../components/ProfileCardSmall";
-import ProfileGrid from "../components/ProfileGrid";
-
 import PastExecAccordion from "../components/PastExecAccordion";
-import Button from "../components/Button";
 
 async function getProfiles() {
   const query = `

@@ -1,6 +1,4 @@
 import Header from "@/app/components/blog/BlogHeader";
-import PostComponent from "@/app/components/blog/BlogPostComponent";
-import { Post } from "@/app/lib/Interface";
 import { client } from "@/sanity/lib/client";
 import React from "react";
 import PaginatedPosts from "@/app/components/PaginatedPosts";
