@@ -56,8 +56,13 @@ async function getPosts() {
 
 export async function generateStaticParams() {
   const posts = await getPosts();
-  return generatePaginatedParams(posts.length, postsPerPage, "pg");
+  const totalPages = Math.ceil(posts.length / postsPerPage);
+  
+  return Array.from({ length: totalPages }).map((_, i) => ({
+    page: `pg-${i + 1}` // Directly return { page: string } without params wrapper
+  }));
 }
+
 
 const PastEventsPage = async ({ params }: { params: { page: string } }) => {
   const posts = await getPosts();

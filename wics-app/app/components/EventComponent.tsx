@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
-import { PortableText } from "next-sanity";
+import { PortableText } from "@portabletext/react";
 import { RichTextComponents } from "@/app/components/blog/RichTextComponents";
 
 interface Props {

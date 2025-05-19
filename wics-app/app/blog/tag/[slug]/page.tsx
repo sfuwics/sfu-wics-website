@@ -32,7 +32,7 @@ async function getPostsByTag(tag: string) {
 
 export async function generateStaticParams() {
   const slugs = await getSlugsByType("tag");
-  return slugs.map((slug) => ({ slug }));
+  return slugs.map(({ slug }) => ({ slug })); 
 }
 
 

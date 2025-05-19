@@ -1,16 +1,11 @@
 import Header from "@/app/components/Header";
 import React from "react";
 import { client } from "@/sanity/lib/client";
-import Link from "next/link";
-import { PortableText } from "next-sanity";
+import { PortableText } from "@portabletext/react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { RichTextComponents } from "@/app/components/blog/RichTextComponents";
 import ImageCarousel from "@/app/components/carousels/ImageCarousel";
-
-import PostComponent from "@/app/components/PostComponent";
-import BlogPostComponent from "@/app/components/blog/BlogPostComponent";
-
 import { getSlugsByType, generateSlugParams } from "@/app/lib/staticParams";
 import PaginatedPosts from "@/app/components/PaginatedPosts";
 
@@ -117,7 +112,7 @@ async function getPostsByTag(tag: string) {
 
 export async function generateStaticParams() {
   const slugs = await getSlugsByType("pageBuilder");
-  return generateSlugParams(slugs);
+  return slugs.map(({ slug }) => ({ slug })); 
 }
 
 const page = async ({ params }: Params) => {

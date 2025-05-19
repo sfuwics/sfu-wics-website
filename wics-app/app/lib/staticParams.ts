@@ -1,17 +1,10 @@
-// lib/staticParams.ts
 import { client } from "@/sanity/lib/client";
 
-/**
- * Fetch slugs from a Sanity content type for static path generation.
- */
-export async function getSlugsByType(type: string): Promise<string[]> {
-  const query = `*[_type == "$type" && defined(slug.current)][].slug.current`;
-  return await client.fetch(query);
+export async function getSlugsByType(type: string): Promise<Array<{ slug: string }>> {
+  const query = `*[_type == $type && defined(slug.current)]{ "slug": slug.current }`;
+  return await client.fetch(query, { type });
 }
 
-/**
- * Generate static params from a list of slugs.
- */
-export function generateSlugParams(slugs: string[]) {
-  return slugs.map((slug) => ({ slug }));
+export function generateSlugParams(slugs: Array<{ slug: string }>): Array<{ params: { slug: string } }> {
+  return slugs.map(({ slug }) => ({ params: { slug } }));
 }

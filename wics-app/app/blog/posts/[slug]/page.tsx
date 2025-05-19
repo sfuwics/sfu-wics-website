@@ -3,7 +3,7 @@ import React from "react";
 import { client } from "@/sanity/lib/client";
 import { Post } from "@/app/lib/Interface";
 import Link from "next/link";
-import { PortableText } from "next-sanity";
+import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
 import { RichTextComponents } from "@/app/components/blog/RichTextComponents";
 import { getSlugsByType, generateSlugParams } from "@/app/lib/staticParams";
@@ -59,7 +59,7 @@ async function getPost(slug: string) {
 
 export async function generateStaticParams() {
   const slugs = await getSlugsByType("blogPost");
-  return generateSlugParams(slugs);
+  return slugs.map(({ slug }) => ({ slug })); 
 }
 
 const page = async ({ params }: Params) => {
