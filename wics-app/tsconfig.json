@@ -16,7 +16,8 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
+      // "@/*": ["./*"],
+      "@/*": ["app/*"],
       "sanity": ["./sanity-studio/sanity.config.ts"]
     },
     "types": ["next", "node"],
