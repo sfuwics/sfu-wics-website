@@ -2,17 +2,26 @@ name: Rebuild on Sanity Update
 
 on:
   repository_dispatch:
-    types: [sanity-update]  # Matches body payload
+    types: [sanity-update]
 
 jobs:
   rebuild:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci && npm run build
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install  
+
+      - name: Build static site
+        run: npm run build
+
       - uses: nwtgck/actions-netlify@v2
         with:
           publish-dir: './out'
