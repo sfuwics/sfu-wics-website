@@ -7,6 +7,10 @@ on:
 jobs:
   rebuild:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wics-app  
+    
     steps:
       - uses: actions/checkout@v4
 
@@ -22,9 +26,10 @@ jobs:
       - name: Build static site
         run: npm run build
 
-      - uses: nwtgck/actions-netlify@v2
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v2
         with:
-          publish-dir: './out'
+          publish-dir: 'wics-app/out'  
           production-deploy: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
