@@ -3,9 +3,9 @@ name: Rebuild on Sanity Update
 on:
   workflow_dispatch: # Manual trigger (optional)
     inputs:
-        event_type:
-          description: 'Event type from Sanity'
-          required: false
+      payload:
+        description: 'Fallback payload'
+        required: false
   repository_dispatch: # Triggered via webhook
     types: [sanity-update]
 
@@ -13,6 +13,34 @@ jobs:
   rebuild:
     runs-on: ubuntu-latest
     steps:
+      # Debug: Print full event payload
+      - name: Dump GitHub event
+        run: |
+          echo "Full event payload:"
+          echo '${{ toJSON(github.event) }}' | jq .
+          echo "Headers:"
+          echo '${{ toJSON(github.event.client_payload.headers) }}' | jq .
+        if: github.event_name == 'repository_dispatch'
+
+      # Extract event_type from X-Payload header if exists
+      - name: Parse custom payload
+        id: parse-payload
+        run: |
+          if [ -n "${{ github.event.client_payload.headers['X-Payload'] }}" ]; then
+            EVENT_TYPE=$(echo '${{ github.event.client_payload.headers['X-Payload'] }}' | jq -r '.event_type')
+          else
+            EVENT_TYPE="${{ github.event.client_payload.event_type }}"
+          fi
+          echo "Parsed event_type: $EVENT_TYPE"
+          echo "event_type=$EVENT_TYPE" >> $GITHUB_OUTPUT
+
+      # Only proceed if event_type matches
+      - name: Verify trigger
+        if: steps.parse-payload.outputs.event_type != 'sanity-update'
+        run: |
+          echo "❌ Invalid event_type: ${{ steps.parse-payload.outputs.event_type }}"
+          exit 1
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -20,9 +48,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build static site
         run: npm run build
@@ -30,8 +59,15 @@ jobs:
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v2
         with:
-          publish-dir: './out' # Next.js static export dir
+          publish-dir: './out'
           production-deploy: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      # Post-deploy status check
+      - name: Verify deployment
+        run: |
+          echo "✅ Successfully deployed to Netlify"
+          echo "Deploy URL: https://${{ secrets.NETLIFY_SITE_ID }}.netlify.app"
