@@ -1,0 +1,37 @@
+name: Rebuild on Sanity Update
+
+on:
+  workflow_dispatch: # Manual trigger (optional)
+    inputs:
+        event_type:
+          description: 'Event type from Sanity'
+          required: false
+  repository_dispatch: # Triggered via webhook
+    types: [sanity-update]
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v2
+        with:
+          publish-dir: './out' # Next.js static export dir
+          production-deploy: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
