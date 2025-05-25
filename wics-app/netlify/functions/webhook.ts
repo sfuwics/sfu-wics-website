@@ -12,10 +12,9 @@ const handler: Handler = async (event) => {
     };
   }
 
-  // Optional: Log the incoming request for debugging
-  console.log('Webhook triggered:', event.body);
+  console.log('Webhook triggered');
 
-  // Delay to allow Sanity content updates to propagate
+  // Wait 5 seconds to ensure Sanity content is available
   await sleep(5000);
 
   try {
@@ -38,6 +37,7 @@ const handler: Handler = async (event) => {
       body: text,
     };
   } catch (error: any) {
+    console.error('Error triggering GitHub dispatch:', error);
     return {
       statusCode: 500,
       body: `Webhook relay failed: ${error.message}`,
