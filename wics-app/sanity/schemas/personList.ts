@@ -34,14 +34,14 @@ export const personList = {
               validation: (Rule) => Rule.required().min(1).max(100),
             },
           ],
+          preview: {
+            select: {
+              title: 'name',
+              subtitle: 'role',
+            },
+          },
         },
       ],
-      preview: {
-        select: {
-          title: 'name',
-          subtitle: 'role',
-        },
-      },
     },
     {
       name: 'image',
