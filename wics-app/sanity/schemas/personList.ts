@@ -1,4 +1,4 @@
-import { Rule } from "sanity";
+import {Rule} from 'sanity'
 
 export const personList = {
   name: 'personList',
@@ -36,20 +36,26 @@ export const personList = {
           ],
         },
       ],
+      preview: {
+        select: {
+          title: 'name',
+          subtitle: 'role',
+        },
+      },
     },
     {
-      name: "image",
-      title: "Image",
-      type: "image",
+      name: 'image',
+      title: 'Image',
+      type: 'image',
       options: {
         hotspot: true,
-      }
+      },
     },
   ],
   preview: {
     select: {
-      title: "title",
-      media: "image",
+      title: 'title',
+      media: 'image',
     },
   },
-};
+}
