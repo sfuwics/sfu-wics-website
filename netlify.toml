@@ -1,0 +1,6 @@
+[build]
+  publish = "wics-app/out"
+  command = "npm install && npm run build"
+
+[functions]
+  directory = "netlify/functions"
