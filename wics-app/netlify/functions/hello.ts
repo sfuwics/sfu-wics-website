@@ -4,3 +4,4 @@ export const handler = async () => {
     body: "Hello from Netlify Functions!",
   };
 };
+cd 
