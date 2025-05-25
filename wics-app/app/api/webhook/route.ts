@@ -23,7 +23,7 @@ const handler: Handler = async (event) => {
     const githubRes = await fetch(`https://api.github.com/repos/sfuwics/sfu-wics-website/dispatches`, {
       method: 'POST',
       headers: {
-        'Authorization': `token ${GITHUB_TOKEN}`,
+        'Authorization': `token ${process.env.GITHUB_TOKEN}`,
         'Accept': 'application/vnd.github.everest-preview+json',
         'Content-Type': 'application/json',
       },
