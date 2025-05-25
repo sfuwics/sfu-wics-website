@@ -1,14 +1,22 @@
 import type { Handler } from '@netlify/functions';
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const handler: Handler = async (event) => {
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
   if (!GITHUB_TOKEN) {
     return {
       statusCode: 500,
-      body: 'Missing GITHUB_TOKEN env variable',
+      body: 'Missing GITHUB_TOKEN environment variable',
     };
   }
+
+  // Optional: Log the incoming request for debugging
+  console.log('Webhook triggered:', event.body);
+
+  // Delay to allow Sanity content updates to propagate
+  await sleep(5000);
 
   try {
     const response = await fetch('https://api.github.com/repos/sfuwics/sfu-wics-website/dispatches', {
@@ -24,6 +32,7 @@ const handler: Handler = async (event) => {
     });
 
     const text = await response.text();
+
     return {
       statusCode: response.status,
       body: text,
