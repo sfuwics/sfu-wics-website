@@ -112,7 +112,6 @@ text-lg
 m-auto
 prose-headings:my-3
 prose-heading:text-2xl
-prose-p:mb-8
 prose-p:leading-7
 prose-li:list-disc
 prose-li:leading-7
