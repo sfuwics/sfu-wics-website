@@ -1,5 +1,5 @@
 [build]
   base = "wics-app"
-  publish = "wics-app/out"
+  publish = "out" 
   command = "npm install && npm run build"
-  functions = "wics-app/netlify/functions"
+  functions = "netlify/functions" 
