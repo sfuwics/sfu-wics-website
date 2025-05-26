@@ -1,7 +1,5 @@
 [build]
-base = "wics-app"
-command = "npm install && npm run build"
-publish = "out"
-
-[functions]
-directory = "netlify/functions"
+  base = "wics-app"
+  publish = "wics-app/out"
+  command = "cd wics-app && npm install && npm run build"
+  functions = "wics-app/netlify/functions"
