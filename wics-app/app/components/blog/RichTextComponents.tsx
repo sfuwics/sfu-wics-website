@@ -38,7 +38,7 @@ export const RichTextComponents = {
   },
   list: {
     bullet: ({ children }: any) => (
-      <ul className="ml-10 list-disc space-y-2 pt-2">{children}</ul>
+      <ul className="ml-10 list-disc space-y-2 ">{children}</ul>
     ),
     number: ({ children }: any) => (
       <ol className="mt-lg ml-5 list-decimal space-y-2">{children}</ol>
