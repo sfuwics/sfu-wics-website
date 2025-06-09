@@ -8,6 +8,8 @@ import { notFound } from "next/navigation";
 import { RichTextComponents } from "@/app/components/blog/RichTextComponents";
 import { getSlugsByType, generateSlugParams } from "@/app/lib/staticParams";
 
+import { enhancePostImages } from "@/app/lib/image-utils";
+
 export const dynamic = 'force-static'; 
 
 interface Params {
@@ -42,7 +44,8 @@ async function getPost(slug: string) {
           _type == "image" => {
               "url": asset->url,
               "dimensions": asset->metadata.dimensions,
-              "alt": alt
+              "alt": alt,
+              "lqip": asset->metadata.lqip
           }
       },
       tags[]-> {
@@ -63,11 +66,10 @@ export async function generateStaticParams() {
 }
 
 const page = async ({ params }: Params) => {
-  const post: Post = await getPost(params?.slug);
+  const initialPost = await getPost(params.slug);
+  const post = await enhancePostImages(initialPost);
 
-  if (!post) {
-    notFound();
-  }
+  if (!post) notFound();
 
   return (
     <div className="mx-auto max-w-2xl">
