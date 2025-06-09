@@ -47,7 +47,10 @@ async function getPage(slug: string) {
         _key,
         asset->{
           _id,
-          url
+          url,
+          metadata {
+            lqip
+          }
         },
         alt
       },
@@ -62,6 +65,7 @@ async function getPage(slug: string) {
   const post = await client.fetch(query);
   return post;
 }
+
 async function getPostsByTag(tag: string) {
   const query = `
     *[
@@ -73,17 +77,47 @@ async function getPostsByTag(tag: string) {
       title,
       publishedAt,
       slug,
-      "excerpt": excerpt,
-      "author": author,
-      "featureImage": coalesce(featureImage.asset->url, body[_type == "image"][0].asset->url),
+      excerpt,
+      author,
+      "featureImage": coalesce(
+        featureImage {
+          asset-> {
+            url,
+            metadata {
+              lqip
+            }
+          }
+        },
+        body[_type == "image"][0] {
+          asset-> {
+            url,
+            metadata {
+              lqip
+            }
+          }
+        }
+      ),
       "tags": tags[]->{
         _id,
-        slug,
+        slug {
+          current
+        },
         name
       },
       "headings": body[style in ["h1", "h2", "h3", "h4", "h5"]],
       body[] {
         ...,
+        _type == "image" => {
+          asset->{
+            _id,
+            url,
+            metadata {
+              lqip,
+              dimensions
+            }
+          },
+          alt
+        },
         _type == "link" => {
           "href": @.href,
           "text": @.text
@@ -101,7 +135,11 @@ async function getPostsByTag(tag: string) {
         _key,
         asset->{
           _id,
-          url
+          url,
+          metadata {
+            lqip,
+            dimensions
+          }
         },
         alt
       }
@@ -109,13 +147,13 @@ async function getPostsByTag(tag: string) {
   `;
   return await client.fetch(query);
 }
-
 export async function generateStaticParams() {
   const slugs = await getSlugsByType("pageBuilder");
   return slugs.map(({ slug }) => ({ slug })); 
 }
 
 const page = async ({ params }: Params) => {
+  const slug = params.slug;
   const page: Page = await getPage(params?.slug);
   const posts = await getPostsByTag(page?.tag?.slug?.current);
   const postsPerPage = 5;
@@ -154,7 +192,7 @@ const page = async ({ params }: Params) => {
       <div className="mt-10 sm:mt-24 mx-auto max-w-3xl px-3">
         <PaginatedPosts
           posts={posts}
-          url={`page/${params.slug}`}
+          url={`page/${slug}`}
           postsPerPage={postsPerPage}
           mode="client"
         />

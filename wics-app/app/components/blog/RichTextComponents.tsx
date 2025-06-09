@@ -30,7 +30,9 @@ export const RichTextComponents = {
             layout={shouldTakeFullWidth ? "responsive" : "intrinsic"}
             width={shouldTakeFullWidth ? width : 400}
             height={shouldTakeFullWidth ? height : 600}
-            className="mx-auto"
+            placeholder={value.lqip ? "blur" : "empty"}
+            blurDataURL={value.lqip}
+            className="motion-safe:animate-fadeIn mx-auto rounded-xl opacity-100 transition-opacity duration-700"
           />
         </div>
       );
@@ -38,7 +40,7 @@ export const RichTextComponents = {
   },
   list: {
     bullet: ({ children }: any) => (
-      <ul className="ml-10 list-disc space-y-2 ">{children}</ul>
+      <ul className="ml-10 list-disc space-y-2">{children}</ul>
     ),
     number: ({ children }: any) => (
       <ol className="mt-lg ml-5 list-decimal space-y-2">{children}</ol>

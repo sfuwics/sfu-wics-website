@@ -43,7 +43,8 @@ async function getUpcomingEvents() {
               width,
               height,
               aspectRatio
-            }
+            },
+            lqip
           }
         }
       },

@@ -104,7 +104,7 @@ const ImageCarousel = ({
       <div className="">
         <div
           className="overflow-hidden transition-all duration-300"
-          ref={emblaRef}
+          ref={emblaRef}    
           style={{ height: carouselHeight }}
         >
           <div className="-ml-4 flex touch-pan-y touch-pinch-zoom items-start">
@@ -115,7 +115,9 @@ const ImageCarousel = ({
                   alt={img.alt || "Carousel Image"}
                   width={1200}
                   height={800}
-                  className="h-auto w-full rounded-xl"
+                  placeholder={img.asset?.metadata?.lqip ? "blur" : "empty"}
+                  blurDataURL={img.asset?.metadata?.lqip}
+                  className="h-auto w-full rounded-xl transition-opacity duration-700 opacity-100 motion-safe:animate-fadeIn"
                   priority={true}
                   onLoadingComplete={updateHeight}
                 />

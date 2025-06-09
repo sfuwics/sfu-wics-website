@@ -19,7 +19,24 @@ async function getPosts() {
       slug,
       "excerpt": excerpt,
       "author": author,
-      "featureImage": coalesce(featureImage.asset->url, body[_type == "image"][0].asset->url),
+      "featureImage": coalesce(
+        featureImage {
+          asset-> {
+            url,
+            metadata {
+              lqip
+            }
+          }
+        },
+        body[_type == "image"][0] {
+          asset-> {
+            url,
+            metadata {
+              lqip
+            }
+          }
+        }
+      ),
       "tags": tags[]->{
         _id,
         slug,
@@ -45,7 +62,10 @@ async function getPosts() {
         _key,
         asset->{
           _id,
-          url
+          url,
+          metadata {
+            lqip
+          }
         },
         alt
       }

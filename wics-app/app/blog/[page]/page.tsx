@@ -12,19 +12,36 @@ const postsPerPage = 5;
 async function getPosts() {
   const query = `
     *[_type == "blogPost"] | order(publishedAt desc) {
-        _id,
-        _type,
-        title,
-        slug,
-        author,
-        publishedAt,
-        excerpt,
-        "featureImage": coalesce(featureImage.asset->url, body[_type == "image"][0].asset->url),
-        tags[]-> {
-          _id,
-          slug,
-          name
+      _id,
+      _type,
+      title,
+      slug,
+      author,
+      publishedAt,
+      excerpt,
+      "featureImage": coalesce(
+        featureImage {
+          asset-> {
+            url,
+            metadata {
+              lqip
+            }
+          }
+        },
+        body[_type == "image"][0] {
+          asset-> {
+            url,
+            metadata {
+              lqip
+            }
+          }
         }
+      ),
+      tags[]-> {
+        _id,
+        slug,
+        name
+      }
     }
   `;
   const data = await client.fetch(query);

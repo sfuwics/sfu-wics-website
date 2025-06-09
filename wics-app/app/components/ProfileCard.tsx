@@ -4,6 +4,7 @@ import { Profile } from "../lib/Interface";
 import Image from "next/image";
 import LinkedinIcon from "@/app/public/icons/linkedin.svg";
 import LinkedinIconBlue from "@/app/public/icons/linkedin-blue.svg";
+import { urlForImage } from "@/sanity/lib/image";
 
 interface Props {
   profiles: Profile;
@@ -30,7 +31,9 @@ const ProfileCard = ({ profile }: Props) => {
           alt={`${profile?.name}'s profile image`}
           layout="fill"
           objectFit="cover"
-          className="transition-all duration-300 sm:group-hover:brightness-50" // Apply hover only for screens >= sm
+          placeholder="blur"
+          blurDataURL={profile.mainImage.asset.metadata?.lqip}
+          className="transition-all duration-300 sm:group-hover:brightness-50 transition-opacity duration-700 opacity-100 motion-safe:animate-fadeIn" // Apply hover only for screens >= sm
         />
 
         {/* Overlay (Bio and Name) */}

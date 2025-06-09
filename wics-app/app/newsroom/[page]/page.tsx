@@ -5,7 +5,7 @@ import { client } from "@/sanity/lib/client";
 import Header from "@/app/components/Header";
 import { generatePaginatedParams } from "@/app/lib/generatePaginatedParams";
 
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 
 const postsPerPage = 5;
 
@@ -29,7 +29,17 @@ async function getPosts() {
         }
       },
       isEvent,
-      images[] { _key, asset->{ _id, url }, alt }
+      images[] {
+        _key,
+        asset->{
+          _id,
+          url,
+          metadata {
+            lqip
+          }
+        },
+        alt
+      }
     }
   `;
   return await client.fetch(query);
@@ -38,12 +48,11 @@ async function getPosts() {
 export async function generateStaticParams() {
   const posts = await getPosts();
   const totalPages = Math.ceil(posts.length / postsPerPage);
-  
+
   return Array.from({ length: totalPages }).map((_, i) => ({
-    page: `pg-${i + 1}` // Directly return { page: string } without params wrapper
+    page: `pg-${i + 1}`, // Directly return { page: string } without params wrapper
   }));
 }
-
 
 const NewsroomPage = async ({ params }: { params: { page: string } }) => {
   const posts = await getPosts();

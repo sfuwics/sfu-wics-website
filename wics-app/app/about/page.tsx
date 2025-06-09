@@ -16,7 +16,10 @@ async function getProfiles() {
         mainImage {
             asset->{
               _id,
-              url
+              url,
+              metadata {
+                lqip
+              }
             },
             alt
         }

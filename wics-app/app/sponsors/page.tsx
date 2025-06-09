@@ -9,9 +9,16 @@ async function getPlatinumSponsors() {
     *[_type == "sponsor" && tier == "platinum"] | order(orderRank) {
       _id,
       companyName,
-      "logo": logo.asset->url,
+      tier,
       "link": link.current,
-      tier
+      "logo": logo {
+        asset-> {
+          url,
+          metadata {
+            lqip
+          }
+        }
+      }
     }
   `;
 
@@ -24,9 +31,16 @@ async function getGoldSponsors() {
     *[_type == "sponsor" && tier == "gold"] | order(orderRank) {
       _id,
       companyName,
-      "logo": logo.asset->url,
+      tier,
       "link": link.current,
-      tier
+      "logo": logo {
+        asset-> {
+          url,
+          metadata {
+            lqip
+          }
+        }
+      }
     }
   `;
 
@@ -86,12 +100,16 @@ export default async function Sponsors() {
               <div className="relative">
                 <div className="relative h-[100px] w-full sm:h-[130px] lg:h-[180px] 2xl:h-[220px]">
                   <Image
-                    src={sponsor.logo}
+                    src={sponsor.logo.asset?.url}
                     alt={sponsor.companyName}
                     fill
-                    className="object-contain"
+                    className="motion-safe:animate-fadeIn object-contain opacity-100 transition-opacity duration-700"
                     quality={85}
                     sizes="(max-width: 1024px) 175px, (max-width: 1536px) 225px, 300px"
+                    placeholder={
+                      sponsor.logo.asset.metadata?.lqip ? "blur" : "empty"
+                    }
+                    blurDataURL={sponsor.logo.asset.metadata?.lqip}
                   />
                 </div>
                 <div className="mt-1 h-0.5 w-full overflow-hidden lg:h-1">
@@ -128,12 +146,16 @@ export default async function Sponsors() {
               <div className="relative">
                 <div className="relative h-[60px] w-full sm:h-[100px] lg:h-[120px] 2xl:h-[150px]">
                   <Image
-                    src={sponsor.logo}
+                    src={sponsor.logo.asset?.url}
                     alt={sponsor.companyName}
                     fill
-                    className="object-contain"
+                    className="motion-safe:animate-fadeIn object-contain opacity-100 transition-opacity duration-700"
                     quality={85}
                     sizes="(max-width: 1024px) 175px, (max-width: 1536px) 225px, 300px"
+                    placeholder={
+                      sponsor.logo.asset.metadata?.lqip ? "blur" : "empty"
+                    }
+                    blurDataURL={sponsor.logo.asset.metadata?.lqip}
                   />
                 </div>
                 <div className="mt-1 h-0.5 w-full overflow-hidden lg:h-1">
