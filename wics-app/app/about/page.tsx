@@ -56,9 +56,12 @@ export default async function About() {
         <div>
           <Image
             src={WiCSGroupPhoto}
-            alt="Group photo at WiCS 20th Aniversary"
-            className="rounded-2xl"
-            priority={true}
+            alt="WiCS team celebrating 20th anniversary"
+            width={1200} 
+            height={800}  
+            className="rounded-2xl shadow-lg"
+            placeholder="blur"
+            priority={true}   
           />
         </div>
 
