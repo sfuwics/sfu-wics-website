@@ -1,34 +1,23 @@
 "use client";
-import { useState, useEffect } from "react";
 import Lottie from "lottie-react";
-import small from "@/app/public/small.json";
+import mobileAnimation from "@/app/public/small.json";
+import tabletAnimation from "@/app/public/mid.json";
+import desktopAnimation from "@/app/public/hero.json";
 
 export default function ResponsiveLottie() {
-  const [animationData, setAnimationData] = useState(null);
+  return (
+    <div className="w-full">
+      <div className="block md:hidden">
+        <Lottie animationData={mobileAnimation} loop autoplay />
+      </div>
 
-  useEffect(() => {
-    const handleResize = async () => {
-      if (window.innerWidth < 640) {
-        const mobile = await import("@/app/public/small.json");
-        setAnimationData(mobile.default);
-      } 
-      if (window.innerWidth < 1024) {
-        const tablet = await import("@/app/public/mid.json");
-        setAnimationData(tablet.default);
-      } 
-      if (window.innerWidth > 1024) {
-        const desktop = await import("@/app/public/hero.json");
-        setAnimationData(desktop.default);
-      }
-    };
+      <div className="hidden md:block lg:hidden">
+        <Lottie animationData={tabletAnimation} loop autoplay />
+      </div>
 
-    // Initialize & update on resize
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  if (!animationData) return <div>Loading...</div>;
-
-  return <Lottie animationData={animationData} loop autoplay />;
+      <div className="hidden lg:block">
+        <Lottie animationData={desktopAnimation} loop autoplay />
+      </div>
+    </div>
+  );
 }
