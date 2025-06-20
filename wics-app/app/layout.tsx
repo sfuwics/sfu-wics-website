@@ -49,7 +49,8 @@ export default function RootLayout({
         <main className="font-roboto-slab min-h-screen flex flex-col">
           <NavBar />
 
-          <div className="container mx-auto pt-24 px-5 flex-1">
+          {/* <div className="container mx-auto pt-24 px-5 flex-1"> */}
+            <div>
             {children}
           </div>
 
