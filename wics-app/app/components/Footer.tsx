@@ -16,8 +16,8 @@ const Footer = () => {
         quality={100}
       />
 
-      <div className="relative flex flex-col gap-10 py-10 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-10 sm:py-16 md:px-20 xl:px-36">
-        <div className="flex flex-col items-center gap-4 px-16 sm:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6 sm:items-start sm:self-start sm:p-0">
+      <div className="relative flex flex-col gap-6 py-8 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-10 sm:py-16 md:px-20 xl:px-36">
+        <div className="flex flex-col items-center gap-4 px-16 sm:w-1/3 sm:items-start sm:self-start sm:p-0 lg:w-1/4 xl:w-1/5 2xl:w-1/6">
           <Link href="/">
             <Image
               src={WiCSLogo}
@@ -29,13 +29,9 @@ const Footer = () => {
               priority
             />
           </Link>
-
-          <p className="text-center text-sm sm:text-left md:pr-8">
-            WiCS Website Designed and Developed by Gahee Kim
-          </p>
         </div>
 
-        <div className="flex flex-col gap-6 px-4 pb-10 sm:flex-row sm:gap-10 sm:p-0 md:gap-20 lg:gap-32">
+        <div className="flex flex-col gap-6 px-4 pb-4 sm:flex-row sm:gap-10 sm:p-0 md:gap-20 lg:gap-32">
           <div className="flex flex-col gap-2">
             <p className="text-wics-blue-500 sm:text-xl">Get in Touch</p>
             <Link
@@ -78,6 +74,9 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      <p className="px-4 pb-6 text-xs sm:px-10 md:px-20 md:pr-8 xl:px-36">
+        Developed by Gahee Kim
+      </p>
     </div>
   );
 };
