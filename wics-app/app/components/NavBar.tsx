@@ -47,9 +47,11 @@ export default function NavBar() {
         } z-[1000] mx-auto mt-8 flex max-w-[40rem] flex-col overflow-hidden border border-wics-blue-500 bg-main-100 px-5 pt-2 transition-all duration-300 sm:flex-row sm:justify-between sm:pt-0`}
       >
         <ul className={`flex w-full items-center sm:w-auto`}>
-          <li className="ml-0.5 flex items-center">
+          <li className=" flex items-center">
             <Link href="/">
-              <Logo className="h-[32px] w-[48px] sm:h-[40px]" />
+              <div className="relative h-[32px] w-[48px] sm:h-[40px] sm:w-[60px]">
+                    <Logo className="h-full w-full" />
+              </div>
             </Link>
           </li>
           {/* hamburger and x buttons for nav toggle */}

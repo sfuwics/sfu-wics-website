@@ -1,5 +1,7 @@
 export const Logo = ({ className = "" }) => (
   <svg
+    width="100%"  // Lets CSS control sizing
+    height="100%"
     className={`w-full h-auto ${className}`}
     viewBox="0 0 496 342"
     xmlns="http://www.w3.org/2000/svg"
