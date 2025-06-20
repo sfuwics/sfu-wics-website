@@ -8,8 +8,6 @@ import { notFound } from "next/navigation";
 import { RichTextComponents } from "@/app/components/blog/RichTextComponents";
 import { getSlugsByType, generateSlugParams } from "@/app/lib/staticParams";
 
-import { enhancePostImages } from "@/app/lib/image-utils";
-
 export const dynamic = 'force-static'; 
 
 interface Params {
@@ -66,9 +64,6 @@ export async function generateStaticParams() {
 }
 
 const page = async ({ params }: Params) => {
-  const initialPost = await getPost(params.slug);
-  const post = await enhancePostImages(initialPost);
-
   if (!post) notFound();
 
   return (
