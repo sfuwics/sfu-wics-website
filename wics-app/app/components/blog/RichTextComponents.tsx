@@ -6,38 +6,50 @@ import { urlForImage } from "@/sanity/lib/image";
 import { slugify } from "@/app/lib/helpers";
 
 export const RichTextComponents = {
-  types: {
-    image: ({ value }: any) => {
-      if (!value?.url) {
-        console.error("Missing image URL:", value);
-        return <p className="italic text-gray-500">Image not available</p>;
-      }
-
-      const { width, height } = value?.dimensions || {};
-      const aspectRatio = width && height ? width / height : 0;
-
-      const shouldTakeFullWidth = aspectRatio >= 1;
-
+types: {
+  image: ({ value }: any) => {
+    // Handle missing/processing images
+    if (!value?.asset?._ref || !value?.url) {
       return (
-        <div
-          className={`relative mx-auto my-10 ${
-            shouldTakeFullWidth ? "w-full" : "max-w-[400px]"
-          }`}
-        >
-          <Image
-            src={value.url}
-            alt={value.alt || "Post image"}
-            layout={shouldTakeFullWidth ? "responsive" : "intrinsic"}
-            width={shouldTakeFullWidth ? width : 400}
-            height={shouldTakeFullWidth ? height : 600}
-            placeholder={value.lqip ? "blur" : "empty"}
-            blurDataURL={value.lqip}
-            className="motion-safe:animate-fadeIn mx-auto rounded-xl opacity-100 transition-opacity duration-700"
-          />
+        <div className="my-10 rounded-lg bg-gray-100 p-8 text-center">
+          <p className="text-gray-500">
+            {value?._upload 
+              ? "Image is still processing..." 
+              : "Image not available"}
+          </p>
         </div>
       );
-    },
+    }
+
+    const { width, height } = value.dimensions || {};
+    const aspectRatio = width && height ? width / height : 16/9; // Default fallback
+
+    return (
+      <div className={`relative mx-auto my-10 ${
+        aspectRatio >= 1 ? "w-full" : "max-w-[400px]"
+      }`}>
+        <Image
+          src={urlForImage(value).url()}
+          alt={value.alt || "Post image"}
+          width={aspectRatio >= 1 ? width : 400}
+          height={aspectRatio >= 1 ? height : 400 / aspectRatio}
+          placeholder={value.lqip ? "blur" : "empty"}
+          blurDataURL={value.lqip}
+          className="rounded-xl"
+          style={{
+            aspectRatio: aspectRatio,
+            objectFit: 'contain'
+          }}
+        />
+        {value.caption && (
+          <p className="mt-2 text-center text-sm text-gray-600">
+            {value.caption}
+          </p>
+        )}
+      </div>
+    );
   },
+},
   list: {
     bullet: ({ children }: any) => (
       <ul className="ml-10 list-disc space-y-2">{children}</ul>
