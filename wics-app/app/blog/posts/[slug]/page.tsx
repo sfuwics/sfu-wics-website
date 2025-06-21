@@ -1,14 +1,13 @@
 import Header from "@/app/components/blog/BlogHeader";
 import React from "react";
 import { client } from "@/sanity/lib/client";
-import { Post } from "@/app/lib/Interface";
 import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
 import { RichTextComponents } from "@/app/components/blog/RichTextComponents";
-import { getSlugsByType, generateSlugParams } from "@/app/lib/staticParams";
+import { getSlugsByType } from "@/app/lib/staticParams";
 
-export const dynamic = 'force-static'; 
+export const dynamic = "force-static";
 
 interface Params {
   params: {
@@ -18,7 +17,7 @@ interface Params {
 
 async function getPost(slug: string) {
   const query = `
-  *[_type == "blogPost" && slug.current == "${slug}"][0] {
+  *[_type == "blogPost" && slug.current == $slug][0] {
       title,
       slug,
       author,
@@ -43,7 +42,9 @@ async function getPost(slug: string) {
               "url": asset->url,
               "dimensions": asset->metadata.dimensions,
               "alt": alt,
-              "lqip": asset->metadata.lqip
+              "lqip": asset->metadata.lqip,
+              "exists": defined(asset->url)
+
           }
       },
       tags[]-> {
@@ -54,20 +55,50 @@ async function getPost(slug: string) {
     }
   `;
 
-  const post = await client.fetch(query);
-  return post;
+    try {
+    const post = await client.fetch(query, { slug });
+    if (!post) {
+      console.error(`Post not found for slug: ${slug}`);
+      return null;
+    }
+    return post;
+  } catch (error) {
+    console.error(`Error fetching post ${slug}:`, error);
+    return null;
+  }
+
+  // const post = await client.fetch(query);
+  // return post;
 }
+
+// export async function generateStaticParams() {
+//   const slugs = await getSlugsByType("blogPost");
+//   return slugs.map(({ slug }) => ({ slug }));
+// }
 
 export async function generateStaticParams() {
   const slugs = await getSlugsByType("blogPost");
-  return slugs.map(({ slug }) => ({ slug })); 
+  
+  // Verify each slug exists
+  const validSlugs = await Promise.all(
+    slugs.map(async ({ slug }) => {
+      const exists = await client.fetch(
+        `count(*[_type == "blogPost" && slug.current == $slug])`,
+        { slug }
+      );
+      return exists > 0 ? { slug } : null;
+    })
+  ).then(results => results.filter(Boolean));
+
+  return validSlugs;
 }
 
 const page = async ({ params }: Params) => {
+  const post = await getPost(params.slug);
   if (!post) notFound();
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="mx-auto max-w-2xl px-10 pt-24">
       <Header title={post?.title} />
       <div className="text-left">
         <p className="text-wics-blue-500">{post?.author}</p>
