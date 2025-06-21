@@ -3,7 +3,6 @@ import PaginatedPosts from "@/app/components/PaginatedPosts";
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/lib/client";
 import Header from "@/app/components/Header";
-import { generatePaginatedParams } from "@/app/lib/generatePaginatedParams";
 
 export const dynamic = "force-static";
 
@@ -48,17 +47,12 @@ async function getPosts() {
   return data;
 }
 
-// export async function generateStaticParams() {
-//   const posts = await getPosts();
-//   return generatePaginatedParams(posts.length, postsPerPage, "pg");
-// }
-
 export async function generateStaticParams() {
   const posts = await getPosts();
   const totalPages = Math.ceil(posts.length / postsPerPage);
-  
+
   return Array.from({ length: totalPages }).map((_, i) => ({
-    page: `pg-${i + 1}` // Directly return { page: string } without params wrapper
+    page: `pg-${i + 1}`, // Directly return { page: string } without params wrapper
   }));
 }
 
@@ -71,7 +65,7 @@ const BlogPage = async ({ params }: { params: { page: string } }) => {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-3">
+    <div className="mx-auto max-w-3xl px-8 pt-24">
       <Header title="Written by WiCS" />
       <PaginatedPosts
         posts={posts}

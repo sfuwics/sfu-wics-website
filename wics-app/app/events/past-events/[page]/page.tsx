@@ -5,7 +5,7 @@ import { client } from "@/sanity/lib/client";
 import Header from "@/app/components/Header";
 import { generatePaginatedParams } from "@/app/lib/generatePaginatedParams";
 
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 
 const postsPerPage = 5;
 
@@ -77,12 +77,11 @@ async function getPosts() {
 export async function generateStaticParams() {
   const posts = await getPosts();
   const totalPages = Math.ceil(posts.length / postsPerPage);
-  
+
   return Array.from({ length: totalPages }).map((_, i) => ({
-    page: `pg-${i + 1}` // Directly return { page: string } without params wrapper
+    page: `pg-${i + 1}`, // Directly return { page: string } without params wrapper
   }));
 }
-
 
 const PastEventsPage = async ({ params }: { params: { page: string } }) => {
   const posts = await getPosts();
@@ -93,9 +92,15 @@ const PastEventsPage = async ({ params }: { params: { page: string } }) => {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-3">
+    <div className="mx-auto max-w-3xl px-8 pt-24">
       <Header title="Past Events" />
-      <PaginatedPosts posts={posts} currentPage={currentPage} url={"events/past-events"} postsPerPage={postsPerPage} mode="dynamic"/>
+      <PaginatedPosts
+        posts={posts}
+        currentPage={currentPage}
+        url={"events/past-events"}
+        postsPerPage={postsPerPage}
+        mode="dynamic"
+      />
     </div>
   );
 };

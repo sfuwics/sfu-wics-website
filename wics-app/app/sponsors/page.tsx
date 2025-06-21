@@ -53,7 +53,7 @@ export default async function Sponsors() {
   const goldSponsors = await getGoldSponsors();
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
+    <div className="mx-auto max-w-7xl px-9 py-8 pt-24">
       <Header title="Sponsors" />
 
       <div className="md:pb-12 lg:w-2/3">

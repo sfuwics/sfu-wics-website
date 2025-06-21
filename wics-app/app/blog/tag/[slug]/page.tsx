@@ -3,7 +3,7 @@ import { client } from "@/sanity/lib/client";
 import React from "react";
 import PaginatedPosts from "@/app/components/PaginatedPosts";
 import { notFound } from "next/navigation";
-import { getSlugsByType, generateSlugParams } from "@/app/lib/staticParams";
+import { getSlugsByType } from "@/app/lib/staticParams";
 
 export const dynamic = 'force-static'; 
 
@@ -17,7 +17,24 @@ async function getPostsByTag(tag: string) {
       author,
       publishedAt,
       excerpt,
-      "featureImage": coalesce(featureImage.asset->url, body[_type == "image"][0].asset->url),
+       "featureImage": coalesce(
+        featureImage {
+          asset-> {
+            url,
+            metadata {
+              lqip
+            }
+          }
+        },
+        body[_type == "image"][0] {
+          asset-> {
+            url,
+            metadata {
+              lqip
+            }
+          }
+        }
+      ),
       tags[]-> {
         _id,
         slug,
@@ -57,7 +74,7 @@ const BlogPageByTag = async ({ params }: Params) => {
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-6">
+    <div className="mx-auto max-w-5xl px-11 pt-24">
       <Header title={`#${params.slug}`} tags />
       <PaginatedPosts
         posts={posts}

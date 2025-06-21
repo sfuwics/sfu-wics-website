@@ -6,11 +6,10 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { RichTextComponents } from "@/app/components/blog/RichTextComponents";
 import ImageCarousel from "@/app/components/carousels/ImageCarousel";
-import { getSlugsByType, generateSlugParams } from "@/app/lib/staticParams";
+import { getSlugsByType } from "@/app/lib/staticParams";
 import PaginatedPosts from "@/app/components/PaginatedPosts";
 
-
-export const dynamic = 'force-static'; 
+export const dynamic = "force-static";
 
 interface Params {
   params: {
@@ -149,7 +148,7 @@ async function getPostsByTag(tag: string) {
 }
 export async function generateStaticParams() {
   const slugs = await getSlugsByType("pageBuilder");
-  return slugs.map(({ slug }) => ({ slug })); 
+  return slugs.map(({ slug }) => ({ slug }));
 }
 
 const page = async ({ params }: Params) => {
@@ -163,33 +162,32 @@ const page = async ({ params }: Params) => {
   }
 
   return (
-    <div className="lg:mx-12 xl:mx-48">
+    <div className="mx-auto px-5 pt-24 lg:mx-12 xl:mx-48">
       <Header title={page?.title} />
       <div className="flex justify-center pb-10">
-          {page.logo && page?.link && (
-            <a href={page.link} target="_blank" rel="noopener noreferrer">
-              <Image
-                src={page.logo.asset.url}
-                alt={page.title || "Page Logo"}
-                width={200}
-                height={200}
-              />
-            </a>
-          )}
-        </div>
+        {page.logo && page?.link && (
+          <a href={page.link} target="_blank" rel="noopener noreferrer">
+            <Image
+              src={page.logo.asset.url}
+              alt={page.title || "Page Logo"}
+              width={200}
+              height={200}
+            />
+          </a>
+        )}
+      </div>
 
       <div className="lg:grid lg:grid-cols-2 lg:gap-6">
         <div className={richTextStyles}>
-          <PortableText value={page?.blurb} components={RichTextComponents} 
-          />
+          <PortableText value={page?.blurb} components={RichTextComponents} />
         </div>
 
         <div className="py-3">
           <ImageCarousel images={page?.images} />
         </div>
       </div>
-      
-      <div className="mt-10 sm:mt-24 mx-auto max-w-3xl px-3">
+
+      <div className="mx-auto mt-10 max-w-3xl px-3 sm:mt-24">
         <PaginatedPosts
           posts={posts}
           url={`page/${slug}`}
@@ -197,7 +195,6 @@ const page = async ({ params }: Params) => {
           mode="client"
         />
       </div>
-
     </div>
   );
 };

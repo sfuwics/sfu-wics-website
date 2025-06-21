@@ -23,7 +23,7 @@ export default function Home() {
         <LottieAnimation />
       </div>
 
-      <div className="xl:px-16">
+      <div className="mx-auto px-5 xl:px-16">
         <div className="flex flex-col sm:gap-8">
           <p className="text-center text-3xl text-wics-blue-500 md:text-3xl lg:text-4xl 2xl:text-5xl">
             Our goals are to:
