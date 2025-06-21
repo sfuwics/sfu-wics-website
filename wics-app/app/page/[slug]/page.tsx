@@ -162,7 +162,7 @@ const page = async ({ params }: Params) => {
   }
 
   return (
-    <div className="mx-auto px-5 pt-24 lg:mx-12 xl:mx-48">
+    <div className="container mx-auto px-5 pt-24 lg:mx-12 xl:mx-48">
       <Header title={page?.title} />
       <div className="flex justify-center pb-10">
         {page.logo && page?.link && (

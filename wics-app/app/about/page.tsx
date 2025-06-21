@@ -49,15 +49,15 @@ export default async function About() {
   const execLists: PersonList[] = await getPastExecList();
 
   return (
-    <div className="mx-auto px-5 pt-24">
+    <div className="container mx-auto px-5 pt-24">
       <Header title="Get to Know SFU WiCS" />
 
       <div>
-        <div>
+        <div className="relative w-full">
           <Image
             src={WiCSGroupPhoto}
             alt="WiCS team celebrating 20th anniversary"
-            width={1200}
+            width={2400}
             height={800}
             className="rounded-2xl shadow-lg"
             placeholder="blur"

@@ -72,7 +72,7 @@ export default async function Events() {
   const firstEventRecap = eventRecapPic[0];
 
   return (
-    <div className="mx-auto px-5 pt-24">
+    <div className="container mx-auto px-5 pt-24">
       <Header title="Events" />
 
       <ComponentCarousel autoScroll scrollInterval={10000}>

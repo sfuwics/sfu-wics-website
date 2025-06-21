@@ -74,7 +74,7 @@ const BlogPageByTag = async ({ params }: Params) => {
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-11 pt-24">
+    <div className="container mx-auto max-w-5xl px-11 pt-24">
       <Header title={`#${params.slug}`} tags />
       <PaginatedPosts
         posts={posts}

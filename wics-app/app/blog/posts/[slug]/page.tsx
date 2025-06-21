@@ -98,7 +98,7 @@ const page = async ({ params }: Params) => {
   if (!post) notFound();
 
   return (
-    <div className="mx-auto max-w-2xl px-10 pt-24">
+    <div className="container mx-auto max-w-2xl px-10 pt-24">
       <Header title={post?.title} />
       <div className="text-left">
         <p className="text-wics-blue-500">{post?.author}</p>

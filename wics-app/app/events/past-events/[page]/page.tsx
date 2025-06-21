@@ -92,7 +92,7 @@ const PastEventsPage = async ({ params }: { params: { page: string } }) => {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-8 pt-24">
+    <div className="container mx-auto max-w-3xl px-8 pt-24">
       <Header title="Past Events" />
       <PaginatedPosts
         posts={posts}

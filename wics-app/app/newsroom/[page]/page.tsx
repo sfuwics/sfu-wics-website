@@ -63,7 +63,7 @@ const NewsroomPage = async ({ params }: { params: { page: string } }) => {
   }
 
   return (
-    <div className="mx-auto px-8 pt-24 max-w-3xl">
+    <div className="container mx-auto px-8 pt-24 max-w-3xl">
       <Header title="Newsroom" />
       <PaginatedPosts
         posts={posts}
