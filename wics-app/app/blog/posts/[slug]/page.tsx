@@ -135,7 +135,7 @@ export default page;
 const richTextStyles = `
 mt-10 sm:mt-14
 text-left
-prose-p:text-sm sm:prose-p:text-lg  
+prose-p:text-sm sm:prose-p:text-base
 m-auto
 prose-headings:my-3
 prose-heading:text-2xl
