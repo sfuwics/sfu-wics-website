@@ -100,7 +100,7 @@ const PaginatedPosts = ({
         </motion.div>
       </AnimatePresence>
 
-      <div className="m-4 sm:m-8 flex items-center justify-center gap-2">
+      <div className="m-4 sm:m-8 flex items-center justify-center gap-1 sm:gap-2">
         {/* Previous */}
         {activePage > 1 && (
           mode === "dynamic" ? (
@@ -124,7 +124,7 @@ const PaginatedPosts = ({
           <>
             {renderPageButton(1)}
             {activePage > Math.floor(maxVisiblePages / 2) + 2 && (
-              <span className="flex items-center px-2">
+              <span className="flex items-center sm:px-2">
                 <FaEllipsisH className="text-neutral-400" />
               </span>
             )}
