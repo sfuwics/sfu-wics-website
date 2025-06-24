@@ -1,4 +1,3 @@
-// components/blog/PaginatedPosts.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -6,14 +5,15 @@ import PostComponent from "./PostComponent";
 import BlogPostComponent from "@/app/components/blog/BlogPostComponent";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaEllipsisH } from "react-icons/fa";
 
 interface PaginatedPostsProps {
   posts: any[];
-  currentPage?: number; // Only needed for 'dynamic' mode
+  currentPage?: number;
   postsPerPage: number;
   url: string;
   mode?: "client" | "dynamic";
+  maxVisiblePages?: number;
 }
 
 const PaginatedPosts = ({
@@ -22,6 +22,7 @@ const PaginatedPosts = ({
   postsPerPage,
   url,
   mode = "client",
+  maxVisiblePages = 2,
 }: PaginatedPostsProps) => {
   const [clientPage, setClientPage] = useState(1);
   const activePage = mode === "client" ? clientPage : currentPage;
@@ -37,6 +38,47 @@ const PaginatedPosts = ({
 
   const goToPage = (page: number) => {
     if (mode === "client") setClientPage(page);
+  };
+
+  // Calculate visible page range
+  const getVisiblePages = () => {
+    let startPage = Math.max(1, activePage - Math.floor(maxVisiblePages / 2));
+    let endPage = startPage + maxVisiblePages - 1;
+
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+  };
+
+  const renderPageButton = (page: number) => {
+    return mode === "dynamic" ? (
+      <Link key={page} href={`/${url}/pg-${page}`}>
+        <button
+          className={`rounded-xl border-2 border-neutral-200 px-3 py-1 ${
+            activePage === page
+              ? "bg-wics-blue-500 text-white"
+              : "bg-white text-wics-blue-500"
+          }`}
+        >
+          {page}
+        </button>
+      </Link>
+    ) : (
+      <button
+        key={page}
+        onClick={() => goToPage(page)}
+        className={`rounded-xl border-2 border-neutral-200 px-3 py-1 ${
+          activePage === page
+            ? "bg-wics-blue-500 text-white"
+            : "bg-white text-wics-blue-500"
+        }`}
+      >
+        {page}
+      </button>
+    );
   };
 
   return (
@@ -77,34 +119,32 @@ const PaginatedPosts = ({
           )
         )}
 
-        {/* Pages */}
-        {Array.from({ length: totalPages }, (_, index) => (
-          mode === "dynamic" ? (
-            <Link key={index + 1} href={`/${url}/pg-${index + 1}`}>
-              <button
-                className={`rounded-xl border-2 border-neutral-200 px-3 py-1 ${
-                  activePage === index + 1
-                    ? "bg-wics-blue-500 text-white"
-                    : "bg-white text-wics-blue-500"
-                }`}
-              >
-                {index + 1}
-              </button>
-            </Link>
-          ) : (
-            <button
-              key={index + 1}
-              onClick={() => goToPage(index + 1)}
-              className={`rounded-xl border-2 border-neutral-200 px-3 py-1 ${
-                activePage === index + 1
-                  ? "bg-wics-blue-500 text-white"
-                  : "bg-white text-wics-blue-500"
-              }`}
-            >
-              {index + 1}
-            </button>
-          )
-        ))}
+        {/* First Page */}
+        {activePage > Math.floor(maxVisiblePages / 2) + 1 && totalPages > maxVisiblePages && (
+          <>
+            {renderPageButton(1)}
+            {activePage > Math.floor(maxVisiblePages / 2) + 2 && (
+              <span className="flex items-center px-2">
+                <FaEllipsisH className="text-neutral-400" />
+              </span>
+            )}
+          </>
+        )}
+
+        {/* Visible Pages */}
+        {getVisiblePages().map((page) => renderPageButton(page))}
+
+        {/* Last Page */}
+        {activePage < totalPages - Math.floor(maxVisiblePages / 2) && totalPages > maxVisiblePages && (
+          <>
+            {activePage < totalPages - Math.floor(maxVisiblePages / 2) - 1 && (
+              <span className="flex items-center">
+                <FaEllipsisH className="text-neutral-400" />
+              </span>
+            )}
+            {renderPageButton(totalPages)}
+          </>
+        )}
 
         {/* Next */}
         {activePage < totalPages && (
