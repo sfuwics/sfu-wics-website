@@ -9,7 +9,7 @@ export const dynamic = "force-static";
 
 const postsPerPage = 5;
 
-async function getPosts() {
+async function getPosts() { // 
   const query = `
     *[_type == "blogPost" || _type == "post"] | order(publishedAt desc) {
       _id,
@@ -19,7 +19,24 @@ async function getPosts() {
       slug,
       "excerpt": excerpt,
       "author": author,
-      "featureImage": coalesce(featureImage.asset->url, body[_type == "image"][0].asset->url),
+       "featureImage": coalesce(
+        featureImage {
+          asset-> {
+            url,
+            metadata {
+              lqip
+            }
+          }
+        },
+        body[_type == "image"][0] {
+          asset-> {
+            url,
+            metadata {
+              lqip
+            }
+          }
+        }
+      ),
       "tags": tags[]->{ _id, slug, name },
       "headings": body[style in ["h1", "h2", "h3", "h4", "h5"]],
       body[] {
