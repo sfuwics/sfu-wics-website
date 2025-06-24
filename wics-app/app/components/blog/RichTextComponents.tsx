@@ -25,7 +25,7 @@ types: {
     const aspectRatio = width && height ? width / height : 16/9; // Default fallback
 
     return (
-      <div className={`relative mx-auto my-10 ${
+      <div className={`relative mx-auto my-6 sm:my-10 ${
         aspectRatio >= 1 ? "w-full" : "max-w-[400px]"
       }`}>
         <Image

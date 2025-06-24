@@ -8,8 +8,8 @@ interface Props {
 
 const Header = ({ title = "", tags = false }: Props) => {
   return (
-    <header className="py-8">
-      <h2 className="mx-auto text-5xl font-bold">{title}</h2>
+    <header className="py-5 sm:py-8">
+      <h2 className="mx-auto text-4xl sm:text-5xl font-bold">{title}</h2>
 
       {tags && (
         <div className="mt-2 text-xs hover:text-wics-yellow-500">

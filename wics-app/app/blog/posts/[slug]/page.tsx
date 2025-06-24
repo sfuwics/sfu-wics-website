@@ -55,7 +55,7 @@ async function getPost(slug: string) {
     }
   `;
 
-    try {
+  try {
     const post = await client.fetch(query, { slug });
     if (!post) {
       console.error(`Post not found for slug: ${slug}`);
@@ -78,17 +78,17 @@ async function getPost(slug: string) {
 
 export async function generateStaticParams() {
   const slugs = await getSlugsByType("blogPost");
-  
+
   // Verify each slug exists
   const validSlugs = await Promise.all(
     slugs.map(async ({ slug }) => {
       const exists = await client.fetch(
         `count(*[_type == "blogPost" && slug.current == $slug])`,
-        { slug }
+        { slug },
       );
       return exists > 0 ? { slug } : null;
-    })
-  ).then(results => results.filter(Boolean));
+    }),
+  ).then((results) => results.filter(Boolean));
 
   return validSlugs;
 }
@@ -133,15 +133,14 @@ export default page;
 
 // styling for blog post
 const richTextStyles = `
-mt-14
+mt-10 sm:mt-14
 text-left
-text-lg
-
+prose-p:text-sm sm:prose-p:text-lg  
 m-auto
 prose-headings:my-3
 prose-heading:text-2xl
 prose-p:my-2
-prose-p:leading-7
+prose-p:leading-6 sm:prose-p:leading-7
 prose-li:list-disc
 prose-li:leading-7
 prose-li:ml-4
