@@ -133,15 +133,19 @@ export default page;
 
 // styling for blog post
 const richTextStyles = `
+m-auto
 mt-10 sm:mt-14
 text-left
+
 prose-p:text-sm sm:prose-p:text-base
-m-auto
+prose-p:leading-6 sm:prose-p:leading-7
+
 prose-headings:my-3
 prose-heading:text-2xl
 prose-p:my-2
-prose-p:leading-6 sm:prose-p:leading-7
+
 prose-li:list-disc
-prose-li:leading-7
-prose-li:ml-4
+prose-li:text-sm sm:prose-li:text-base
+prose-li:leading-6 sm:prose-li:leading-7
+prose-li:ml-1 sm:prose-li:ml-4
 `;
