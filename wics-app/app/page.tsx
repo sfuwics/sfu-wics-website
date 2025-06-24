@@ -73,19 +73,19 @@ export default function Home() {
             </div>
           </div>
           <div className="h-48 w-full overflow-hidden rounded-xl sm:col-span-7 sm:col-start-1 sm:row-span-6 sm:row-start-2 sm:h-[400px] md:h-[500px] lg:h-[600px] 2xl:h-[800px]">
-            <Link href="/events" target="_blank" rel="noopener noreferrer">
+            <Link href="/events">
               <FeatureComponent imageSrc={Skate} text="Check Out Our Events" />
             </Link>
           </div>
 
           <div className="h-48 w-full overflow-hidden rounded-xl sm:col-span-5 sm:col-start-8 sm:row-span-4 sm:row-start-1 sm:h-full">
-            <Link href="/newsroom" target="_blank" rel="noopener noreferrer">
+            <Link href="/newsroom">
               <FeatureComponent imageSrc={News} text="Stay Updated" />
             </Link>
           </div>
 
           <div className="h-48 w-full overflow-hidden rounded-xl sm:col-span-5 sm:col-start-8 sm:row-span-4 sm:row-start-5 sm:h-full">
-            <Link href="/blog" target="_blank" rel="noopener noreferrer">
+            <Link href="/blog">
               <FeatureComponent imageSrc={Blog} text="Read Our Blog" />
             </Link>
           </div>
