@@ -3,6 +3,9 @@ import PaginatedPosts from "@/app/components/PaginatedPosts";
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/lib/client";
 import Header from "@/app/components/Header";
+import { createMetadata } from "@/app/lib/metadata";
+
+export const metadata = createMetadata('Blog');
 
 export const dynamic = "force-static";
 

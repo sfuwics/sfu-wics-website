@@ -4,6 +4,9 @@ import WiCSGroupPhoto from "@/app/public/images/about/wics-group-photo.png";
 import Image from "next/image";
 import ProfileCard from "../components/ProfileCard";
 import PastExecAccordion from "../components/PastExecAccordion";
+import { createMetadata } from "../lib/metadata";
+
+export const metadata = createMetadata('About Us');
 
 async function getProfiles() {
   const query = `

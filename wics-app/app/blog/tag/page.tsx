@@ -3,6 +3,9 @@ import { Tag } from "@/app/lib/Interface";
 import Link from "next/link";
 import React from "react";
 import { client } from "@/sanity/lib/client";
+import { createMetadata } from "@/app/lib/metadata";
+
+export const metadata = createMetadata('Tags');
 
 async function getAllTags() {
   const query = `

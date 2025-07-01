@@ -3,9 +3,9 @@ import PaginatedPosts from "@/app/components/PaginatedPosts";
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/lib/client";
 import Header from "@/app/components/Header";
-import { generatePaginatedParams } from "@/app/lib/generatePaginatedParams";
+import { createMetadata } from "@/app/lib/metadata";
 
-export const dynamic = "force-static";
+export const metadata = createMetadata('Newsroom');
 
 const postsPerPage = 5;
 

@@ -16,8 +16,6 @@ import LottieAnimation from "./components/LottieAnimation";
 
 export default function Home() {
   return (
-    // <div className="xl:px-16">
-
     <div>
       <div className="pb-24 sm:pb-24">
         <LottieAnimation />

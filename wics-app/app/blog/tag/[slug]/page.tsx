@@ -4,8 +4,9 @@ import React from "react";
 import PaginatedPosts from "@/app/components/PaginatedPosts";
 import { notFound } from "next/navigation";
 import { getSlugsByType } from "@/app/lib/staticParams";
+import { createMetadata } from "@/app/lib/metadata";
 
-export const dynamic = 'force-static'; 
+export const metadata = createMetadata('Tags');
 
 async function getPostsByTag(tag: string) {
   const query = `

@@ -66,15 +66,7 @@ async function getPost(slug: string) {
     console.error(`Error fetching post ${slug}:`, error);
     return null;
   }
-
-  // const post = await client.fetch(query);
-  // return post;
 }
-
-// export async function generateStaticParams() {
-//   const slugs = await getSlugsByType("blogPost");
-//   return slugs.map(({ slug }) => ({ slug }));
-// }
 
 export async function generateStaticParams() {
   const slugs = await getSlugsByType("blogPost");

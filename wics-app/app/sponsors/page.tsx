@@ -3,6 +3,9 @@ import Header from "@/app/components/Header";
 import { client } from "@/sanity/lib/client";
 import Link from "next/link";
 import Image from "next/image";
+import { createMetadata } from "@/app/lib/metadata";
+
+export const metadata = createMetadata('Sponsors');
 
 async function getPlatinumSponsors() {
   const query = `
