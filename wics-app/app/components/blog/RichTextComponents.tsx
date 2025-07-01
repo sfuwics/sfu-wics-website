@@ -4,6 +4,7 @@ import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import { urlForImage } from "@/sanity/lib/image";
 import { slugify } from "@/app/lib/helpers";
+import VideoBlock from "../VideoBlock";
 
 export const RichTextComponents = {
 types: {
@@ -49,6 +50,7 @@ types: {
       </div>
     );
   },
+  video: VideoBlock,
 },
   list: {
     bullet: ({ children }: any) => (

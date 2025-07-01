@@ -8,7 +8,7 @@ export const blogPost = {
   fields: [
     {
       name: "title",
-      title: "Title",
+      title: "Tirtle",
       type: "string",
       validation: (Rule: Rule) => Rule.required().error("Required"),
     },
@@ -43,17 +43,76 @@ export const blogPost = {
       type: "array",
       of: [
         { type: "block" },
-        {
+        { 
           type: "image",
-          options: {
-            hotspot: true, // Allow hotspot cropping
+          options: { hotspot: true },
+          fields: [{ name: "alt", type: "string", title: "Alt text" }]
+        },
+        {
+          type: "object",
+          name: "video",
+          title: "Video",
+          preview: {
+            select: {
+              title: 'caption',
+              media: 'thumbnail'
+            }
           },
           fields: [
             {
-              name: "alt",
+              name: "videoType",
+              title: "Video Type",
               type: "string",
-              title: "Alternative text",
-              description: "Important for accessibility and SEO.",
+              options: {
+                list: [
+                    { title: "Embed URL", value: "embed" },
+                    { title: "Upload", value: "file" }
+                ],
+                layout: "radio"
+              }
+            },
+            {
+              name: "url",
+              title: "Video URL",
+              type: "url",
+              hidden: ({ parent }) => parent?.videoType !== "embed",
+              validation: (Rule) => Rule.uri({ scheme: ['http', 'https'] })
+            },
+            {
+              name: "videoFile",
+              title: "Video File",
+              type: "file",
+              hidden: ({ parent }) => parent?.videoType !== "file",
+              options: { accept: "video/mp4,video/webm" }
+            },
+            {
+              name: "thumbnail",
+              title: "Thumbnail",
+              type: "image",
+              options: { hotspot: true }
+            },
+            {
+              name: "caption",
+              title: "Caption",
+              type: "string"
+            },
+            {
+              name: "autoplay",
+              title: "Autoplay",
+              type: "boolean",
+              initialValue: false
+            },
+            {
+              name: "loop",
+              title: "Loop",
+              type: "boolean",
+              initialValue: false
+            },
+            {
+              name: "controls",
+              title: "Show Controls",
+              type: "boolean",
+              initialValue: true
             },
           ],
         },
