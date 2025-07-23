@@ -44,8 +44,14 @@ async function getPost(slug: string) {
               "alt": alt,
               "lqip": asset->metadata.lqip,
               "exists": defined(asset->url)
-
-          }
+          },
+          _type == "video" => {
+            ...,
+            videoFile {
+              asset->
+            },
+            orientation,
+          },
       },
       tags[]-> {
           _id,
@@ -67,6 +73,7 @@ async function getPost(slug: string) {
     return null;
   }
 }
+
 
 export async function generateStaticParams() {
   const slugs = await getSlugsByType("blogPost");

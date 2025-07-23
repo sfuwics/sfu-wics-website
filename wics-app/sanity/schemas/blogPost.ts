@@ -8,7 +8,7 @@ export const blogPost = {
   fields: [
     {
       name: "title",
-      title: "Tirtle",
+      title: "Title",
       type: "string",
       validation: (Rule: Rule) => Rule.required().error("Required"),
     },
@@ -95,6 +95,19 @@ export const blogPost = {
               name: "caption",
               title: "Caption",
               type: "string"
+            },
+            {
+              name: "orientation",
+              title: "Orientation",
+              type: "string",
+              options: {
+                list: [
+                  { title: "Landscape", value: "landscape" },
+                  { title: "Portrait", value: "portrait" }
+                ],
+                layout: "radio"
+              },
+              initialValue: "landscape" 
             },
             {
               name: "autoplay",

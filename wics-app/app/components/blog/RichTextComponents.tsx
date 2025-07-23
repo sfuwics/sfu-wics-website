@@ -50,7 +50,21 @@ types: {
       </div>
     );
   },
-  video: VideoBlock,
+  video: ({ value }: any) => {
+  if (!value) return null;
+  
+  const isPortrait = value.orientation === 'portrait' || 
+                    (value.dimensions?.width && value.dimensions?.height && 
+                      value.dimensions.width < value.dimensions.height);
+
+  return (
+    <div className={`relative mx-auto my-6 sm:my-10  ${
+      isPortrait ? "max-w-[400px]" : "w-full"
+    }`}>
+      <VideoBlock value={value} />
+    </div>
+  );
+}
 },
   list: {
     bullet: ({ children }: any) => (

@@ -1,84 +1,51 @@
-// components/VideoBlock.tsx
 import React from 'react';
-import { PortableTextVideo } from '@/types/sanity'; // Define this type (see below)
 
-interface VideoBlockProps {
-  value: PortableTextVideo;
-}
-
-const VideoBlock: React.FC<VideoBlockProps> = ({ value }) => {
+export default function VideoBlock({ value }) {
   if (!value) return null;
 
-  // Extract video ID from common platforms
-  const extractVideoId = (url: string): string | null => {
-    // YouTube
-    const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|youtu\.be\/)([^"&?\/\s]{11})/i;
-    const youtubeMatch = url.match(youtubeRegex);
-    if (youtubeMatch && youtubeMatch[1]) return youtubeMatch[1];
-
-    // Vimeo
-    const vimeoRegex = /vimeo\.com\/(?:channels\/|groups\/[^\/]*\/videos\/|)(\d+)(?:|\/\?)/i;
-    const vimeoMatch = url.match(vimeoRegex);
-    if (vimeoMatch && vimeoMatch[1]) return vimeoMatch[1];
-
-    return null;
-  };
-
-  // Render embedded video (YouTube/Vimeo)
-  if (value.videoType === 'embed' && value.url) {
-    const videoId = extractVideoId(value.url);
-    const isYouTube = value.url.includes('youtube') || value.url.includes('youtu.be');
-    const isVimeo = value.url.includes('vimeo');
-
+  // Handle uploaded videos
+  if (value.videoType === 'file' && value.videoFile?.asset?.url) {
     return (
-      <div className="my-4 aspect-video w-full overflow-hidden rounded-lg">
-        {isYouTube && videoId && (
-          <iframe
-            className="h-full w-full"
-            src={`https://www.youtube.com/embed/${videoId}?modestbranding=1&rel=0`}
-            title={value.caption || 'YouTube video player'}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        )}
-        {isVimeo && videoId && (
-          <iframe
-            className="h-full w-full"
-            src={`https://player.vimeo.com/video/${videoId}?title=0&byline=0&portrait=0`}
-            title={value.caption || 'Vimeo video player'}
-            allowFullScreen
-          />
+      <div className="my-6">
+        <video 
+          controls 
+          className="w-full rounded-xl"
+          src={value.videoFile.asset.url}
+        />
+        {value.caption && (
+          <p className="mt-2 text-center text-sm text-gray-600">
+            {value.caption}
+          </p>
         )}
       </div>
     );
   }
 
-  // Render self-hosted video
-  if (value.videoType === 'file' && value.videoFile?.asset) {
-    return (
-      <div className="my-4">
-        <video
-          className="w-full rounded-lg"
-          controls={value.controls ?? true}
-          autoPlay={value.autoplay ?? false}
-          loop={value.loop ?? false}
-          muted={value.autoplay ?? false} // Required for autoplay in most browsers
-          playsInline
-        >
-          <source
-            src={value.videoFile.asset.url}
-            type={`video/${value.videoFile.asset.extension || 'mp4'}`}
-          />
-          Your browser does not support the video tag.
-        </video>
-        {value.caption && (
-          <p className="mt-2 text-sm text-gray-600">{value.caption}</p>
-        )}
+  // Handle YouTube/Vimeo embeds
+  if (value.videoType === 'embed' && value.url) {
+    let embedUrl;
+    
+    // YouTube
+    if (value.url.includes('youtube') || value.url.includes('youtu.be')) {
+      const videoId = value.url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i)?.[1];
+      embedUrl = `https://www.youtube.com/embed/${videoId}?modestbranding=1`;
+    } 
+    // Vimeo
+    else if (value.url.includes('vimeo')) {
+      const videoId = value.url.match(/vimeo\.com\/(\d+)/i)?.[1];
+      embedUrl = `https://player.vimeo.com/video/${videoId}`;
+    }
+
+    return embedUrl ? (
+      <div className="my-6 aspect-video w-full overflow-hidden rounded-lg">
+        <iframe
+          src={embedUrl}
+          className="h-full w-full"
+          allowFullScreen
+        />
       </div>
-    );
+    ) : null;
   }
 
   return null;
-};
-
-export default VideoBlock;
+}
