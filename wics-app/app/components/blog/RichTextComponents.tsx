@@ -59,7 +59,7 @@ types: {
 
   return (
     <div className={`relative mx-auto my-6 sm:my-10  ${
-      isPortrait ? "max-w-[400px]" : "w-full"
+      isPortrait ? "max-w-[350px]" : "w-full"
     }`}>
       <VideoBlock value={value} />
     </div>
