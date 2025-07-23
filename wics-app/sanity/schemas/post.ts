@@ -22,7 +22,60 @@ export const post = {
       name: "body",
       title: "Body",
       type: "array",
-      of: [{ type: "block" }],
+      of: [{ type: "block" },
+         {
+          type: "object",
+          name: "video",
+          title: "Video",
+          preview: {
+            select: {
+              title: 'caption',
+              media: 'thumbnail'
+            }
+          },
+          fields: [
+            {
+              name: "videoType",
+              title: "Video Type",
+              type: "string",
+              options: {
+                list: [
+                    { title: "Embed URL", value: "embed" },
+                    { title: "Upload", value: "file" }
+                ],
+                layout: "radio"
+              }
+            },
+            {
+              name: "url",
+              title: "Video URL",
+              type: "url",
+              hidden: ({ parent }) => parent?.videoType !== "embed",
+              validation: (Rule) => Rule.uri({ scheme: ['http', 'https'] })
+            },
+            {
+              name: "videoFile",
+              title: "Video File",
+              type: "file",
+              hidden: ({ parent }) => parent?.videoType !== "file",
+              options: { accept: "video/mp4,video/webm" }
+            },
+            {
+              name: "orientation",
+              title: "Orientation",
+              type: "string",
+              options: {
+                list: [
+                  { title: "Landscape", value: "landscape" },
+                  { title: "Portrait", value: "portrait" }
+                ],
+                layout: "radio"
+              },
+              initialValue: "landscape" 
+            },
+          ],
+        },
+      ],
     },
     {
       name: "isEvent",

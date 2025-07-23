@@ -43,7 +43,14 @@ async function getPosts() { //
         ..., _type == "link" => { "href": @.href, "text": @.text },
         markDefs[] {
           ..., _type == "link" => { "href": @.href, "text": @.text }
-        }
+        },
+        _type == "video" => {
+          ...,
+          videoFile {
+            asset->
+          },
+          orientation,
+        },
       },
       isEvent,
       images[] {
