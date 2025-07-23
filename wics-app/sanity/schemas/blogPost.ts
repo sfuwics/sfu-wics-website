@@ -86,17 +86,6 @@ export const blogPost = {
               options: { accept: "video/mp4,video/webm" }
             },
             {
-              name: "thumbnail",
-              title: "Thumbnail",
-              type: "image",
-              options: { hotspot: true }
-            },
-            {
-              name: "caption",
-              title: "Caption",
-              type: "string"
-            },
-            {
               name: "orientation",
               title: "Orientation",
               type: "string",
@@ -108,24 +97,6 @@ export const blogPost = {
                 layout: "radio"
               },
               initialValue: "landscape" 
-            },
-            {
-              name: "autoplay",
-              title: "Autoplay",
-              type: "boolean",
-              initialValue: false
-            },
-            {
-              name: "loop",
-              title: "Loop",
-              type: "boolean",
-              initialValue: false
-            },
-            {
-              name: "controls",
-              title: "Show Controls",
-              type: "boolean",
-              initialValue: true
             },
           ],
         },
