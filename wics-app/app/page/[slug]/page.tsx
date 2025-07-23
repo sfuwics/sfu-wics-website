@@ -162,7 +162,7 @@ const page = async ({ params }: Params) => {
   }
 
   return (
-    <div className="container mx-auto px-5 pt-24 lg:mx-12 xl:mx-48">
+    <div className="container mx-auto px-10 pt-24">
       <Header title={page?.title} />
       <div className="flex justify-center pb-10">
         {page.logo && page?.link && (
@@ -177,7 +177,7 @@ const page = async ({ params }: Params) => {
         )}
       </div>
 
-      <div className="lg:grid lg:grid-cols-2 lg:gap-6">
+      <div className="lg:grid lg:grid-cols-2 lg:gap-6 xl:gap-20">
         <div className={richTextStyles}>
           <PortableText value={page?.blurb} components={RichTextComponents} />
         </div>
