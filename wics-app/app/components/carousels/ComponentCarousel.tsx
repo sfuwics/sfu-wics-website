@@ -2,9 +2,9 @@
 
 import useEmblaCarousel from "embla-carousel-react";
 import { EmblaOptionsType } from "embla-carousel";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState, useCallback } from "react";
 import { DotButton, useDotButton } from "./EmblaCarouselDotButton";
-import { PrevButton, NextButton } from "./EmblaCarouselArrowButtons"; // No need for disabled state
+import { PrevButton, NextButton } from "./EmblaCarouselArrowButtons";
 
 interface CarouselProps {
   children: ReactNode[];
@@ -17,40 +17,64 @@ const Carousel = ({ children, options, autoScroll = true, scrollInterval = 3000 
   if (!children || children.length === 0) return null;
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true, // Enable infinite looping
-    align: "start",
+    loop: true,
+    align: "center",
     ...options,
   });
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi);
-
   const [carouselHeight, setCarouselHeight] = useState("auto");
 
-  // Auto Height Adjustment
+  // Update carousel height based on active slide
+  const updateHeight = useCallback(() => {
+    if (!emblaApi) return;
+    
+    const slides = emblaApi.slideNodes();
+    const activeSlide = slides[emblaApi.selectedScrollSnap()];
+    
+    if (activeSlide) {
+      setCarouselHeight(`${activeSlide.clientHeight}px`);
+    }
+  }, [emblaApi]);
+
+  // Initialize and handle resize events
   useEffect(() => {
     if (!emblaApi) return;
-    const updateHeight = () => {
-      const slides = emblaApi.slideNodes();
-      const activeSlide = slides[selectedIndex];
-      if (activeSlide) {
-        setCarouselHeight(`${activeSlide.clientHeight}px`);
-      }
-    };
-    emblaApi.on("select", updateHeight);
+
+    // Initial height calculation
     updateHeight();
-  }, [emblaApi, selectedIndex]);
+
+    // Add resize observer
+    const resizeObserver = new ResizeObserver(() => {
+      emblaApi.reInit();
+      updateHeight();
+    });
+
+    const viewport = emblaApi.containerNode();
+    if (viewport) {
+      resizeObserver.observe(viewport);
+    }
+
+    // Add slide change listener
+    emblaApi.on("select", updateHeight);
+    emblaApi.on("reInit", updateHeight);
+
+    return () => {
+      resizeObserver.disconnect();
+      emblaApi.off("select", updateHeight);
+      emblaApi.off("reInit", updateHeight);
+    };
+  }, [emblaApi, updateHeight]);
 
   // Auto Scroll with Infinite Loop
   useEffect(() => {
     if (!emblaApi || !autoScroll) return;
 
     const autoScrollInterval = setInterval(() => {
-      if (!emblaApi) return;
-
       if (emblaApi.canScrollNext()) {
         emblaApi.scrollNext();
       } else {
-        emblaApi.scrollTo(0); // Reset to first slide seamlessly
+        emblaApi.scrollTo(0);
       }
     }, scrollInterval);
 
@@ -59,29 +83,29 @@ const Carousel = ({ children, options, autoScroll = true, scrollInterval = 3000 
 
   return (
     <section className="relative mx-auto w-full overflow-hidden">
-      {/* Carousel Viewport with Auto Height */}
       <div className="p-4 2xl:p-8 border border-black rounded-2xl">
-        <div className="overflow-hidden transition-all duration-300" ref={emblaRef} style={{ height: carouselHeight }}>
-          {/* Carousel Container */}
+        <div 
+          className="overflow-hidden transition-all duration-300" 
+          ref={emblaRef} 
+          style={{ height: carouselHeight, minHeight: '100px' }} // Added min-height as fallback
+        >
           <div className="-ml-4 flex items-start touch-pan-y touch-pinch-zoom">
             {children.map((child, index) => (
-              <div key={index} className="w-full flex-shrink-0 pl-4">{child}</div>
+              <div key={index} className="w-full flex-shrink-0 pl-4 min-w-0">
+                {child}
+              </div>
             ))}
           </div>
         </div>
       </div>
 
-
-      {/* Carousel Controls */}
       {children.length > 1 && emblaApi && (
         <div className="mt-5 grid grid-cols-[auto_1fr] justify-between gap-4">
-          {/* Always Enabled Navigation Buttons */}
           <div className="grid grid-cols-2 items-center gap-2">
-            <PrevButton onClick={() => emblaApi.scrollPrev()} /> {/* Always active */}
-            <NextButton onClick={() => emblaApi.scrollNext()} /> {/* Always active */}
+            <PrevButton onClick={() => emblaApi.scrollPrev()} />
+            <NextButton onClick={() => emblaApi.scrollNext()} />
           </div>
 
-          {/* Dots Navigation */}
           <div className="flex items-center justify-end">
             <div className="flex flex-wrap">
               {scrollSnaps.map((_, index) => (
