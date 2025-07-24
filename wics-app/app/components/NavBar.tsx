@@ -43,7 +43,7 @@ export default function NavBar() {
       <div
         ref={navRef}
         className={` ${
-          isOpen ? "h-[20rem] rounded-3xl" : "h-[3rem] rounded-[24px]"
+          isOpen ? "h-[20rem] rounded-3xl" : "h-[3rem] rounded-[15px]"
         } z-[1000] mx-auto mt-8 flex max-w-[40rem] flex-col overflow-hidden border border-wics-blue-500 bg-main-100 px-5 pt-2 transition-all duration-300 sm:flex-row sm:justify-between sm:pt-0`}
       >
         <ul className={`flex w-full items-center sm:w-auto`}>

@@ -1,4 +1,3 @@
-import CloudCosmos from "@/app/public/images/home/cloud-cosmos.png";
 import Image from "next/image";
 import PSBCCard from "./components/PSBCCard";
 import pCosmos from "@/app/public/images/home/p-cosmos.png";

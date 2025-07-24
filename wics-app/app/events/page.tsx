@@ -11,7 +11,7 @@ import GHCPic from "@/app/public/images/events/ghc.png";
 import CANCWiCPic from "@/app/public/images/events/canc-wic.jpg";
 import { createMetadata } from "@/app/lib/metadata";
 
-export const metadata = createMetadata('Events');
+export const metadata = createMetadata("Events");
 
 async function getUpcomingEvents() {
   const query = `
