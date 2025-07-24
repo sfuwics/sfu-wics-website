@@ -81,19 +81,10 @@ export default function RootLayout({
       <body
         className={robotoSlab.variable}
       >
-        {/* <Head>
-          <link rel="icon" type="image/png" href="/public/favicon-96x96.png" sizes="96x96" />
-          <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
-          <link rel="shortcut icon" href="/public/favicon.ico" />
-          <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png" />
-          <link rel="manifest" href="/public/site.webmanifest" />
-        </Head> */}
-
         <main className="font-roboto-slab min-h-screen flex flex-col">
           <NavBar />
 
-          {/* <div className="container mx-auto pt-24 px-5 flex-1"> */}
-            <div>
+          <div>
             {children}
           </div>
 
