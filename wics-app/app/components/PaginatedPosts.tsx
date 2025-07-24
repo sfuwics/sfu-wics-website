@@ -50,7 +50,10 @@ const PaginatedPosts = ({
       startPage = Math.max(1, endPage - maxVisiblePages + 1);
     }
 
-    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+    return Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i,
+    );
   };
 
   const renderPageButton = (page: number) => {
@@ -100,10 +103,10 @@ const PaginatedPosts = ({
         </motion.div>
       </AnimatePresence>
 
-      <div className="m-4 sm:m-8 flex items-center justify-center gap-1 sm:gap-2">
+      <div className="m-4 flex items-center justify-center gap-1 sm:m-8 sm:gap-2">
         {/* Previous */}
-        {activePage > 1 && (
-          mode === "dynamic" ? (
+        {activePage > 1 &&
+          (mode === "dynamic" ? (
             <Link href={`/${url}/pg-${activePage - 1}`}>
               <button className="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-neutral-200 transition-colors hover:bg-neutral-200 disabled:opacity-50">
                 <FaChevronLeft className="h-4 w-4 text-wics-blue-500" />
@@ -116,39 +119,40 @@ const PaginatedPosts = ({
             >
               <FaChevronLeft className="h-4 w-4 text-wics-blue-500" />
             </button>
-          )
-        )}
+          ))}
 
         {/* First Page */}
-        {activePage > Math.floor(maxVisiblePages / 2) + 1 && totalPages > maxVisiblePages && (
-          <>
-            {renderPageButton(1)}
-            {activePage > Math.floor(maxVisiblePages / 2) + 2 && (
-              <span className="flex items-center sm:px-2">
-                <FaEllipsisH className="text-neutral-400" />
-              </span>
-            )}
-          </>
-        )}
+        {activePage > Math.floor(maxVisiblePages / 2) + 1 &&
+          totalPages > maxVisiblePages && (
+            <>
+              {renderPageButton(1)}
+              {activePage > Math.floor(maxVisiblePages / 2) + 2 && (
+                <span className="flex items-center sm:px-2">
+                  <FaEllipsisH className="text-neutral-400" />
+                </span>
+              )}
+            </>
+          )}
 
         {/* Visible Pages */}
         {getVisiblePages().map((page) => renderPageButton(page))}
 
         {/* Last Page */}
-        {activePage < totalPages - Math.floor(maxVisiblePages / 2) && totalPages > maxVisiblePages && (
-          <>
-            {activePage < totalPages - Math.floor(maxVisiblePages / 2) - 1 && (
-              <span className="flex items-center">
-                <FaEllipsisH className="text-neutral-400" />
-              </span>
-            )}
-            {renderPageButton(totalPages)}
-          </>
-        )}
+        {activePage < totalPages - Math.floor(maxVisiblePages / 2) &&
+          totalPages > maxVisiblePages && (
+            <>
+              {activePage + Math.floor(maxVisiblePages / 2) < totalPages && (
+                <span className="flex items-center sm:px-2">
+                  <FaEllipsisH className="text-neutral-400" />
+                </span>
+              )}
+              {renderPageButton(totalPages)}
+            </>
+          )}
 
         {/* Next */}
-        {activePage < totalPages && (
-          mode === "dynamic" ? (
+        {activePage < totalPages &&
+          (mode === "dynamic" ? (
             <Link href={`/${url}/pg-${activePage + 1}`}>
               <button className="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-neutral-200 transition-colors hover:bg-neutral-200 disabled:opacity-50">
                 <FaChevronRight className="h-4 w-4 text-wics-blue-500" />
@@ -161,8 +165,7 @@ const PaginatedPosts = ({
             >
               <FaChevronRight className="h-4 w-4 text-wics-blue-500" />
             </button>
-          )
-        )}
+          ))}
       </div>
     </div>
   );
