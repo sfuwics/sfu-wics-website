@@ -12,7 +12,7 @@ const handler: Handler = async (event) => {
     };
   }
 
-  console.log('Webhook triggered:', event.body);
+  console.log('Webhook  triggered:', event.body);
 
   // Wait 5 seconds to ensure Sanity content updates are propagated
   await sleep(5000);
