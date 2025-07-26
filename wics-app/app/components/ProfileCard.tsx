@@ -33,7 +33,7 @@ const ProfileCard = ({ profile }: Props) => {
           objectFit="cover"
           placeholder="blur"
           blurDataURL={profile.mainImage.asset.metadata?.lqip}
-          className="transition-all duration-300 sm:group-hover:brightness-50 transition-opacity duration-700 opacity-100 motion-safe:animate-fadeIn" // Apply hover only for screens >= sm
+          className="transition-all duration-300 sm:group-hover:brightness-[0.15] transition-opacity duration-700 opacity-100 motion-safe:animate-fadeIn" // Apply hover only for screens >= sm
         />
 
         {/* Overlay (Bio and Name) */}
