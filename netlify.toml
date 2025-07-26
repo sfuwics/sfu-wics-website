@@ -2,4 +2,9 @@
   base = "wics-app"
   publish = "out" 
   command = "npm install && npm run build"
-  functions = "netlify/functions" 
+  functions = "wics-app/netlify/functions"
+
+[functions]
+  directory = "wics-app/netlify/functions"
+  node_bundler = "esbuild"
+  included_files = ["wics-app/netlify/functions/**/*.ts", "wics-app/netlify/functions/**/*.js"]

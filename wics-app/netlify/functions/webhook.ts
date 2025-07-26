@@ -1,10 +1,18 @@
 import type { Handler } from '@netlify/functions';
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+// Increased timeout to ensure build stability
+const BUILD_STABILITY_DELAY = 10000; // 10 seconds
 
 const handler: Handler = async (event) => {
-  const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+  // Skip if this is a Netlify auto-build to prevent infinite loops
+  if (process.env.NETLIFY_AUTO_BUILD === 'true') {
+    return {
+      statusCode: 200,
+      body: 'Skipping build-trigger during auto-build',
+    };
+  }
 
+  const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
   if (!GITHUB_TOKEN) {
     return {
       statusCode: 500,
@@ -12,12 +20,22 @@ const handler: Handler = async (event) => {
     };
   }
 
-  console.log('Webhook  triggered:', event.body);
-
-  // Wait 5 seconds to ensure Sanity content updates are propagated
-  await sleep(5000);
+  console.log('Sanity webhook triggered:', event.body);
 
   try {
+    // 1. First verify the function is properly deployed
+    const selfTest = await fetch(`${process.env.URL}/.netlify/functions/webhook`, {
+      method: 'HEAD',
+    });
+
+    if (!selfTest.ok) {
+      throw new Error('Function endpoint not properly deployed');
+    }
+
+    // 2. Wait longer for content propagation and build stability
+    await new Promise(resolve => setTimeout(resolve, BUILD_STABILITY_DELAY));
+
+    // 3. Trigger GitHub dispatch
     const response = await fetch('https://api.github.com/repos/sfuwics/sfu-wics-website/dispatches', {
       method: 'POST',
       headers: {
@@ -27,20 +45,35 @@ const handler: Handler = async (event) => {
       },
       body: JSON.stringify({
         event_type: 'sanity-update',
+        client_payload: {
+          sanity_webhook: true,
+          timestamp: new Date().toISOString()
+        }
       }),
     });
 
-    const text = await response.text();
+    // 4. Verify GitHub response
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`GitHub API error: ${errorText}`);
+    }
 
     return {
-      statusCode: response.status,
-      body: text,
+      statusCode: 200,
+      body: JSON.stringify({
+        success: true,
+        message: 'GitHub dispatch triggered successfully'
+      }),
     };
+
   } catch (error: any) {
-    console.error('Error triggering GitHub dispatch:', error);
+    console.error('Webhook processing error:', error);
     return {
       statusCode: 500,
-      body: `Webhook relay failed: ${error.message}`,
+      body: JSON.stringify({
+        error: error.message,
+        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      }),
     };
   }
 };
