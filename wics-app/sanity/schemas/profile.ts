@@ -8,49 +8,54 @@ export const profile = defineType({
   orderings: [orderRankOrdering],
   fields: [
     orderRankField({ type: "profile" }),
-    {
+    defineField({
       name: "name",
       title: "Name",
       type: "string",
-    },
-    {
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "role",
       title: "Role",
       type: "string",
-    },
-    {
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "pronouns",
       title: "Pronouns",
       type: "string",
-    },
-    {
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "blurb",
       title: "Blurb",
       type: "text",
-    },
+      validation: (Rule) => Rule.required(),
+    }),
     defineField({
       name: "linkedin",
       title: "LinkedIn",
       type: "string",
       validation: (Rule) =>
-        Rule.required().custom((url) => {
+        Rule.custom((url) => {
           const linkedInRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|company|pub|profile)\/[a-zA-Z0-9-]+\/?$/;
 
           if (typeof url === 'undefined') return true; 
           if (!linkedInRegex.test(url)) {
-            return "Must be a valid LinkedIn URL (e.g., https://www.linkedin.com/in/username)";
+            return "Must be a valid LinkedIn URL (https://www.linkedin.com/in/username)";
           }
           return true;
         }),
     }),
-    {
+    defineField({
       name: "mainImage",
       title: "Main image",
       type: "image",
       options: {
         hotspot: true,
-      }
-    },
+      },
+      validation: (Rule) => Rule.required(),
+    }),
   ],
   preview: {
     select: {
