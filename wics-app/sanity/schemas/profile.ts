@@ -1,5 +1,5 @@
-import { defineType } from "sanity";
-import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list';
+import { defineType, defineField } from "sanity";
+import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list';
 
 export const profile = defineType({
   name: "profile",
@@ -28,11 +28,21 @@ export const profile = defineType({
       title: "Blurb",
       type: "text",
     },
-    {
+    defineField({
       name: "linkedin",
       title: "LinkedIn",
       type: "string",
-    },
+      validation: (Rule) =>
+        Rule.required().custom((url) => {
+          const linkedInRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|company|pub|profile)\/[a-zA-Z0-9-]+\/?$/;
+
+          if (typeof url === 'undefined') return true; 
+          if (!linkedInRegex.test(url)) {
+            return "Must be a valid LinkedIn URL (e.g., https://www.linkedin.com/in/username)";
+          }
+          return true;
+        }),
+    }),
     {
       name: "mainImage",
       title: "Main image",
