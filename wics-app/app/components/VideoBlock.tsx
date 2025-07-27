@@ -23,7 +23,7 @@ export default function VideoBlock({ value }: VideoBlockProps) {
   // Handle uploaded video files (MP4/WebM)
   if (value.videoType === 'file' && value.videoFile?.asset?.url) {
     return (
-      <div className="my-6 group relative">
+      <div className="group relative">
         <video
           controls
           className="w-full aspect-video rounded-xl bg-black"

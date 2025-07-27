@@ -26,7 +26,7 @@ types: {
     const aspectRatio = width && height ? width / height : 16/9; // Default fallback
 
     return (
-      <div className={`relative mx-auto mt-3 sm:mt-2 mb-3 ${
+      <div className={`relative mx-auto pb-2 pt-2 ${
         aspectRatio >= 1 ? "w-full" : "max-w-[400px]"
       }`}>
         <Image
@@ -58,7 +58,7 @@ types: {
                       value.dimensions.width < value.dimensions.height);
 
   return (
-    <div className={`relative mx-auto  mt-3 sm:mt-0 mb-3  ${
+    <div className={`relative mx-auto pb-2 pt-2 ${
       isPortrait ? "max-w-[350px]" : "w-full"
     }`}>
       <VideoBlock value={value} />
