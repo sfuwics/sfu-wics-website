@@ -68,10 +68,10 @@ types: {
 },
   list: {
     bullet: ({ children }: any) => (
-      <ul className="ml-10 list-disc space-y-2">{children}</ul>
+      <ul className="ml-10 list-disc space-y-1 sm:space-y-2">{children}</ul>
     ),
     number: ({ children }: any) => (
-      <ol className="mt-lg ml-5 list-decimal space-y-2">{children}</ol>
+      <ol className="mt-lg ml-5 list-decimal space-y-1 sm:space-y-2">{children}</ol>
     ),
   },
   listItem: {
@@ -110,7 +110,7 @@ types: {
     h4: ({ value }: any) => (
       <h4
         id={slugify(value.children[0].text)}
-        className="pt-3 text-xl font-bold"
+        className="pt-3 sm:pt-8 text-xl font-bold"
       >
         {value.children[0].text}
       </h4>
@@ -118,7 +118,7 @@ types: {
     h5: ({ value }: any) => (
       <h5
         id={slugify(value.children[0].text)}
-        className="pt-3 text-lg font-bold"
+        className="pt-3 sm:pt-8 text-lg font-bold"
       >
         {value.children[0].text}
       </h5>
@@ -128,9 +128,21 @@ types: {
         {children}
       </blockquote>
     ),
-    normal: ({ children }: any) => {
-      return <p className="">{children}</p>;
-    },
+normal: ({ children, value }: any) => {
+  // Count how many text nodes this block has
+  const textNodeCount = value.children.filter((child: any) => 
+    child._type === 'span' && child.text.trim().length > 0
+  ).length;
+  
+  // Consider it single-line if there's only one text node
+  const isSingleLine = textNodeCount === 1;
+  
+  return (
+    <p className={isSingleLine ? "my-3" : "my-8"}>
+      {children}
+    </p>
+  );
+},
   },
   marks: {
     link: ({ children, value }: any) => {

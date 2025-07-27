@@ -137,14 +137,15 @@ mt-10 sm:mt-14
 text-left
 
 prose-p:text-sm sm:prose-p:text-base
-prose-p:leading-6 sm:prose-p:leading-7
+prose-p:leading-6
 
 prose-headings:my-3
 prose-heading:text-2xl
-prose-p:my-4
 
 prose-li:list-disc
 prose-li:text-sm sm:prose-li:text-base
-prose-li:leading-6 sm:prose-li:leading-7
+prose-li:leading-6
 prose-li:ml-1 sm:prose-li:ml-4
 `;
+
+
