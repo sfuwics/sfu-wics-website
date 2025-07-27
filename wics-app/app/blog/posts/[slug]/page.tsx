@@ -141,7 +141,7 @@ prose-p:leading-6 sm:prose-p:leading-7
 
 prose-headings:my-3
 prose-heading:text-2xl
-prose-p:my-2
+prose-p:my-4
 
 prose-li:list-disc
 prose-li:text-sm sm:prose-li:text-base

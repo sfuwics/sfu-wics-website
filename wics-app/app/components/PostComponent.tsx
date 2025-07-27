@@ -68,8 +68,13 @@ const richTextStyles = `
   prose-p:leading-6
   prose-li:list-disc
   prose-li:leading-snug
+
   prose-ul:py-0
   prose-ul:pb-4
   prose-ol:py-0
   prose-ol:pb-4
+
+  prose-li:text-sm sm:prose-li:text-base
+  prose-li:leading-6 sm:prose-li:leading-7
+  prose-li:ml-1 sm:prose-li:ml-4
 `;

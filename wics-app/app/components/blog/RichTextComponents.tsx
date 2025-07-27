@@ -26,7 +26,7 @@ types: {
     const aspectRatio = width && height ? width / height : 16/9; // Default fallback
 
     return (
-      <div className={`relative mx-auto my-6 sm:my-10 ${
+      <div className={`relative mx-auto mt-3 sm:mt-2 mb-3 ${
         aspectRatio >= 1 ? "w-full" : "max-w-[400px]"
       }`}>
         <Image
@@ -58,7 +58,7 @@ types: {
                       value.dimensions.width < value.dimensions.height);
 
   return (
-    <div className={`relative mx-auto my-6 sm:my-10  ${
+    <div className={`relative mx-auto  mt-3 sm:mt-0 mb-3  ${
       isPortrait ? "max-w-[350px]" : "w-full"
     }`}>
       <VideoBlock value={value} />
@@ -86,7 +86,7 @@ types: {
     h1: ({ value }: any) => (
       <h1
         id={slugify(value.children[0].text)}
-        className="pt-3 text-4xl font-bold"
+        className="pt-3 sm:pt-8 text-4xl font-bold"
       >
         {value.children[0].text}
       </h1>
@@ -94,7 +94,7 @@ types: {
     h2: ({ value }: any) => (
       <h2
         id={slugify(value.children[0].text)}
-        className="pt-3 text-3xl font-bold"
+        className="pt-3 sm:pt-8 text-3xl font-bold"
       >
         {value.children[0].text}
       </h2>
@@ -102,7 +102,7 @@ types: {
     h3: ({ value }: any) => (
       <h3
         id={slugify(value.children[0].text)}
-        className="pt-3 text-2xl font-bold"
+        className="pt-3 sm:pt-8 text-2xl font-bold"
       >
         {value.children[0].text}
       </h3>
@@ -129,7 +129,7 @@ types: {
       </blockquote>
     ),
     normal: ({ children }: any) => {
-      return <p className="mb-5">{children}</p>;
+      return <p className="">{children}</p>;
     },
   },
   marks: {
