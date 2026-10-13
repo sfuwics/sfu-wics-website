@@ -9,6 +9,8 @@ export default function NavBar() {
   const navRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
+  const isActive = (href: string) => pathname?.startsWith(href);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -48,7 +50,7 @@ export default function NavBar() {
       >
         <ul className={`flex w-full items-center sm:w-auto`}>
           <li className=" flex items-center">
-            <Link href="/">
+            <Link href="/" aria-label="SFU WiCS home">
               <div className="relative h-[32px] w-[48px] sm:h-[40px] sm:w-[60px]">
                     <Logo className="h-full w-full" />
               </div>
@@ -60,6 +62,8 @@ export default function NavBar() {
               className="relative h-4 w-6 sm:hidden"
               onClick={toggleMenu}
               aria-label="Toggle menu"
+              aria-expanded={isOpen}
+              aria-controls="nav-links"
             >
               <div className="relative h-full w-full">
                 {/* Top bar */}
@@ -92,12 +96,20 @@ export default function NavBar() {
         </ul>
 
         {/* content box for nav links */}
-        <div className="flex justify-center sm:justify-normal">
+        {/* Hidden links stay out of the tab order on mobile; the visibility
+            transition keeps them visible until the close animation ends */}
+        <div
+          id="nav-links"
+          className={`flex justify-center transition-[visibility] duration-300 sm:visible sm:justify-normal ${
+            isOpen ? "visible" : "invisible"
+          }`}
+        >
           <ul className="mt-8 flex flex-col items-center gap-6 text-base text-wics-blue-500 sm:mt-0 sm:flex-row sm:gap-4">
             <li>
               <Link
                 className="decoration-wics-yellow-500 decoration-2 hover:underline"
                 href="/about"
+                aria-current={isActive("/about") ? "page" : undefined}
               >
                 About
               </Link>
@@ -106,6 +118,7 @@ export default function NavBar() {
               <Link
                 className="decoration-wics-yellow-500 decoration-2 hover:underline"
                 href="/newsroom"
+                aria-current={isActive("/newsroom") ? "page" : undefined}
               >
                 Newsroom
               </Link>
@@ -114,6 +127,7 @@ export default function NavBar() {
               <Link
                 className="decoration-wics-yellow-500 decoration-2 hover:underline"
                 href="/events"
+                aria-current={isActive("/events") ? "page" : undefined}
               >
                 Events
               </Link>
@@ -122,6 +136,7 @@ export default function NavBar() {
               <Link
                 className="decoration-wics-yellow-500 decoration-2 hover:underline"
                 href="/blog"
+                aria-current={isActive("/blog") ? "page" : undefined}
               >
                 WiCS Writes
               </Link>
@@ -130,6 +145,7 @@ export default function NavBar() {
               <Link
                 className="decoration-wics-yellow-500 decoration-2 hover:underline"
                 href="/sponsors"
+                aria-current={isActive("/sponsors") ? "page" : undefined}
               >
                 Sponsors
               </Link>

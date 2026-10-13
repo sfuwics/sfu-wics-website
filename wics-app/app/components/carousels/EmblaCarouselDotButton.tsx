@@ -3,14 +3,23 @@ import React from "react";
 interface DotButtonProps {
   onClick: () => void;
   className?: string;
+  label?: string;
+  selected?: boolean;
 }
 
-export const DotButton = ({ onClick, className }: DotButtonProps) => {
+export const DotButton = ({
+  onClick,
+  className,
+  label,
+  selected,
+}: DotButtonProps) => {
   return (
     <button
       type="button"
       onClick={onClick}
       className={className}
+      aria-label={label}
+      aria-current={selected ? "true" : undefined}
     />
   );
 };

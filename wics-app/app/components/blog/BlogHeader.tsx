@@ -9,11 +9,16 @@ interface Props {
 const Header = ({ title = "", tags = false }: Props) => {
   return (
     <header className="py-5 sm:py-8">
-      <h2 className="mx-auto text-4xl sm:text-5xl font-bold">{title}</h2>
+      <h1 className="mx-auto text-4xl sm:text-5xl font-bold">{title}</h1>
 
       {tags && (
-        <div className="mt-2 text-xs hover:text-wics-yellow-500">
-          <Link href="/tag">#tags</Link>
+        <div className="mt-2 text-xs">
+          <Link
+            href="/blog/tag"
+            className="decoration-wics-yellow-500 decoration-2 hover:underline"
+          >
+            #tags
+          </Link>
         </div>
       )}
     </header>

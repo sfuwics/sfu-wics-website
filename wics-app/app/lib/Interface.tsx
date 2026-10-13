@@ -6,6 +6,17 @@ export interface Post {
   body: any;
   tags: Array<Tag>;
   _id: string;
+  author?: string;
+  featureImage?: SanityImage;
+  images?: Array<SanityImage & { _key: string; alt?: string }>;
+}
+
+// Image fields as projected by the GROQ queries (asset-> { url, metadata })
+interface SanityImage {
+  asset: {
+    url: string;
+    metadata?: { lqip?: string };
+  };
 }
 
 export interface Tag {

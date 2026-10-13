@@ -140,12 +140,9 @@ prose-p:text-sm sm:prose-p:text-base
 prose-p:leading-6
 
 prose-headings:my-3
-prose-heading:text-2xl
 
-prose-li:list-disc
 prose-li:text-sm sm:prose-li:text-base
 prose-li:leading-6
-prose-li:ml-1 sm:prose-li:ml-4
 `;
 
 

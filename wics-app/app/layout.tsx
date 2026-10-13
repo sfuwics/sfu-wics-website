@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import NavBar from "./components/NavBar";
@@ -45,11 +44,6 @@ export const metadata: Metadata = {
     ],
 
     shortcut: "/favicon.svg",
-
-    other: {
-      rel: "shortcut icon",
-      url: "/favicon.ico",
-    },
 
     apple: "/apple-touch-icon.png",
 

@@ -73,6 +73,8 @@ const PSBCCarousel = () => {
               index === selectedIndex ? 'bg-wics-blue-500' : 'bg-gray-300'
             }`}
             onClick={() => emblaApi?.scrollTo(index)}
+            aria-label={`Go to slide ${index + 1}`}
+            aria-current={index === selectedIndex ? "true" : undefined}
           />
         ))}
       </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Post } from "../../utils/Interface";
+import { Post } from "../lib/Interface";
 import { PortableText } from "@portabletext/react";
 import { RichTextComponents } from "@/app/components/blog/RichTextComponents";
 import ImageCarousel from "@/app/components/carousels/ImageCarousel";
@@ -63,10 +63,8 @@ const richTextStyles = `
   text-sm
   m-auto
   prose-headings:my-3
-  prose-heading:text-2xl
   prose-p:mb-4
   prose-p:leading-6
-  prose-li:list-disc
   prose-li:leading-snug
 
   prose-ul:py-0
@@ -76,5 +74,4 @@ const richTextStyles = `
 
   prose-li:text-sm sm:prose-li:text-base
   prose-li:leading-6 sm:prose-li:leading-7
-  prose-li:ml-1 sm:prose-li:ml-4
 `;

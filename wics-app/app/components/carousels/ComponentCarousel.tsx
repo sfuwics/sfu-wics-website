@@ -14,8 +14,6 @@ interface CarouselProps {
 }
 
 const Carousel = ({ children, options, autoScroll = true, scrollInterval = 3000 }: CarouselProps) => {
-  if (!children || children.length === 0) return null;
-
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "center",
@@ -81,6 +79,9 @@ const Carousel = ({ children, options, autoScroll = true, scrollInterval = 3000 
     return () => clearInterval(autoScrollInterval);
   }, [emblaApi, autoScroll, scrollInterval]);
 
+  // Early return goes after all hooks so hook order never changes
+  if (!children || children.length === 0) return null;
+
   return (
     <section className="relative mx-auto w-full overflow-hidden">
       <div className="p-4 2xl:p-8 border border-black rounded-2xl">
@@ -112,7 +113,9 @@ const Carousel = ({ children, options, autoScroll = true, scrollInterval = 3000 
                 <DotButton
                   key={index}
                   onClick={() => onDotButtonClick(index)}
-                  className={`mx-1 h-4 w-4 rounded-full border-2 border-gray transition-all ${
+                  label={`Go to slide ${index + 1}`}
+                  selected={index === selectedIndex}
+                  className={`mx-1 h-4 w-4 rounded-full border-2 transition-all ${
                     index === selectedIndex ? "border-2 border-wics-blue-500" : ""
                   }`}
                 />

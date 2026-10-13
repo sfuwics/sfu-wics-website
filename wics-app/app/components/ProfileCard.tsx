@@ -39,7 +39,7 @@ const ProfileCard = ({ profile }: Props) => {
         {/* Overlay (Bio and Name) */}
         <div className="absolute inset-0 flex hidden flex-col items-center justify-center gap-5 text-white opacity-0 transition-all duration-300 sm:flex sm:group-hover:opacity-100">
           {/* Visible on non-mobile */}
-          <p className="text-md mt-2 px-4">{profile?.blurb}</p>
+          <p className="mt-2 px-4">{profile?.blurb}</p>
 
           {showLinkedin && (
             <a
@@ -48,7 +48,7 @@ const ProfileCard = ({ profile }: Props) => {
               rel="noopener noreferrer"
               className="block transition-opacity duration-300 hover:opacity-80"
             >
-              <Image src={LinkedinIcon} height={24} width={24} />
+              <Image src={LinkedinIcon} alt="LinkedIn" height={24} width={24} />
             </a>
           )}
         </div>
@@ -78,7 +78,7 @@ const ProfileCard = ({ profile }: Props) => {
             </a>
           )}
         </div>
-        <h2 className="text-md sm:text-lg">{profile?.role}</h2>
+        <h2 className="sm:text-lg">{profile?.role}</h2>
       </div>
 
       {/* Mobile-specific blurb */}

@@ -5,10 +5,12 @@ import { PortableText } from "@portabletext/react";
 import { RichTextComponents } from "@/app/components/blog/RichTextComponents";
 
 interface Props {
-  posts: Post[];
+  post: Post;
+  // Only the first slide in the carousel should preload its image
+  priority?: boolean;
 }
 
-const PostComponent = ({ post }: Props) => {
+const PostComponent = ({ post, priority = false }: Props) => {
   return (
 <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-5 lg:gap-10">
   {/* Title and Body */}
@@ -32,7 +34,7 @@ const PostComponent = ({ post }: Props) => {
           style={{
             aspectRatio: post?.featureImageDimensions?.aspectRatio || 16 / 9, // Fallback to 16:9
           }}
-          priority
+          priority={priority}
         />
       </div>
     </div>
@@ -49,11 +51,9 @@ text-sm
 
 m-auto
 prose-headings:my-3
-prose-heading:text-2xl
 prose-p:mb-[2%]
 sm:prose-p:mb-4
 sm:prose-p:leading-6
-prose-li:list-disc
 prose-li:leading-3
 prose-ul:py-0
 prose-ul:pb-4

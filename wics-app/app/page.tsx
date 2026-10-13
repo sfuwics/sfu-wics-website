@@ -16,6 +16,8 @@ import LottieAnimation from "./components/LottieAnimation";
 export default function Home() {
   return (
     <div>
+      {/* The hero text lives inside the Lottie animation */}
+      <h1 className="sr-only">SFU Women in Computing Science</h1>
       <div className="pb-24 sm:pb-24">
         <LottieAnimation />
       </div>
@@ -28,7 +30,7 @@ export default function Home() {
           <div className="block sm:hidden">
             <PSBCCarousel />
           </div>
-          <div className="block flex hidden items-center sm:block">
+          <div className="hidden sm:block">
             <div className="flex justify-between gap-2 md:gap-6">
               <PSBCCard
                 imageSrc={pCosmos}
@@ -64,7 +66,6 @@ export default function Home() {
               alt="WiCS Logo"
               className="h-[40px] w-auto object-contain md:h-[52px] 2xl:h-[80px]"
               quality={85}
-              priority
             />
           </div>
 

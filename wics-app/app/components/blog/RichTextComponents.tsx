@@ -6,6 +6,13 @@ import { urlForImage } from "@/sanity/lib/image";
 import { slugify } from "@/app/lib/helpers";
 import VideoBlock from "../VideoBlock";
 
+// Plain text of a block across all its spans (for heading ids)
+const blockText = (value: any) =>
+  (value?.children ?? []).map((child: any) => child?.text ?? "").join("");
+
+const listIndent = (value: any) =>
+  (value?.level ?? 1) > 1 ? "pl-4 sm:pl-8" : "pl-5 sm:pl-[4.75rem]";
+
 export const RichTextComponents = {
 types: {
   image: ({ value }: any) => {
@@ -67,60 +74,66 @@ types: {
 }
 },
   list: {
-    bullet: ({ children }: any) => (
-      <ul className="ml-10 list-disc space-y-1 sm:space-y-2">{children}</ul>
+    // Only the top level gets the large indent; nested levels add a small
+    // one so deep nesting doesn't push text off narrow screens
+    bullet: ({ children, value }: any) => (
+      <ul
+        className={`${listIndent(value)} list-disc space-y-1 sm:space-y-2`}
+      >
+        {children}
+      </ul>
     ),
-    number: ({ children }: any) => (
-      <ol className="mt-lg ml-5 list-decimal space-y-1 sm:space-y-2">{children}</ol>
+    number: ({ children, value }: any) => (
+      <ol
+        className={`${listIndent(value)} list-decimal space-y-1 sm:space-y-2`}
+      >
+        {children}
+      </ol>
     ),
   },
   listItem: {
-    bullet: ({ children }: any) => (
-      <li className="ml-5 list-item">{children}</li>
-    ),
-    number: ({ children }: any) => (
-      <li className="ml-5 list-item">{children}</li>
-    ),
+    bullet: ({ children }: any) => <li className="list-item">{children}</li>,
+    number: ({ children }: any) => <li className="list-item">{children}</li>,
   },
   block: {
-    h1: ({ value }: any) => (
+    h1: ({ children, value }: any) => (
       <h1
-        id={slugify(value.children[0].text)}
+        id={slugify(blockText(value))}
         className="pt-3 sm:pt-8 text-4xl font-bold"
       >
-        {value.children[0].text}
+        {children}
       </h1>
     ),
-    h2: ({ value }: any) => (
+    h2: ({ children, value }: any) => (
       <h2
-        id={slugify(value.children[0].text)}
+        id={slugify(blockText(value))}
         className="pt-3 sm:pt-8 text-3xl font-bold"
       >
-        {value.children[0].text}
+        {children}
       </h2>
     ),
-    h3: ({ value }: any) => (
+    h3: ({ children, value }: any) => (
       <h3
-        id={slugify(value.children[0].text)}
+        id={slugify(blockText(value))}
         className="pt-3 sm:pt-8 text-2xl font-bold"
       >
-        {value.children[0].text}
+        {children}
       </h3>
     ),
-    h4: ({ value }: any) => (
+    h4: ({ children, value }: any) => (
       <h4
-        id={slugify(value.children[0].text)}
+        id={slugify(blockText(value))}
         className="pt-3 sm:pt-8 text-xl font-bold"
       >
-        {value.children[0].text}
+        {children}
       </h4>
     ),
-    h5: ({ value }: any) => (
+    h5: ({ children, value }: any) => (
       <h5
-        id={slugify(value.children[0].text)}
+        id={slugify(blockText(value))}
         className="pt-3 sm:pt-8 text-lg font-bold"
       >
-        {value.children[0].text}
+        {children}
       </h5>
     ),
     blockquote: ({ children }: any) => (
@@ -154,7 +167,7 @@ normal: ({ children, value }: any) => {
         <Link
           href={value.href}
           rel={rel}
-          className="overflow-hidden break-words text-wics-blue-400 underline hover:text-wics-yellow-500"
+          className="overflow-hidden break-words text-wics-blue-400 underline hover:decoration-wics-yellow-500 hover:decoration-2"
           style={{ wordBreak: "break-word" }}
         >
           {children}
