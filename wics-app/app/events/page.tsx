@@ -9,6 +9,7 @@ import Link from "next/link";
 import TryCatchPic from "@/app/public/images/events/trycatch.png";
 import GHCPic from "@/app/public/images/events/ghc.png";
 import CANCWiCPic from "@/app/public/images/events/canc-wic.jpg";
+import HackTheGalaxyPic from "@/app/public/images/events/hack-the-galaxy.jpg";
 import { createMetadata } from "@/app/lib/metadata";
 
 export const metadata = createMetadata("Events");
@@ -82,8 +83,8 @@ export default async function Events() {
         {posts?.map((post) => <EventComponent key={post?._id} post={post} />)}
       </ComponentCarousel>
 
-      <div className="sm-grid-rows-3 my-6 flex w-full flex-col gap-4 sm:grid sm:grid-cols-2 md:grid-cols-4 md:grid-rows-2 lg:grid-cols-5 xl:grid-rows-4">
-        <div className="h-48 w-full overflow-hidden rounded-xl sm:col-span-2 sm:h-64 md:col-span-2 md:row-span-2 md:h-auto lg:col-span-3 lg:h-[600px] xl:row-span-4 xl:h-[800px]">
+      <div className="my-6 flex w-full flex-col gap-4 sm:grid sm:grid-cols-2 md:h-[400px] md:grid-cols-4 md:grid-rows-2 lg:h-[600px] lg:grid-cols-5 xl:h-[800px]">
+        <div className="h-64 w-full overflow-hidden rounded-xl sm:col-span-2 md:row-span-2 md:h-full lg:col-span-3">
           <Link href="/events/past-events">
             <FeatureComponent
               imageSrc={firstEventRecap.featureImage}
@@ -92,7 +93,7 @@ export default async function Events() {
           </Link>
         </div>
 
-        <div className="h-48 w-full overflow-hidden rounded-xl sm:col-span-2 md:col-span-2 md:col-start-3 md:row-start-1 lg:col-start-4 lg:h-full xl:row-span-2">
+        <div className="h-48 w-full overflow-hidden rounded-xl md:h-full">
           <Link
             href="https://trycatch.cs.sfu.ca/"
             target="_blank"
@@ -102,7 +103,16 @@ export default async function Events() {
           </Link>
         </div>
 
-        <div className="h-48 w-full overflow-hidden rounded-xl sm:row-start-3 md:col-start-3 md:row-start-2 lg:col-start-4 lg:h-full xl:row-span-2 xl:row-start-3">
+        <div className="h-48 w-full overflow-hidden rounded-xl md:h-full">
+          <Link href="/page/hack-the-galaxy">
+            <FeatureComponent
+              imageSrc={HackTheGalaxyPic}
+              text="Hack the Galaxy"
+            />
+          </Link>
+        </div>
+
+        <div className="h-48 w-full overflow-hidden rounded-xl md:h-full">
           <Link href="/page/ghc">
             <FeatureComponent
               imageSrc={GHCPic}
@@ -111,7 +121,7 @@ export default async function Events() {
           </Link>
         </div>
 
-        <div className="h-48 w-full overflow-hidden rounded-xl sm:row-start-3 md:col-start-4 md:row-start-2 lg:col-start-5 lg:h-full xl:row-span-2 xl:row-start-3">
+        <div className="h-48 w-full overflow-hidden rounded-xl md:h-full">
           <Link href="/page/can-cwic">
             <FeatureComponent imageSrc={CANCWiCPic} text="CAN-CWiC" />
           </Link>
