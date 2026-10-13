@@ -3,6 +3,9 @@ name: Rebuild on Sanity Update
 on:
   repository_dispatch:
     types: [sanity-update]
+  push:
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
   rebuild:
