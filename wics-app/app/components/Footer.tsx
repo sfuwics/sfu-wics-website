@@ -9,8 +9,8 @@ const Footer = () => {
     <div className="relative overflow-hidden bg-white">
       <Image
         src={Stars}
-        alt="Decorative stars"
-        className="top-1/5 pointer-events-none absolute bottom-[-4%] right-[-6%] w-56 object-contain sm:bottom-[-16%] sm:right-[-4%] sm:w-44 md:w-56 lg:bottom-[-6%] lg:right-[-2%]"
+        alt=""
+        className="pointer-events-none absolute bottom-[-4%] right-[-6%] w-56 object-contain sm:bottom-[-16%] sm:right-[-4%] sm:w-44 md:w-56 lg:bottom-[-6%] lg:right-[-2%]"
         width={150}
         height={150}
         quality={100}
@@ -26,7 +26,6 @@ const Footer = () => {
               height={60}
               className="object-contain"
               quality={85}
-              priority
             />
           </Link>
         </div>

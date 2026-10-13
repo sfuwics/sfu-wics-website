@@ -86,7 +86,7 @@ export default async function About() {
       </div>
 
       <div className="mt-20">
-        <Header title="Executive Profiles" />
+        <Header title="Executive Profiles" as="h2" />
         <div className="grid auto-rows-fr grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {profiles?.length > 0 &&
             profiles?.map((profile) => (
@@ -96,7 +96,7 @@ export default async function About() {
       </div>
 
       <div className="mt-10 pb-14">
-        <Header title="Past Executives" />
+        <Header title="Past Executives" as="h2" />
         <PastExecAccordion data={execLists} />
       </div>
     </div>

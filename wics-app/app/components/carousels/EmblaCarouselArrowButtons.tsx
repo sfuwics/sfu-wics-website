@@ -12,6 +12,7 @@ export const PrevButton = ({ onClick, disabled }: ArrowButtonProps) => {
       type="button"
       onClick={onClick}
       disabled={disabled}
+      aria-label="Previous slide"
       className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-neutral-200 transition-colors hover:bg-gray-200 disabled:opacity-50"
     >
       <FaChevronLeft className="h-5 w-5 text-wics-blue-500" />
@@ -25,6 +26,7 @@ export const NextButton = ({ onClick, disabled }: ArrowButtonProps) => {
       type="button"
       onClick={onClick}
       disabled={disabled}
+      aria-label="Next slide"
       className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-neutral-200 transition-colors hover:bg-neutral-200 disabled:opacity-50"
     >
       <FaChevronRight className="h-5 w-5 text-wics-blue-500" />

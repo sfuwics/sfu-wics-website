@@ -183,7 +183,7 @@ const page = async ({ params }: Params) => {
         </div>
 
         <div className="py-3">
-          <ImageCarousel images={page?.images} />
+          <ImageCarousel images={page?.images} priority />
         </div>
       </div>
 
@@ -208,10 +208,8 @@ sm:text-base
 
 m-auto
 prose-headings:my-3
-prose-heading:text-2xl
 prose-p:mb-4
 prose-p:leading-6
-prose-li:list-disc
 prose-li:leading-3
 prose-ul:py-0
 prose-ul:pb-4

@@ -73,7 +73,7 @@ export default async function Sponsors() {
           become a sponsor, please contact us at{" "}
           <a
             href="mailto:wics@sfu.ca"
-            className="text-wics-blue-500 underline hover:text-wics-yellow-500"
+            className="text-wics-blue-500 underline hover:decoration-wics-yellow-500 hover:decoration-2"
           >
             wics@sfu.ca
           </a>
@@ -131,7 +131,7 @@ export default async function Sponsors() {
         {goldSponsors.map((sponsor, index) => (
           <div
             key={sponsor._id}
-            className={`sm:pb-22 flex w-full items-center px-4 pb-12 sm:px-5 lg:pb-24 2xl:px-1 ${
+            className={`flex w-full items-center px-4 pb-12 sm:px-5 lg:pb-24 2xl:px-1 ${
               goldSponsors.length % 3 === 1 && index === goldSponsors.length - 1
                 ? "sm:w-full" // Center last item if 1 extra
                 : goldSponsors.length % 3 === 2 &&

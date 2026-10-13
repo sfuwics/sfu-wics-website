@@ -57,32 +57,38 @@ const PaginatedPosts = ({
   };
 
   const renderPageButton = (page: number) => {
+    const className = `rounded-xl border-2 border-neutral-200 px-3 py-1 ${
+      activePage === page
+        ? "bg-wics-blue-500 text-white"
+        : "bg-white text-wics-blue-500"
+    }`;
+    const current = activePage === page ? "page" : undefined;
+
     return mode === "dynamic" ? (
-      <Link key={page} href={`/${url}/pg-${page}`}>
-        <button
-          className={`rounded-xl border-2 border-neutral-200 px-3 py-1 ${
-            activePage === page
-              ? "bg-wics-blue-500 text-white"
-              : "bg-white text-wics-blue-500"
-          }`}
-        >
-          {page}
-        </button>
+      <Link
+        key={page}
+        href={`/${url}/pg-${page}`}
+        className={className}
+        aria-label={`Page ${page}`}
+        aria-current={current}
+      >
+        {page}
       </Link>
     ) : (
       <button
         key={page}
         onClick={() => goToPage(page)}
-        className={`rounded-xl border-2 border-neutral-200 px-3 py-1 ${
-          activePage === page
-            ? "bg-wics-blue-500 text-white"
-            : "bg-white text-wics-blue-500"
-        }`}
+        className={className}
+        aria-label={`Page ${page}`}
+        aria-current={current}
       >
         {page}
       </button>
     );
   };
+
+  const arrowClassName =
+    "flex h-9 w-9 items-center justify-center rounded-xl border-2 border-neutral-200 transition-colors hover:bg-neutral-200 disabled:opacity-50";
 
   return (
     <div>
@@ -94,9 +100,11 @@ const PaginatedPosts = ({
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3 }}
         >
-          {currentPosts.map((post) => (
+          {currentPosts.map((post, index) => (
             <div key={post?._id}>
-              {post?._type === "blogPost" && <BlogPostComponent post={post} />}
+              {post?._type === "blogPost" && (
+                <BlogPostComponent post={post} priority={index === 0} />
+              )}
               {post?._type === "post" && <PostComponent post={post} />}
             </div>
           ))}
@@ -107,15 +115,18 @@ const PaginatedPosts = ({
         {/* Previous */}
         {activePage > 1 &&
           (mode === "dynamic" ? (
-            <Link href={`/${url}/pg-${activePage - 1}`}>
-              <button className="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-neutral-200 transition-colors hover:bg-neutral-200 disabled:opacity-50">
-                <FaChevronLeft className="h-4 w-4 text-wics-blue-500" />
-              </button>
+            <Link
+              href={`/${url}/pg-${activePage - 1}`}
+              className={arrowClassName}
+              aria-label="Previous page"
+            >
+              <FaChevronLeft className="h-4 w-4 text-wics-blue-500" />
             </Link>
           ) : (
             <button
               onClick={() => goToPage(activePage - 1)}
-              className="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-neutral-200 transition-colors hover:bg-neutral-200 disabled:opacity-50"
+              className={arrowClassName}
+              aria-label="Previous page"
             >
               <FaChevronLeft className="h-4 w-4 text-wics-blue-500" />
             </button>
@@ -128,7 +139,7 @@ const PaginatedPosts = ({
               {renderPageButton(1)}
               {activePage > Math.floor(maxVisiblePages / 2) + 2 && (
                 <span className="flex items-center sm:px-2">
-                  <FaEllipsisH className="text-neutral-400" />
+                  <FaEllipsisH className="text-neutral-400" aria-hidden="true" />
                 </span>
               )}
             </>
@@ -143,7 +154,7 @@ const PaginatedPosts = ({
             <>
               {activePage + Math.floor(maxVisiblePages / 2) < totalPages && (
                 <span className="flex items-center sm:px-2">
-                  <FaEllipsisH className="text-neutral-400" />
+                  <FaEllipsisH className="text-neutral-400" aria-hidden="true" />
                 </span>
               )}
               {renderPageButton(totalPages)}
@@ -153,15 +164,18 @@ const PaginatedPosts = ({
         {/* Next */}
         {activePage < totalPages &&
           (mode === "dynamic" ? (
-            <Link href={`/${url}/pg-${activePage + 1}`}>
-              <button className="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-neutral-200 transition-colors hover:bg-neutral-200 disabled:opacity-50">
-                <FaChevronRight className="h-4 w-4 text-wics-blue-500" />
-              </button>
+            <Link
+              href={`/${url}/pg-${activePage + 1}`}
+              className={arrowClassName}
+              aria-label="Next page"
+            >
+              <FaChevronRight className="h-4 w-4 text-wics-blue-500" />
             </Link>
           ) : (
             <button
               onClick={() => goToPage(activePage + 1)}
-              className="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-neutral-200 transition-colors hover:bg-neutral-200 disabled:opacity-50"
+              className={arrowClassName}
+              aria-label="Next page"
             >
               <FaChevronRight className="h-4 w-4 text-wics-blue-500" />
             </button>

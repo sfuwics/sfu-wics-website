@@ -4,10 +4,12 @@ import Image from "next/image";
 import { Post } from "../../lib/Interface";
 
 interface Props {
-  posts: Post;
+  post: Post;
+  // Only the first card in a list should preload its image
+  priority?: boolean;
 }
 
-const PostComponent = ({ post }: Props) => {
+const PostComponent = ({ post, priority = false }: Props) => {
   return (
     <div className="flex items-start gap-2 border-t border-black py-5 sm:gap-5 sm:py-8 lg:gap-10">
       <div className="w-2/3">
@@ -45,7 +47,7 @@ const PostComponent = ({ post }: Props) => {
             placeholder={post.featureImage.asset?.metadata?.lqip  ? "blur" : "empty"}
             blurDataURL={post.featureImage.asset?.metadata?.lqip}
             className="h-auto max-h-full w-full rounded-xl object-cover transition-opacity duration-700 opacity-100 motion-safe:animate-fadeIn"
-            priority
+            priority={priority}
           />
         </div>
       )}

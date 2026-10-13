@@ -76,7 +76,9 @@ export default async function Events() {
       <Header title="Events" />
 
       <ComponentCarousel autoScroll scrollInterval={10000}>
-        {posts?.map((post) => <EventComponent key={post?._id} post={post} />)}
+        {posts?.map((post, index) => (
+          <EventComponent key={post?._id} post={post} priority={index === 0} />
+        ))}
       </ComponentCarousel>
 
       <div className="my-6 flex w-full flex-col gap-4 sm:grid sm:grid-cols-2 md:h-[400px] md:grid-cols-4 md:grid-rows-2 lg:h-[600px] lg:grid-cols-5 xl:h-[800px]">

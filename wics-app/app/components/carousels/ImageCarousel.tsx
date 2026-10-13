@@ -18,6 +18,8 @@ interface CarouselProps {
   options?: EmblaOptionsType;
   autoScroll?: boolean;
   scrollInterval?: number;
+  // Preload the first slide; only for carousels above the fold
+  priority?: boolean;
 }
 
 const ImageCarousel = ({
@@ -25,9 +27,9 @@ const ImageCarousel = ({
   options,
   autoScroll = true,
   scrollInterval = 3000,
+  priority = false,
 }: CarouselProps) => {
   const safeImages = (images ?? []).filter((img) => img?.asset?.url);
-  if (safeImages.length === 0) return null;
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
@@ -99,6 +101,9 @@ const ImageCarousel = ({
     return () => clearInterval(autoScrollInterval);
   }, [emblaApi, autoScroll, scrollInterval]);
 
+  // Early return goes after all hooks so hook order never changes
+  if (safeImages.length === 0) return null;
+
   return (
     <section className="relative mx-auto w-full overflow-hidden">
       <div className="">
@@ -108,7 +113,7 @@ const ImageCarousel = ({
           style={{ height: carouselHeight }}
         >
           <div className="-ml-4 flex touch-pan-y touch-pinch-zoom items-start">
-            {safeImages.map((img) => (
+            {safeImages.map((img, index) => (
               <div key={img._key} className="w-full flex-shrink-0 pl-4">
                 <Image
                   src={img.asset?.url || ""}
@@ -118,8 +123,8 @@ const ImageCarousel = ({
                   placeholder={img.asset?.metadata?.lqip ? "blur" : "empty"}
                   blurDataURL={img.asset?.metadata?.lqip}
                   className="h-auto w-full rounded-xl transition-opacity duration-700 opacity-100 motion-safe:animate-fadeIn"
-                  priority={true}
-                  onLoadingComplete={updateHeight}
+                  priority={priority && index === 0}
+                  onLoad={updateHeight}
                 />
               </div>
             ))}
@@ -139,7 +144,9 @@ const ImageCarousel = ({
                 <DotButton
                   key={index}
                   onClick={() => onDotButtonClick(index)}
-                  className={`border-gray mx-1 h-4 w-4 rounded-full border-2 transition-all ${
+                  label={`Go to slide ${index + 1}`}
+                  selected={index === selectedIndex}
+                  className={`mx-1 h-4 w-4 rounded-full border-2 transition-all ${
                     index === selectedIndex
                       ? "border-2 border-wics-blue-500"
                       : ""
