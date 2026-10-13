@@ -54,37 +54,44 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="sm-grid-rows-3 flex w-full flex-col gap-4 py-20 sm:grid sm:grid-cols-12 sm:grid-rows-8 md:py-28 lg:py-36 xl:py-40 2xl:py-48">
-          <div className="col-span-7 col-start-1 row-start-1">
-            <div className="flex items-start justify-start gap-3 md:gap-5 2xl:gap-8">
-              <p className="text-4xl font-bold text-wics-blue-500 md:text-5xl 2xl:text-7xl">
-                Explore
-              </p>
-              <Image
-                src={MedWiCSLogo}
-                alt="WiCS Logo"
-                className="h-[40px] w-auto object-contain md:h-[52px] 2xl:h-[80px]"
-                quality={85}
-                priority
-              />
+        <div className="py-20 md:py-28 lg:py-36 xl:py-40 2xl:py-48">
+          <div className="mb-4 flex items-start justify-start gap-3 md:gap-5 2xl:gap-8">
+            <p className="text-4xl font-bold text-wics-blue-500 md:text-5xl 2xl:text-7xl">
+              Explore
+            </p>
+            <Image
+              src={MedWiCSLogo}
+              alt="WiCS Logo"
+              className="h-[40px] w-auto object-contain md:h-[52px] 2xl:h-[80px]"
+              quality={85}
+              priority
+            />
+          </div>
+
+          <div className="flex w-full flex-col gap-4 sm:h-[400px] sm:flex-row md:h-[510px] lg:h-[610px] 2xl:h-[800px]">
+            <div className="h-48 w-full overflow-hidden rounded-xl sm:h-full sm:w-7/12">
+              <Link href="/events" className="block h-full">
+                <FeatureComponent
+                  imageSrc={Skate}
+                  text="Check Out Our Events"
+                  gradientClassName="h-2/3 from-black/70 via-black/55 via-40% sm:h-1/2"
+                />
+              </Link>
             </div>
-          </div>
-          <div className="h-48 w-full overflow-hidden rounded-xl sm:col-span-7 sm:col-start-1 sm:row-span-6 sm:row-start-2 sm:h-[400px] md:h-[500px] lg:h-[600px] 2xl:h-[800px]">
-            <Link href="/events">
-              <FeatureComponent imageSrc={Skate} text="Check Out Our Events" />
-            </Link>
-          </div>
 
-          <div className="h-48 w-full overflow-hidden rounded-xl sm:col-span-5 sm:col-start-8 sm:row-span-4 sm:row-start-1 sm:h-full">
-            <Link href="/newsroom">
-              <FeatureComponent imageSrc={News} text="Stay Updated" />
-            </Link>
-          </div>
+            <div className="flex flex-col gap-4 sm:flex-1">
+              <div className="h-48 w-full overflow-hidden rounded-xl sm:h-auto sm:min-h-0 sm:flex-1">
+                <Link href="/newsroom" className="block h-full">
+                  <FeatureComponent imageSrc={News} text="Stay Updated" />
+                </Link>
+              </div>
 
-          <div className="h-48 w-full overflow-hidden rounded-xl sm:col-span-5 sm:col-start-8 sm:row-span-4 sm:row-start-5 sm:h-full">
-            <Link href="/blog">
-              <FeatureComponent imageSrc={Blog} text="Read Our Blog" />
-            </Link>
+              <div className="h-48 w-full overflow-hidden rounded-xl sm:h-auto sm:min-h-0 sm:flex-1">
+                <Link href="/blog" className="block h-full">
+                  <FeatureComponent imageSrc={Blog} text="Read Our Blog" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
